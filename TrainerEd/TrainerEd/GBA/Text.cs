@@ -362,7 +362,7 @@ namespace HTE.GBA
                             break;
                     }
                 }
-                else if (ch == "\\h")
+                else if (ch.StartsWith("\\h"))
                 {
                     // hex value
                     // TODO: safe checking

@@ -26,15 +26,11 @@ namespace HTE
             Section section = null;
             while (!sr.EndOfStream)
             {
-                string line = sr.ReadLine().Trim();
+                string line = sr.ReadLine().Replace("\n", "").Replace("\r", "");
                 lineNo += 1;
 
                 // comment
-                if (line.Contains("#"))
-                {
-                    int index = line.IndexOf("#");
-                    line = line.Remove(index).TrimEnd();
-                }
+                if (line.StartsWith(";")) continue;
 
                 // check if it's empty
                 if (string.IsNullOrEmpty(line) || string.IsNullOrWhiteSpace(line)) continue;
