@@ -1,270 +1,401 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace HTE.GBA
 {
-    /*public class TextManager
+    public enum CharacterEncoding
     {
-        private Dictionary<string, string[]> texts;
+        English,
+        Japanese
+    }
 
-        public TextManager()
+    public static class TextTable
+    {
+        // Everything you need to know:
+        // http://bulbapedia.bulbagarden.net/wiki/Character_encoding_in_Generation_III
+
+        public static readonly string[] EnglishTable = {
+            " ", "À", "Á", "Â", "Ç", "È", "É", "Ê", "Ë", "Ì", "こ", "Î", "Ï", "Ò", "Ó", "Ô",
+            "Œ", "Ù", "Ú", "Û", "Ñ", "ß", "à", "á", "ね", "ç", "è", "é", "ê", "ë", "ì", "ま",
+            "î", "ï", "ò", "ó", "ô", "œ", "ù", "ú", "û", "ñ", "º", "ª", "\\h2C", "&", "+", "あ",
+            "ぃ", "ぅ", "ぇ", "ぉ", "[lv]", "=", "ょ", "が", "ぎ", "ぐ", "げ", "ご", "ざ", "じ", "ず", "ぜ",
+            "ぞ", "だ", "ぢ", "づ", "で", "ど", "ば", "び", "ぶ", "べ", "ぼ", "ぱ", "ぴ", "ぷ", "ぺ", "ぽ",
+            "っ", "¿", "¡", "[pk]", "[mn]", "[po]", "[ke]", "[bl]", "[oc]", "[k]", "Í", "%", "(", ")", "セ", "ソ",
+            "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "â", "ノ", "ハ", "ヒ", "フ", "ヘ", "ホ", "í",
+            "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "[u]", "[d]", "[l]", "[r]", "ヲ", "ン", "ァ",
+            "ィ", "ゥ", "ェ", "ォ", "ャ", "ュ", "ョ", "ガ", "ギ", "グ", "ゲ", "ゴ", "ザ", "ジ", "ズ", "ゼ",
+            "ゾ", "ダ", "ヂ", "ヅ", "デ", "ド", "バ", "ビ", "ブ", "ベ", "ボ", "パ", "ピ", "プ", "ペ", "ポ",
+            "ッ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "?", ".", "-", "[.]",
+            "[...]", "[\"]", "\"", "[']", "'", "[m]", "[f]", "$", ",", "*", "/", "A", "B", "C", "D", "E",
+            "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
+            "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+            "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "[>]",
+            ":", "Ä", "Ö", "Ü", "ä", "ö", "ü", "[^]", "[v]", "[<]", "\\l", "\\p", "\\c", "\\v", "\\n", "\\x",
+        };
+
+        public static readonly string[] JapaneseTable = {
+			//  0   1   2   3   4   5   6   7   8   9   a   b   c   d   e   f
+			" ", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "", "\\l", "\\p", "\\c", "\\v", "\\n", "\\x",
+        };
+
+        public static string GetEnglishString(byte[] bytes)
         {
-            texts = new Dictionary<string, string[]>();
+            return GetString(bytes, CharacterEncoding.English);
         }
 
-        public void Register
-    }*/
-    
-    public class TextTable
-    {
-        private static string[] eng = new string[] { " ", "À", "Á", "Â", "Ç", "È", "É", "Ê", "Ë", "Ì", "こ", "Î", "Ï", "Ò", "Ó", "Ô", "Œ", "Ù", "Ú", "Û", "Ñ", "ß", "à", "á", "ね", "ç", "è", "é", "ê", "ë", "ì", "ま", "î", "ï", "ò", "ó", "ô", "œ", "ù", "ú", "û", "ñ", "º", "ª", "[o]", "&", "+", "あ", "ぃ", "ぅ", "ぇ", "ぉ", "[Lv]", "=", "ょ", "が", "ぎ", "ぐ", "げ", "ご", "ざ", "じ", "ず", "ぜ", "ぞ", "だ", "ぢ", "づ", "で", "ど", "ば", "び", "ぶ", "べ", "ぼ", "ぱ", "ぴ", "ぷ", "ぺ", "ぽ", "っ", "¿", "¡", "[pk]", "[mn]", "[po]", "[ké]", "[bl]", "[oc]", "[k]", "Í", "%", "(", ")", "セ", "ソ", "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "â", "ノ", "ハ", "ヒ", "フ", "ヘ", "ホ", "í", "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "[U]", "[D]", "[L]", "[R]", "ヲ", "ン", "ァ", "ィ", "ゥ", "ェ", "ォ", "ャ", "ュ", "ョ", "ガ", "ギ", "グ", "ゲ", "ゴ", "ザ", "ジ", "ズ", "ゼ", "ゾ", "ダ", "ヂ", "ヅ", "デ", "ド", "バ", "ビ", "ブ", "ベ", "ボ", "パ", "ピ", "プ", "ペ", "ポ", "ッ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "?", ".", "-", "·", "[...]", "“", "”", "‘", "'", "♂", "♀", "$", ",", "*", "/", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "►", ":", "Ä", "Ö", "Ü", "ä", "ö", "ü", "↑", "↓", "←", "\\l", "\\p", "\\c", "\\v", "\\n", "\\x" };
-        //                                                                                                                                                                                      1B                                                                                                                                          35                                                                                                                                                                             53                                                                                                                                                                                                                                                                                                                                                                                                       94                                                               9F    A0   A1                                           AA                                   B1  B2   B3   B4    B5   B6   B7                  BB                                                                                                                           D4   D5                                                                                                                           EE   EF   F0   F1   F2   F3   F4   F5   F6   F7   F8   F9   FA    FB      FC      FD      FE     FF
-        private static string[] jap = new string[] { " ", "あ", "い", "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ", "た", "ち", "つ", "て", "と", "な", "に", "ぬ", "ね", "の", "は", "ひ", "ふ", "へ", "ほ", "ま", "み", "む", "め", "も", "や", "ゆ", "よ", "ら", "り", "る", "れ", "ろ", "わ", "を", "ん", "ぁ", "ぃ", "ぅ", "ぇ", "ぉ", "ゃ", "ゅ", "ょ", "が", "ぎ", "ぐ", "げ", "ご", "ざ", "じ", "ず", "ぜ", "ぞ", "だ", "ぢ", "づ", "で", "ど", "ば", "び", "ぶ", "べ", "ぼ", "ぱ", "ぴ", "ぷ", "ぺ", "ぽ", "っ", "ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ", "サ", "シ", ")", "セ", "ス", "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "ヒ", "フ", "ヘ", "ホ", "マ", "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ", "ワ", "ヲ", "ン", "ァ", "ィ", "ゥ", "ェ", "ォ", "ャ", "ュ", "ョ", "ガ", "ギ", "グ", "ゲ", "ゴ", "ザ", "ジ", "ズ", "ゼ", "ゾ", "ダ", "ヂ", "ヅ", "デ", "ド", "バ", "ビ", "ブ", "ベ", "ボ", "パ", "ピ", "プ", "ペ", "ポ", "ッ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "！", "？", "。", "ー", "・", "[・・]", "『", "』", "「", "」", "♂", "♀", "円", ".", "×", "/", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "►", ":", "Ä", "Ö", "Ü", "ä", "ö", "ü", "↑", "↓", "←", "\\l", "\\p", "\\c", "\\v", "\\n", "\\x" };
-        //                                                                                                                                                                                      1B                                                                                                                                          35                                                                                                                                                                             53                                                                                                                                                                                                                                                                                                                                                                                                       94                                                               9F    A0   A1                                           AA                                     B1   B2     B3   B4    B5   B6   B7                      BB                                                                                                                           D4   D5                                                                                                                           EE   EF   F0   F1   F2   F3   F4   F5   F6   F7   F8   F9   FA    FB      FC      FD      FE     FF
-
-        private static HashSet<char> validEscapes = new HashSet<char>(new char[] { 'h', 'l', 'p', 'c', 'v', 'n', 'x' });
-
-        public enum GBACharSet
+        public static string GetJapaneseString(byte[] bytes)
         {
-            English, Japanese
+            return GetString(bytes, CharacterEncoding.Japanese);
         }
 
-        public static string GetString(byte[] bytes, bool shearTerminator = true, GBACharSet charSet = GBACharSet.English)
+        public static string GetString(byte[] bytes, CharacterEncoding encoding)
         {
-            /*string s = "";
+            var sb = new StringBuilder();
             for (int i = 0; i < bytes.Length; i++)
             {
-                if (bytes[i] == 0xFF) break;
-                s += eng[bytes[i]];
-            }
-            return s;*/
+                // get byte
+                var b = bytes[i];
 
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < bytes.Length; i++)
-            {
-                byte b = bytes[i];
-
-                sb.Append(charSet == GBACharSet.English ? eng[b] : jap[b]);
-
-                if (b >= 0xFC)
+                // deal with special characters or proceed as normal
+                if (b == 0xFC)
                 {
-                    if (b == 0xFF) break;
-                    else if (b == 0xFC || b == 0xFD) // functions
+                    // functions
+                    var cmd = bytes[++i];
+
+                    switch (cmd)
                     {
-                        i++;
-                        sb.Append("\\h" + bytes[i].ToString("X2"));
+                        case 0x1: // text color
+                            {
+                                var color = bytes[++i];
+
+                                // TODO: fancy color names by version
+                                sb.AppendFormat("\\c\\h{0:X2}\\h{1:X2}", cmd, color);
+                            }
+                            break;
+                        case 0x2: // highlight color
+                            {
+                                var color = bytes[++i];
+
+                                sb.AppendFormat("\\c\\h{0:X2}\\h{1:X2}", cmd, color);
+                            }
+                            break;
+                        case 0x3: // text shadow color
+                            {
+                                var color = bytes[++i];
+
+                                sb.AppendFormat("\\c\\h{0:X2}\\h{1:X2}", cmd, color);
+                            }
+                            break;
+                        case 0x4: // text highlight and shadow color
+                            {
+                                var shadow = bytes[++i];
+                                var highlight = bytes[++i];
+
+                                sb.AppendFormat("\\c\\h{0:X2}\\h{1:X2}\\h{2:X2}", cmd, shadow, highlight);
+                            }
+                            break;
+
+                        case 0x06: // size
+                            if (bytes[++i] == 0x00)
+                            {
+                                sb.Append("[small]");
+                            }
+                            else {
+                                sb.Append("[normal]");
+                            }
+                            break;
+
+                        case 0x08: // pause
+                            {
+                                var pause = bytes[++i];
+
+                                sb.AppendFormat("\\c\\h{0:X2}\\h{1:X2}", cmd, pause);
+                            }
+                            break;
+
+                        case 0x09:
+                            sb.Append("[waitbutton]");
+                            break;
+
+                        case 0x0C: // escape characters
+                                   // FA -> ➡
+                                   // FB -> +
+                                   // other -> nothing
+                            {
+                                var escape = bytes[++i];
+
+                                sb.AppendFormat("\\c\\h{0:X2}\\h{1:X2}", cmd, escape);
+                            }
+                            break;
+
+                        case 0x0D: // shift text X pixels right
+                            {
+                                var shift = bytes[++i];
+
+                                sb.AppendFormat("\\c\\h{0:X2}\\h{1:X2}", cmd, shift);
+                            }
+                            break;
+
+                        case 0x10: // play song
+                            {
+                                // two bytes, little endian song #
+                                var song1 = bytes[++i];
+                                var song2 = bytes[++i];
+
+                                sb.AppendFormat("\\c\\h{0:X2}\\h{1:X2}\\h{2:X2}", cmd, song1, song2);
+                            }
+                            break;
+
+                        case 0x15: // font change
+                            sb.Append("[western]");
+                            break;
+                        case 0x16: // normal font
+                            sb.Append("[eastern]");
+                            break;
+                        case 0x17: // stop music
+                            sb.Append("[stop_music]");
+                            break;
+                        case 0x18: // resume music
+                            sb.Append("[resume_music]");
+                            break;
+
+                        default:
+                            sb.AppendFormat("\\c\\h{0:X2}", cmd);
+                            break;
                     }
                 }
-            }
+                else if (b == 0xFD)
+                {
+                    // variables
+                    var cmd = bytes[++i];
 
-            if (shearTerminator)
-            {
-                sb = sb.Replace("\\x", "");
+                    switch (cmd)
+                    {
+                        case 0x1:
+                            sb.Append("[player]");
+                            break;
+                        case 0x2:
+                            sb.Append("[buffer1]");
+                            break;
+                        case 0x3:
+                            sb.Append("[buffer2]");
+                            break;
+                        case 0x4:
+                            sb.Append("[buffer3]");
+                            break;
+
+                        case 0x6:
+                            sb.Append("[rival]");
+                            break;
+
+                        // TODO: team names, etc.
+
+                        default:
+                            sb.AppendFormat("\\v\\h{0:X2}", cmd);
+                            break;
+                    }
+                }
+                else if (b == 0xFF)
+                {
+                    // terminate string
+                    break;
+                }
+                else {
+                    // add character from japanese or english table
+                    sb.Append(encoding == CharacterEncoding.Japanese ? JapaneseTable[b] : EnglishTable[b]);
+                }
             }
 
             return sb.ToString();
         }
 
-        public static byte[] GetBytes(string s, GBACharSet charSet = GBACharSet.English)
+        public static string GetEnglishCharacter(byte b)
         {
-            #region Old
-            /*List<string> trans = new List<string>();
-            for (int i = 0; i < s.Length; i++)
-            {
-                char c = s[i];
-                if (c == '[')
-                {
-                    string ss = "";// = c.ToString();
-                    while (i < s.Length && c != ']')
-                    {
-                        ss += c.ToString();
+            return EnglishTable[b];
+        }
 
-                        i++;
-                        c = s[i];
-                    }
-                    trans.Add(ss + c);
-                }
-                else if (c == '\\')
+        public static string GetJapaneseCharacter(byte b)
+        {
+            return JapaneseTable[b];
+        }
+
+        public static string GetCharacter(byte b, CharacterEncoding encoding)
+        {
+            return encoding == CharacterEncoding.Japanese ? JapaneseTable[b] : EnglishTable[b];
+        }
+
+        public static byte[] GetEnglishBytes(string str)
+        {
+            return GetBytes(str, CharacterEncoding.English);
+        }
+
+        public static byte[] GetBytes(string str, CharacterEncoding encoding)
+        {
+            // ignore an empty string
+            if (str.Length == 0)
+                return new byte[0];
+
+            // split the string into "characters"
+            var chars = new List<string>();
+            for (int i = 0; i < str.Length; i++)
+            {
+                var c = str[i];
+
+                if (c == '\\')
                 {
-                    i++;
-                    trans.Add("\\" + s[i]);
+                    // a delimiter needs the next character as well
+                    var cmd = "\\" + str[++i];
+
+                    // a \h delimiter also needs the next two characters
+                    if (cmd == "\\h")
+                    {
+                        cmd += str[++i];
+                        cmd += str[++i];
+                    }
+
+                    chars.Add(cmd);
+                }
+                else if (c == '[')
+                {
+                    // collect characters until ]
+                    var sb = new StringBuilder();
+
+                    while (str[i] != ']')
+                    {
+                        sb.Append(str[i++]);
+
+                        if (i >= str.Length)
+                        {
+                            throw new Exception("[ was not closed by a ]!");
+                        }
+                    }
+
+                    sb.Append(str[i]);
+
+                    chars.Add(sb.ToString());
                 }
                 else
                 {
-                    trans.Add(c.ToString());
+                    chars.Add(c.ToString());
                 }
             }
 
-            byte[] buffer = new byte[trans.Count];
-            for (int i = 0; i < buffer.Length; i++)
+            //Debug.WriteLine("TEXT: " + string.Join(",", chars));
+
+            // turn "characters" into bytes
+            var buffer = new List<byte>();
+            foreach (var ch in chars)
             {
-                buffer[i] = GetByte(trans[i]);
-            }
-
-            return buffer;*/
-            #endregion
-
-            try
-            {
-                // First, split the string into pieces
-                string[] exploded = ExplodeString(s);
-
-                // The get the bytes for each part
-                List<byte> result = new List<byte>();
-                foreach (string str in exploded)
+                if (ch[0] == '[')
                 {
-                    result.Add(GetByte(str, charSet));
-                }
-                return result.ToArray();
-            }
-            catch (Exception ex)
-            {
-                return new byte[0];
-            }
-        }
-
-        public static byte[] GetBytes(string s, int length, GBACharSet charSet = GBACharSet.English)
-        {
-            byte[] b = GetBytes(s);
-
-            // TODO: improve this~~
-
-            if (b.Length != length)
-            {
-                List<byte> buffer = b.ToList();
-                if (b.Length > length)
-                {
-                    Array.Resize(ref b, length);
-                    return b;
-                }
-                else if (b.Length < length)
-                {
-                    buffer.Add(0xFF);
-                    for (int i = 1; i < length - buffer.Count - 1; i++)
+                    // [] stuff
+                    switch (ch.Substring(1, ch.Length - 2))
                     {
-                        buffer.Add(00);
-                    }
-                    return buffer.ToArray();
-                }
+                        // FC
+                        case "small":
+                            buffer.AddRange(new byte[] { 0xFC, 0x06, 0x00 });
+                            break;
+                        case "normal":
+                            buffer.AddRange(new byte[] { 0xFC, 0x06, 0x01 });
+                            break;
 
-                return buffer.ToArray();
+                        case "waitbutton":
+                        case "wait_button":
+                            buffer.AddRange(new byte[] { 0xFC, 0x09 });
+                            break;
+
+                        case "western":
+                            buffer.AddRange(new byte[] { 0xFC, 0x15 });
+                            break;
+                        case "eastern":
+                            buffer.AddRange(new byte[] { 0xFC, 0x16 });
+                            break;
+                        case "stopmusic":
+                        case "stop_music":
+                            buffer.AddRange(new byte[] { 0xFC, 0x17 });
+                            break;
+                        case "resumemusic":
+                        case "resume_music":
+                            buffer.AddRange(new byte[] { 0xFC, 0x18 });
+                            break;
+
+                        // FD - variables
+                        case "player":
+                            buffer.AddRange(new byte[] { 0xFD, 0x01 });
+                            break;
+                        case "buffer1":
+                            buffer.AddRange(new byte[] { 0xFD, 0x02 });
+                            break;
+                        case "buffer2":
+                            buffer.AddRange(new byte[] { 0xFD, 0x03 });
+                            break;
+                        case "buffer3":
+                            buffer.AddRange(new byte[] { 0xFD, 0x04 });
+                            break;
+                        case "rival":
+                            buffer.AddRange(new byte[] { 0xFD, 0x06 });
+                            break;
+
+                        // handle things like [m] and [f] which are in the table
+                        default:
+                            var r = GetByte(ch, encoding);
+                            if (r == 0)
+                                throw new Exception("Unrecognized [   ] alias!");
+                            else
+                                buffer.Add(r);
+                            break;
+                    }
+                }
+                else if (ch == "\\h")
+                {
+                    // hex value
+                    // TODO: safe checking
+                    buffer.Add(Convert.ToByte(ch.Substring(2), 16));
+                }
+                else
+                {
+                    // all other stuff is in the table
+                    buffer.Add(GetByte(ch, encoding));
+                }
             }
-            else
-            {
-                return b;
-            }
+
+            // finally, add a terminator
+            buffer.Add(0xFF);
+
+            return buffer.ToArray();
         }
 
-        public static byte GetByte(string s, GBACharSet charSet = GBACharSet.English)
+        public static byte GetByte(string c, CharacterEncoding encoding)
         {
-            // \\h escape
-            if (s.StartsWith("\\h"))
+            for (int i = 0; i <= 255; i++)
             {
-                return byte.Parse(s.Substring(2), System.Globalization.NumberStyles.HexNumber);
-            }
-
-            // otherwise
-            for (int i = 0; i < eng.Length; i++)
-            {
-                if ((charSet == GBACharSet.English ? eng[i] : jap[i]) == s)
+                if (encoding == CharacterEncoding.English && EnglishTable[i] == c)
                 {
                     return (byte)i;
                 }
-
-                //if (eng[i] == s)
-                //{
-                //    return (byte)i;
-                //}
+                else if (JapaneseTable[i] == c)
+                {
+                    return (byte)i;
+                }
             }
             return 0;
         }
-
-        private static string[] ExplodeString(string s)
-        {
-            List<string> exploded = new List<string>();
-            for (int i = 0; i < s.Length; i++)
-            {
-                char c = s[i];
-
-                if (c == '[')
-                {
-                    /*int end = s.IndexOf(']', i);
-                    if (end == -1) throw new Exception("Unterminated '[]' character!");*/
-
-                    // Find and build the []
-                    StringBuilder sb = new StringBuilder();
-                    int end = -1;
-                    for (int j = i; j < s.Length; j++)
-                    {
-                        sb.Append(s[j]);
-
-                        if (s[j] == ']')
-                        {
-                            end = j;
-                            break;
-                        }
-                    }
-
-                    if (end == -1) throw new Exception("Unterminated '[]' character!");
-
-                    //exploded.Add(s.Substring(i, end - i + 1));
-
-                    exploded.Add(sb.ToString());
-                    i = end;
-                }
-                else if (c == '\\')
-                {
-                    try
-                    {
-                        char e = s[i + 1];
-                        if (!validEscapes.Contains(e)) throw new Exception();
-
-                        if (e == 'h')
-                        {
-                            // copy next two characters
-                            string bbbbb = s.Substring(i + 2, 2);
-                            i += 2;
-
-                            // a raw test
-                            // will throw an exception if invalid
-                            int.Parse(bbbbb, System.Globalization.NumberStyles.HexNumber);
-
-                            exploded.Add("\\" + e + bbbbb);
-                        }
-                        else
-                        {
-                            exploded.Add("\\" + e);
-                        }
-
-                        i++;
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception("Invalid escape sequence!");
-                    }
-                }
-                else
-                {
-                    exploded.Add(c.ToString());
-                }
-            }
-
-            return exploded.ToArray();
-        }
-
-        public static int GetStringLength(string s)
-        {
-            try
-            {
-                return ExplodeString(s).Length;
-            }
-            catch (Exception ex)
-            {
-                return 0;
-            }
-        }
     }
 }
+

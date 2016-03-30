@@ -24,23 +24,6 @@ namespace HTE
 
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
-            // Limit Key presses
-            /*if (numberStyle == NumberStyles.Decimal)
-            {
-                if (char.IsDigit(e.KeyChar)) { }
-                else if (e.KeyChar == '\b') { }
-                else e.Handled = true;
-            }
-            else if (numberStyle == NumberStyles.Hexadecimal)
-            {
-                if (char.IsDigit(e.KeyChar)) { }
-                else if (e.KeyChar == '\b') { }
-                else if (e.KeyChar >= 'a' && e.KeyChar <= 'f') { }
-                else if (e.KeyChar >= 'A' && e.KeyChar <= 'F') { }
-                else if (e.KeyChar == 'x' && Text.StartsWith("0") && !Text.StartsWith("0x")/* && TextLength == 1*) { }
-                else e.Handled = true;
-            }*/
-
             base.OnKeyPress(e);
         }
 
@@ -49,14 +32,14 @@ namespace HTE
             uint? val = ThisToUInt32();
             if (val == null)
             {
-                this.BackColor = Color.PaleVioletRed;
+                BackColor = Color.PaleVioletRed;
             }
             else
             {
-                if (this.BackColor == Color.PaleVioletRed) this.BackColor = SystemColors.Window;
+                if (BackColor == Color.PaleVioletRed) BackColor = SystemColors.Window;
 
-                if ((uint)val < minValue) Value = minValue;
-                else if ((uint)val > maxValue) Value = maxValue;
+                if (val < minValue) Value = minValue;
+                else if (val > maxValue) Value = maxValue;
             }
 
             base.OnTextChanged(e);

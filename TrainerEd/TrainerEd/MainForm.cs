@@ -337,7 +337,7 @@ namespace HTE
             for (int i = 0; i < names.Length; i++)
             {
                 br.BaseStream.Seek(offset + (i * 0x28) + 4, SeekOrigin.Begin);
-                names[i] = TextTable.GetString(br.ReadBytes(12), true, TextTable.GBACharSet.English);
+                names[i] = TextTable.GetEnglishString(br.ReadBytes(12));
             }
             return names;
         }
@@ -371,7 +371,7 @@ namespace HTE
             trainer.Gender = (byte)((genderMusic & 128) >> 7);
             trainer.Music = (byte)(genderMusic & 127);
             trainer.Sprite = br.ReadByte();
-            trainer.Name = TextTable.GetString(br.ReadBytes(12));
+            trainer.Name = TextTable.GetEnglishString(br.ReadBytes(12));
             for (int i = 0; i < 4; i++) // If HasHeldItems == false, should all be 0
                 trainer.HeldItems[i] = br.ReadUInt16();
             trainer.DoubleBattle = (br.ReadByte() == 1);
@@ -424,7 +424,7 @@ namespace HTE
             br.BaseStream.Seek(offset, SeekOrigin.Begin);
             for (int i = 0; i < names.Length; i++)
             {
-                names[i] = TextTable.GetString(br.ReadBytes(13), true, TextTable.GBACharSet.English);
+                names[i] = TextTable.GetEnglishString(br.ReadBytes(13));
             }
             return names;
         }
@@ -440,7 +440,7 @@ namespace HTE
             br.BaseStream.Seek(offset, SeekOrigin.Begin);
             for (int i = 0; i < names.Length; i++)
             {
-                names[i] = TextTable.GetString(br.ReadBytes(13), true, TextTable.GBACharSet.English);
+                names[i] = TextTable.GetEnglishString(br.ReadBytes(13));
             }
             return names;
         }
@@ -457,7 +457,7 @@ namespace HTE
             br.BaseStream.Seek(offset, SeekOrigin.Begin);
             for (int i = 0; i < names.Length; i++)
             {
-                names[i] = TextTable.GetString(br.ReadBytes(11), true, TextTable.GBACharSet.English);
+                names[i] = TextTable.GetEnglishString(br.ReadBytes(11));
             }
             return names;
         }
@@ -474,7 +474,7 @@ namespace HTE
             for (int i = 0; i < names.Length; i++)
             {
                 br.BaseStream.Seek(offset + i * 44, SeekOrigin.Begin);
-                names[i] = TextTable.GetString(br.ReadBytes(14), true, TextTable.GBACharSet.English);
+                names[i] = TextTable.GetEnglishString(br.ReadBytes(14));
                 // there is other crap we disregard
             }
             return names;
@@ -626,7 +626,7 @@ namespace HTE
                 for (int i = 0; i < classNames.Length; i++)
                 {
                     // get bytes
-                    byte[] name = TextTable.GetBytes(classNames[i], 12, TextTable.GBACharSet.English);
+                    byte[] name = TextTable.GetBytes(classNames[i], CharacterEncoding.English);
 
                     // add terminator (if length == 12)
                     Array.Resize(ref name, 13);
@@ -690,7 +690,7 @@ namespace HTE
                 bw.Write((byte)((trainer.Gender * 0x80) + trainer.Music));
                 bw.Write(trainer.Sprite);
 
-                byte[] name = TextTable.GetBytes(trainer.Name, 11);
+                byte[] name = TextTable.GetBytes(trainer.Name, CharacterEncoding.English);
                 Array.Resize(ref name, 12);
                 name[11] = 0xFF;
                 bw.Write(name);
@@ -986,24 +986,34 @@ namespace HTE
 
             if (selectedTrainer == -1) return;
 
-            // set text
-            string actual = TextTable.GetString(TextTable.GetBytes(txtName.Text));
-            if (actual.Length > 0)
-                trainer.Name = actual;
+            // try to set the text
+            try
+            {
+                txtName.BackColor = SystemColors.Window;
+
+                string actual = TextTable.GetEnglishString(TextTable.GetEnglishBytes(txtName.Text));
+                if (actual.Length > 0)
+                    trainer.Name = actual;
+            }
+            catch (Exception ex)
+            {
+                txtName.BackColor = Color.PaleVioletRed;
+            }
+
         }
 
         private void txtName_KeyPress(object sender, KeyPressEventArgs e)
         {
             // check text length
             // stop names longer than 11 characters
-            if (TextTable.GetStringLength(txtName.Text) >= 11)
+            /*if (TextTable.GetEnglishBytes(txtName.Text).Length >= 11)
             {
                 if (e.KeyChar != '\b')
                 {
                     e.Handled = true;
                     System.Media.SystemSounds.Beep.Play();
                 }
-            }
+            }*/
         }
 
         private void nSprite_ValueChanged(object sender, EventArgs e)
@@ -1080,11 +1090,14 @@ namespace HTE
         private void bChangeClass_Click(object sender, EventArgs e)
         {
             qxy = true;
-            if (txtClass.TextLength > 0)
+            if (txtClass.TextLength == 0)
+                return;
+
+            try
             {
                 // get text as actual string
                 // takes care of pesky things like raw values
-                string actual = TextTable.GetString(TextTable.GetBytes(txtClass.Text));
+                string actual = TextTable.GetEnglishString(TextTable.GetEnglishBytes(txtClass.Text));
 
                 // set data
                 int id = cClass2.SelectedIndex;
@@ -1095,20 +1108,26 @@ namespace HTE
 
                 // save in rom
                 SaveClassNames();
+
+                txtClass.BackColor = SystemColors.Window;
+            }
+            catch
+            {
+                txtClass.BackColor = Color.PaleVioletRed;
             }
             qxy = false;
         }
 
         private void txtClass_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (TextTable.GetStringLength(txtClass.Text) >= 12)
+            /*if (TextTable.GetEnglishBytes(txtClass.Text).Length >= 12)
             {
                 if (e.KeyChar != '\b')
                 {
                     e.Handled = true;
                     System.Media.SystemSounds.Beep.Play();
                 }
-            }
+            }*/
         }
 
         private void txtMusic_TextChanged(object sender, EventArgs e)
@@ -1451,15 +1470,16 @@ namespace HTE
             }
             else
             {
-
                 e.Handled = e.SuppressKeyPress = true;
             }
             //MessageBox.Show("Search!");
 
             // search away
             // use the text table for enhanced searching
-            string search = TextTable.GetString(TextTable.GetBytes(txtFindName.Text));
-            if (search.Length == 0) return;
+            //string search = TextTable.GetEnglishString(TextTable.GetEnglishBytes(txtFindName.Text));
+            
+            if (txtFindName.TextLength == 0) return;
+            string search = txtFindName.Text.ToLower();
 
             // get starting position
             /*int start = 0;
@@ -1492,7 +1512,7 @@ namespace HTE
             }
             else
             {
-                MessageBox.Show(string.Format("A trainer with '{0}' in its name could not be found!\n(From the current spot onward!)", search));
+                MessageBox.Show(string.Format("A trainer with '{0}' in its name could not be found!\n(From the current spot onward!)", txtFindName.Text));
             }
         }
 

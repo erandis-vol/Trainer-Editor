@@ -26,7 +26,7 @@ namespace HTE.GBA
         { }
 
         public GBABinaryReader(ROM input)
-            : base(File.OpenRead(input.File))
+            : base(File.Open(input.File, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
         { }
 
         public uint ReadPointer()
@@ -35,6 +35,7 @@ namespace HTE.GBA
             uint data = base.ReadUInt32();
             // safety
             if (data < 0x08000000) throw new BadPointerException(data, base.BaseStream.Position - 4);
+
             // return
             return data - 0x08000000;
         }
@@ -158,105 +159,6 @@ namespace HTE.GBA
             return length;
         }
 
-        /*
-        public byte[] ReadLZ77CompressedBytes()
-        {
-            long StartOffset = base.BaseStream.Position;
-            byte[] data = ReadBytes(4);
-
-            long Offset = base.BaseStream.Position;
-
-            if (data[0] == 0x10)
-            {
-                uint dataLength = BitConverter.ToUInt32(new Byte[] { data[1], data[2], data[3], 0x0 }, 0);
-                data = new Byte[dataLength];
-
-                Offset += 4;
-
-                string watch = "";
-                int i = 0;
-                byte pos = 8;
-
-                while (i < dataLength)
-                {
-                    base.BaseStream.Seek(Offset, SeekOrigin.Begin);
-                    if (pos != 8)
-                    {
-                        if (watch[pos] == "0"[0])
-                        {
-                            data[i] = ReadByte();
-                        }
-                        else
-                        {
-                            byte[] r = ReadBytes(2);
-                            int length = r[0] >> 4;
-                            int start = ((r[0] - ((r[0] >> 4) << 4)) << 8) + r[1];
-                            AmmendArray(ref data, ref i, i - start - 1, length + 3);
-                            Offset++;
-                        }
-                        Offset++;
-                        i++;
-                        pos++;
-
-                    }
-                    else
-                    {
-                        watch = Convert.ToString(ReadByte(), 2);
-                        while (watch.Length != 8)
-                        {
-                            watch = "0" + watch;
-                        }
-                        Offset++;
-                        pos = 0;
-                    }
-                }
-                return data;
-            }
-            else
-            {
-                throw new Exception("This data is not LZ77 compressed!");
-            }
-        }
-
-        private void AmmendArray(ref byte[] Bytes, ref int Index, int Start, int Length)
-        {
-            int a = 0; // Act
-            int r = 0; // Rel
-
-            byte Backup = 0;
-
-            if (Index > 0)
-            {
-                Backup = Bytes[Index - 1];
-            }
-
-            while (a != Length)
-            {
-                if (Index + r >= 0 && Start + r >= 0 && Index + a < Bytes.Length)
-                {
-                    if (Start + r >= Index)
-                    {
-                        r = 0;
-                        Bytes[Index + a] = Bytes[Start + r];
-                    }
-                    else
-                    {
-                        Bytes[Index + a] = Bytes[Start + r];
-                        Backup = Bytes[Index + r];
-                    }
-                }
-                a++;
-                r++;
-            }
-
-            Index += Length - 1;
-        }
-
-        public uint ReadLZ77CompressedLength()
-        {
-
-        }*/
-
         #endregion
 
         #region Palettes
@@ -296,12 +198,17 @@ namespace HTE.GBA
             : base(output)
         { }
 
+        public GBABinaryWriter(ROM output)
+            : base(File.Open(output.File, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
+        { }
+
         public void WritePointer(uint offset)
         {
             // safety
-            if (offset >= 0x08000000) throw new BadPointerException(offset);
+            if (offset > 0x1FFFFF) throw new BadPointerException(offset);
+
             // write
-            base.Write((uint)(offset + 0x08000000));
+            base.Write(offset + 0x8000000);
         }
     }
 }
