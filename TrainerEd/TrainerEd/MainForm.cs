@@ -597,6 +597,8 @@ namespace HTE
                     {
                         br.BaseStream.Seek(3L, SeekOrigin.Current);
                     }
+
+                    // TODO: don't let this crash with bad data
                 }
                 return 0;
             }

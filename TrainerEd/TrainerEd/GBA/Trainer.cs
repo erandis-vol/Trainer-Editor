@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace HTE.GBA
 {
@@ -22,6 +19,7 @@ namespace HTE.GBA
         public uint PartyOffset;
         public List<Pokemon> Party;
 
+        // Create a blank trainer
         public Trainer()
         {
             Class = 0;
@@ -30,18 +28,13 @@ namespace HTE.GBA
             Sprite = 0;
             Name = "TRAINER";
             HasHeldItems = true;
-            HeldItems = new ushort[4];
-            HeldItems[0] = 0;
-            HeldItems[1] = 0;
-            HeldItems[2] = 0;
-            HeldItems[3] = 0;
+            HeldItems = new ushort[4] { 0, 0, 0, 0 };
             DoubleBattle = false;
             AI = 0;
 
             HasCustomAttacks = true;
             PartyOffset = 0;
             Party = new List<Pokemon>();
-            //Party.Add(new Pokemon());
         }
     }
 
@@ -58,11 +51,7 @@ namespace HTE.GBA
             Species = 0;
             Level = 0;
             HeldItem = 0;
-            Attacks = new ushort[4];
-            Attacks[0] = 0;
-            Attacks[1] = 0;
-            Attacks[2] = 0;
-            Attacks[3] = 0;
+            Attacks = new ushort[4] { 0, 0, 0, 0 };
         }
     }
 }

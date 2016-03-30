@@ -205,7 +205,7 @@ namespace HTE.GBA
         public void WritePointer(uint offset)
         {
             // safety
-            if (offset > 0x1FFFFF) throw new BadPointerException(offset);
+            if (offset > 0x8000000) throw new BadPointerException(offset);
 
             // write
             base.Write(offset + 0x8000000);

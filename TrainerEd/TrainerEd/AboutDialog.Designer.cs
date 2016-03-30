@@ -64,7 +64,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(145, 26);
             this.label3.TabIndex = 18;
-            this.label3.Text = "Version 0.9.1 (7/19/2015)\r\nCopyright (c) 2015 Lost Heart";
+            this.label3.Text = "Version 0.9.2 (3/30/2016)\r\nCopyright (c) 2015-2016 Lostelle";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // pictureBox1
