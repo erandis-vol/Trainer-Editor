@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -20,7 +21,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionOpen_triggered()
 {
-
+    QFileDialog::getOpenFileName(this, tr("Open ROM"), "", "GBA ROMs (*.gba *.bin)");
 }
 
 void MainWindow::on_actionSave_triggered()
