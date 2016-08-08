@@ -11,17 +11,21 @@ namespace HTE
 {
     public partial class MainForm : Form
     {
-        public ROM rom;
-        private IniFile ini;
+        // TODO: move these two to ROM class
+        FileSystemWatcher watcher;
+        string romFile = string.Empty;
 
-        private Trainer trainer;
-        private int selectedTrainer = -1, selectedParty = -1;
-        private string[] classNames;
-        private string[] pokemonNames;
-        private string[] trainerNames; // not used for editing
-        private Bitmap blankSprite = new Bitmap(64, 64);
+        ROM rom;
+        Settings roms;
 
-        private bool qxy = false;
+        Trainer[] trainers;
+        
+        int selectedTrainer = -1, selectedParty = -1;
+        string[] classNames;
+        string[] pokemonNames;
+        Bitmap blankSprite = new Bitmap(64, 64);
+
+        bool qxy = false;
 
         public MainForm()
         {
@@ -30,14 +34,9 @@ namespace HTE
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            rom = new ROM()
-            {
-                File = string.Empty
-            };
-
             try
             {
-                ini = new IniFile("ROMs.ini");
+                roms = Settings.FromFile("ROMs.ini", "ini");
             }
             catch (Exception ex)
             {
@@ -72,97 +71,121 @@ namespace HTE
 
             // do the initial loading
             qxy = true;
-            using (GBABinaryReader br = new GBABinaryReader(File.OpenRead(openFileDialog1.FileName)))
+
+            // load a new ROM file
+            var temp = new ROM(openFileDialog1.FileName);
+            var code = temp.Code;
+
+            // check for valid ROM types
+            //if (!ini.GetSections().Contains(temp.Code))
+            if (!roms.ContainsSection(code))
             {
-                // get rom code
-                br.BaseStream.Seek(0xA0, SeekOrigin.Begin);
-                string name = Encoding.UTF8.GetString(br.ReadBytes(12));
-                string code = Encoding.UTF8.GetString(br.ReadBytes(4));
+                MessageBox.Show($"{code} is not a recognized ROM!", "Uh-oh!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                if (!ini.GetSections().Contains(code))
+                // Disable form
+                if (romFile != string.Empty)
                 {
-                    MessageBox.Show(code + " is not a recognized ROM!", "Uh-oh!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    // Disable
-                    listTrainers.Items.Clear();
-                    lblROM.Text = "";
-                    groupBox2.Enabled = false;
-                    groupBox8.Enabled = false;
-                    exportToolStripMenuItem.Enabled = false;
-                    importToolStripMenuItem.Enabled = false;
-                    massExportToolStripMenuItem.Enabled = false;
-                    simpleRandomizeToolStripMenuItem.Enabled = false;
-                    saveToolStripMenuItem.Enabled = false;
-                    rom.File = string.Empty;
-                    return;
+                    goto fail;
                 }
-
-                // remember
-                rom.File = openFileDialog1.FileName;
-                rom.Code = code;
-                lblROM.Text = "ROM: " + name + "\nCode: " + code;
-
-                // begin
-                uint offset;
-                trainerNames = LoadTrainerNames(br, out offset);
-                lblROM.Text += "\nTrainer Data: 0x" + offset.ToString("X") + "\nTrainer Count: " + trainerNames.Length;
-                txtFindID.MaxValue = (uint)trainerNames.Length - 1;
-                groupBox8.Enabled = true;
-
-                listTrainers.Items.Clear();
-                for (int i = 0; i < trainerNames.Length; i++)
-                {
-                    ListViewItem item = new ListViewItem(i.ToString("X3"));
-                    item.SubItems.Add(trainerNames[i]);
-                    item.Tag = i;
-                    listTrainers.Items.Add(item);
-                }
-
-                classNames = LoadClassNames(br);
-                cClass.Items.Clear(); cClass2.Items.Clear();
-                for (int i = 0; i < Convert.ToInt32(ini[rom.Code, "NumberOfClassNames"]); i++)
-                {
-                    cClass.Items.Add(i.ToString("X2"));
-                    cClass2.Items.Add(classNames[i]);
-                }
-
-                nSprite.Maximum = Convert.ToInt32(ini[rom.Code, "NumberOfTrainerSprites"]);
-
-                string[] items = LoadItemNames(br);
-                cItem1.Items.Clear();
-                cItem2.Items.Clear();
-                cItem3.Items.Clear();
-                cItem4.Items.Clear();
-                cHeld.Items.Clear();
-                cItem1.Items.AddRange(items);
-                cItem2.Items.AddRange(items);
-                cItem3.Items.AddRange(items);
-                cItem4.Items.AddRange(items);
-                cHeld.Items.AddRange(items);
-
-                string[] attacks = LoadAttackNames(br);
-                cAtk1.Items.Clear();
-                cAtk2.Items.Clear();
-                cAtk3.Items.Clear();
-                cAtk4.Items.Clear();
-                cAtk1.Items.AddRange(attacks);
-                cAtk2.Items.AddRange(attacks);
-                cAtk3.Items.AddRange(attacks);
-                cAtk4.Items.AddRange(attacks);
-
-                pokemonNames = LoadPokemonNames(br);
-                cSpecies.Items.Clear(); cSpeciesN.Items.Clear();
-                //cSpecies.Items.AddRange(pokemonNames);
-                for (int i = 0; i < pokemonNames.Length; i++)
-                {
-                    cSpeciesN.Items.Add(i.ToString("X2"));
-                    cSpecies.Items.Add(pokemonNames[i]);
-                }
+                return;
             }
+
+            // valid ROM loaded, begin working with this one
+            romFile = openFileDialog1.FileName;
+            watcher = new FileSystemWatcher(Path.GetDirectoryName(romFile), $"*.{Path.GetExtension(romFile)}");
+            rom = temp;
+
+            // next, load file data
+
+            // 1. load all Trainer data
+            rom.Seek(roms.GetInt32(code, "TrainerData"));   // read pointer to trainer data
+            int firstTrainer = rom.ReadPointer();
+
+            int trainerCount = roms.GetInt32(code, "NumberOfTrainers"); // number of trainers from ini
+            trainers = new Trainer[trainerCount];
+
+            for (int i = 0; i < trainerCount; i++)
+                trainers[i] = rom.ReadTrainer();
+
+            // set a few properties for trainers
+            txtFindID.MaxValue = (uint)trainerCount - 1;
+            groupBox8.Enabled = true;
+
+            listTrainers.Items.Clear(); // populate listview with trainer names
+            for (int i = 0; i < trainerCount; i++)
+            {
+                ListViewItem item = new ListViewItem(i.ToString("X3"));
+                item.SubItems.Add(trainers[i].Name);
+                item.Tag = i;
+                listTrainers.Items.Add(item);
+            }
+
+            // 2 . load trainer classses
+            int classCount = roms.GetInt32(code, "NumberOfClassNames");
+            rom.Seek(roms.GetInt32(code, "ClassNames"));
+            rom.Seek(rom.ReadPointer());
+            classNames = rom.ReadTextTable(13, classCount);
+
+            cClass.Items.Clear(); cClass2.Items.Clear();
+            for (int i = 0; i < classCount; i++)
+            {
+                cClass.Items.Add(i.ToString("X2"));
+                cClass2.Items.Add(classNames[i]);
+            }
+
+            // this:
+            nSprite.Maximum = roms.GetInt32(code, "NumberOfTrainerSprites");
+
+            // 3. load item names
+            string[] items = LoadItemNames(br);
+            cItem1.Items.Clear();
+            cItem2.Items.Clear();
+            cItem3.Items.Clear();
+            cItem4.Items.Clear();
+            cHeld.Items.Clear();
+            cItem1.Items.AddRange(items);
+            cItem2.Items.AddRange(items);
+            cItem3.Items.AddRange(items);
+            cItem4.Items.AddRange(items);
+            cHeld.Items.AddRange(items);
+
+            string[] attacks = LoadAttackNames(br);
+            cAtk1.Items.Clear();
+            cAtk2.Items.Clear();
+            cAtk3.Items.Clear();
+            cAtk4.Items.Clear();
+            cAtk1.Items.AddRange(attacks);
+            cAtk2.Items.AddRange(attacks);
+            cAtk3.Items.AddRange(attacks);
+            cAtk4.Items.AddRange(attacks);
+
+            pokemonNames = LoadPokemonNames(br);
+            cSpecies.Items.Clear(); cSpeciesN.Items.Clear();
+            //cSpecies.Items.AddRange(pokemonNames);
+            for (int i = 0; i < pokemonNames.Length; i++)
+            {
+                cSpeciesN.Items.Add(i.ToString("X2"));
+                cSpecies.Items.Add(pokemonNames[i]);
+            }
+
 
             massExportToolStripMenuItem.Enabled = true;
             simpleRandomizeToolStripMenuItem.Enabled = true;
             qxy = false;
+
+            return;
+
+            // call at any point a failed loading happens
+            fail:
+            listTrainers.Items.Clear();
+            lblROM.Text = "";
+            groupBox2.Enabled = false;
+            groupBox8.Enabled = false;
+            exportToolStripMenuItem.Enabled = false;
+            importToolStripMenuItem.Enabled = false;
+            massExportToolStripMenuItem.Enabled = false;
+            simpleRandomizeToolStripMenuItem.Enabled = false;
+            saveToolStripMenuItem.Enabled = false;
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -322,24 +345,7 @@ namespace HTE
 
         #region Loading
 
-        private string[] LoadTrainerNames(GBABinaryReader br, out uint offset)
-        {
-            // setup
-            string[] names = new string[Convert.ToInt32(ini[rom.Code, "NumberOfTrainers"])];
-            br.BaseStream.Seek(Convert.ToUInt32(ini[rom.Code, "TrainerData"], 16), SeekOrigin.Begin);
-            offset = br.ReadPointer();
-
-            // begin
-            //br.BaseStream.Seek(offset, SeekOrigin.Begin);
-            //var charSet = (ini[rom.Code, "CharSet"] == "E" ? TextTable.GBACharSet.English : TextTable.GBACharSet.Japanese);
-            for (int i = 0; i < names.Length; i++)
-            {
-                br.BaseStream.Seek(offset + (i * 0x28) + 4, SeekOrigin.Begin);
-                names[i] = TextTable.GetEnglishString(br.ReadBytes(12));
-            }
-            return names;
-        }
-
+        /*
         private Trainer LoadTrainer(int id, GBABinaryReader br)
         {
             // setup
@@ -349,15 +355,6 @@ namespace HTE
             //this.Text = "itari's Trainer Editor -- " + id.ToString("000") + " @ 0x" + (offset + id * 40).ToString("X");
             groupBox2.Text = "Trainer 0x" + id.ToString("X") + " @ 0x" + (offset + id * 40).ToString("X");
             groupBox6.Text = "Pokémon";
-
-            /*
-            string formatV = ini[rom.Code, "TrainerDataFormat"];
-            //int format = ini[rom.Code, "TrainerDataFormat"] == "E" ? 0 : 1;
-            int format = 0;
-            if (formatV == "E") { }
-            else if (formatV == "J") format = 1;
-            else throw new Exception("Invalid data format!");
-            */
 
             // load trainer
             br.BaseStream.Seek(offset + id * 40, SeekOrigin.Begin);
@@ -409,23 +406,7 @@ namespace HTE
 
             // done
             return trainer;
-        }
-
-        private string[] LoadClassNames(GBABinaryReader br)
-        {
-            string[] names = new string[Convert.ToInt32(ini[rom.Code, "NumberOfClassNames"])];
-            br.BaseStream.Seek(Convert.ToUInt32(ini[rom.Code, "ClassNames"], 16), SeekOrigin.Begin);
-            uint offset = br.ReadPointer();
-
-            //var charSet = (ini[rom.Code, "CharSet"] == "E" ? TextTable.GBACharSet.English : TextTable.GBACharSet.Japanese);
-
-            br.BaseStream.Seek(offset, SeekOrigin.Begin);
-            for (int i = 0; i < names.Length; i++)
-            {
-                names[i] = TextTable.GetEnglishString(br.ReadBytes(13));
-            }
-            return names;
-        }
+        }*/
 
         private string[] LoadAttackNames(GBABinaryReader br)
         {
@@ -935,6 +916,7 @@ namespace HTE
 
         private void FillPrizeMoney()
         {
+            // TODO: this is clearly not it :')
             if (selectedTrainer > -1 && trainer.Party.Count > 0)
             {
                 int rate = 4 * trainer.Party[trainer.Party.Count - 1].Level;
@@ -1532,16 +1514,5 @@ namespace HTE
 
 
 
-    }
-
-    /*public enum ROMType
-    {
-        GB, GBC, GBA
-    }*/
-
-    public struct ROM
-    {
-        public string File;
-        public string Code;
     }
 }

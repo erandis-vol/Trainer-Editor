@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -112,14 +113,17 @@ namespace HTE.GBA
 
         public int ReadPointer()
         {
-            // Read pointer data
+            // read value
             var ptr = ReadInt32();
 
-            // A pointer must be between 0x0 and 0x1FFFFFF to be valid on the GBA
+            // return on blank pointer
+            if (ptr == 0) return 0;
+
+            // a pointer must be between 0x0 and 0x1FFFFFF to be valid on the GBA
             // ROM pointer format is OFFSET | 0x8000000, so 0x8000000 <= POINTER <= 0x9FFFFFF
             if (ptr < 0x8000000 || ptr > 0x9FFFFFF) throw new Exception(string.Format("Bad pointer at 0x{0:X6}", pos - 4));
 
-            // Easy way to extract
+            // easy way to extract
             return ptr & 0x1FFFFFF;
         }
 
@@ -238,6 +242,23 @@ namespace HTE.GBA
             }
             return pal;
         }
+
+        // read a GBA string
+        public string ReadText(int length, CharacterEncoding encoding = CharacterEncoding.English)
+        {
+            return TextTable.GetString(ReadBytes(length), encoding);
+        }
+
+        public string[] ReadTextTable(int stringLength, int tableSize, CharacterEncoding encoding = CharacterEncoding.English)
+        {
+            var table = new string[tableSize];
+            for (int i = 0; i < tableSize; i++)
+                table[i] = ReadText(stringLength, encoding);
+
+            return table;
+        }
+
+        
 
         #endregion
 
