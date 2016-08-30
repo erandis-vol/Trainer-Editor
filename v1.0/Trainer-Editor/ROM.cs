@@ -2,44 +2,75 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace HTE.GBA
+namespace Lost
 {
-    public class ROM
+    public class ROM : IDisposable
     {
         private byte[] buffer;
         private int pos = 0;
+        private string filePath;
+        private FileSystemWatcher fileWatcher;
+        private bool ignoreChange;
+
+        private bool disposed;
 
         public ROM(string filePath)
         {
-            if (!File.Exists(filePath))
+            try
             {
-                throw new FileNotFoundException("Could not find " + filePath + "!");
+                // read contents of file into buffer
+                using (var fs = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    buffer = new byte[fs.Length];
+                    fs.Read(buffer, 0, buffer.Length);
+                }
+
+                // create file watcher to monitor ROM being modified
+                fileWatcher = new FileSystemWatcher();
+                fileWatcher.Path = Path.GetDirectoryName(filePath);
+                fileWatcher.Filter = "*.gba";
+
+                fileWatcher.Changed += OnSourceFileChanged;
+                fileWatcher.Renamed += OnSourceFileRenamed;
+
+                fileWatcher.EnableRaisingEvents = true;
+            }
+            catch
+            {
+                throw new Exception($"Unable to open {filePath}!");
             }
 
-            // Read contents of file into buffer
-            // We have to do it this way so that we can interface with A-Map
-            using (var fs = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            {
-                buffer = new byte[fs.Length];
-                fs.Read(buffer, 0, buffer.Length);
-            }
+            this.filePath = filePath;
         }
 
         ~ROM()
         {
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            if (disposed) return;
+            disposed = true;
+
+            fileWatcher.Dispose();
             buffer = null;
         }
 
-        public void Save(string filePath)
+        public void Save()
         {
-            // Again, write using a filestream
-            // Using File.WriteAllBytes does not work with greedy programs like A-Map
+            if (string.IsNullOrEmpty(filePath)) return;
+
             using (var fs = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
             {
                 fs.Write(buffer, 0, buffer.Length);
             }
+
+            ignoreChange = true;
         }
 
         public void Seek(int offset)
@@ -74,9 +105,19 @@ namespace HTE.GBA
             return buffer[pos];
         }
 
+        public sbyte ReadSByte()
+        {
+            return (sbyte)ReadByte();
+        }
+
         public ushort ReadUInt16()
         {
             return (ushort)(buffer[pos++] | (buffer[pos++] << 8));
+        }
+
+        public ushort PeekUInt16()
+        {
+            return (ushort)(buffer[pos] | (buffer[pos + 1] << 8));
         }
 
         public int ReadInt32()
@@ -125,6 +166,35 @@ namespace HTE.GBA
 
             // easy way to extract
             return ptr & 0x1FFFFFF;
+        }
+
+        // read a GBA string
+        public string ReadText(CharacterEncoding encoding)
+        {
+            // read string until FF
+            var buffer = new List<byte>();
+            while (PeekByte() != 0xFF)
+            {
+                buffer.Add(ReadByte());
+            }
+            buffer.Add(ReadByte());
+
+            // convert to string
+            return TextTable.GetString(buffer.ToArray(), encoding);
+        }
+
+        public string ReadText(int length, CharacterEncoding encoding)
+        {
+            return TextTable.GetString(ReadBytes(length), encoding);
+        }
+
+        public string[] ReadTextTable(int stringLength, int tableSize, CharacterEncoding encoding)
+        {
+            var table = new string[tableSize];
+            for (int i = 0; i < tableSize; i++)
+                table[i] = ReadText(stringLength, encoding);
+
+            return table;
         }
 
         public byte[] ReadCompressedBytes()
@@ -243,23 +313,6 @@ namespace HTE.GBA
             return pal;
         }
 
-        // read a GBA string
-        public string ReadText(int length, CharacterEncoding encoding = CharacterEncoding.English)
-        {
-            return TextTable.GetString(ReadBytes(length), encoding);
-        }
-
-        public string[] ReadTextTable(int stringLength, int tableSize, CharacterEncoding encoding = CharacterEncoding.English)
-        {
-            var table = new string[tableSize];
-            for (int i = 0; i < tableSize; i++)
-                table[i] = ReadText(stringLength, encoding);
-
-            return table;
-        }
-
-        
-
         #endregion
 
         #region Write
@@ -267,6 +320,11 @@ namespace HTE.GBA
         public void WriteByte(byte value)
         {
             buffer[pos++] = value;
+        }
+
+        public void WriteSByte(sbyte value)
+        {
+            WriteByte((byte)value);
         }
 
         public void WriteUInt16(ushort value)
@@ -320,53 +378,35 @@ namespace HTE.GBA
             WriteInt32(offset | 0x8000000);
         }
 
-        // Write a UTF8 encoded string
         public void WriteString(string str)
         {
+            // utf8 encoded string
             WriteBytes(Encoding.UTF8.GetBytes(str));
         }
 
-        /*public void WriteCompressedBytes(byte[] buffer)
+        public void WriteText(string str, CharacterEncoding encoding)
         {
-            // Adapted from NSE 2.X by link12552
+            WriteBytes(TextTable.GetBytes(str, encoding));
+        }
 
-            // ensure proper data size
-            if (buffer.Length > 0xFFFFFF)
-                throw new Exception("Cannot compressed buffer longer than 0xFFFFFF bytes!");
+        public void WriteText(string str, int length, CharacterEncoding encoding)
+        {
+            // convert string
+            var buffer = TextTable.GetBytes(str, encoding);
 
-            var output = new List<byte>();
-            var preOutput = new List<byte>();
+            // ensure proper length
+            if (buffer.Length != length)
+                Array.Resize(ref buffer, length);
+            buffer[length - 1] = 0xFF;
 
-            // compressed data header
-            output.Add(0x10);                       // signature byte
-            output.Add((byte)buffer.Length);        // i24, decompressed length
-            output.Add((byte)(buffer.Length >> 8));
-            output.Add((byte)(buffer.Length >> 16));
+            WriteBytes(buffer);
+        }
 
-            // provide starting data for compression
-            preOutput.Add(buffer[0]);
-            preOutput.Add(buffer[1]);
-
-            int actualPos = 2; byte shortPos = 2;
-            byte flags = 0;
-
-            while (actualPos < buffer.Length)
-            {
-                if (shortPos >= 8)
-                {
-                    output.Add(flags);
-                    output.AddRange(preOutput);
-
-                    flags = 0;
-                    preOutput.Clear();
-                    shortPos = 0;
-                }
-                else
-                {
-                    
-                }
-            }
-        }*/
+        public void WriteTextTable(string[] table, int entryLength, CharacterEncoding encoding)
+        {
+            foreach (var str in table)
+                WriteText(str, entryLength, encoding);
+        }
 
         #endregion
 
@@ -401,6 +441,11 @@ namespace HTE.GBA
 
         #region Properties
 
+        public string FilePath
+        {
+            get { return filePath; }
+        }
+
         public int Length
         {
             get { return buffer.Length; }
@@ -409,8 +454,6 @@ namespace HTE.GBA
         public int Position
         {
             get { return pos; }
-
-            // User should use Seek!
             set
             {
                 pos = value;
@@ -431,6 +474,7 @@ namespace HTE.GBA
         }
 
         // ROM specific properties
+        // TODO: better to store these as existing strings
 
         public string Name
         {
@@ -458,5 +502,33 @@ namespace HTE.GBA
 
         #endregion
 
+        void OnSourceFileChanged(object sender, FileSystemEventArgs e)
+        {
+            if (e.FullPath == filePath)
+            {
+                if (ignoreChange)
+                {
+                    ignoreChange = false;
+                    return;
+                }
+
+                using (var fs = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    if (buffer.Length != fs.Length)
+                        buffer = new byte[fs.Length];
+
+                    fs.Read(buffer, 0, buffer.Length);
+                }
+            }
+        }
+
+        void OnSourceFileRenamed(object sender, RenamedEventArgs e)
+        {
+            if (e.OldFullPath == filePath)
+            {
+                filePath = e.FullPath;
+            }
+        }
     }
 }
+

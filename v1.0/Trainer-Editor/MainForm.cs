@@ -5,20 +5,21 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HTE
+namespace Lost
 {
-    public partial class AboutDialog : Form
+    public partial class MainForm : Form
     {
-        public AboutDialog()
+        public MainForm()
         {
             InitializeComponent();
         }
 
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            e.Graphics.DrawIcon(this.Icon, new Rectangle(0, 0, 32, 32));
+
         }
     }
 }

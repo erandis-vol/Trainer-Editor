@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
 
-namespace HTE
+namespace Lost
 {
     using Section = Dictionary<string, string>;
 
@@ -26,6 +25,15 @@ namespace HTE
             }
         }
 
+        public Settings(Settings parent, string[] sections)
+        {
+            foreach (var section in parent.sections.Keys)
+            {
+                if (sections.Contains(section))
+                    this.sections[section] = new Section(parent.sections[section]);
+            }
+        }
+
         public static Settings FromFile(string filePath, string format)
         {
             var settings = new Settings();
@@ -39,7 +47,7 @@ namespace HTE
                 case "xml":
                     settings.LoadXML(filePath);
                     break;
-                
+
                 default:
                     throw new NotSupportedException($"Settings format {format} is not supported!");
             }
@@ -182,11 +190,16 @@ namespace HTE
             return false;
         }
 
-        public int GetInt32(string section, string key)
+        public int GetInt32(string section, string key, int fromBase = 10)
         {
-            int i;
-            if (int.TryParse(GetString(section, key), out i)) return i;
-            return 0;
+            try
+            {
+                return Convert.ToInt32(GetString(section, key), fromBase);
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         public double GetDouble(string section, string key)
@@ -234,27 +247,18 @@ namespace HTE
 
         public bool ContainsKey(string section, string key)
         {
-            if (sections.ContainsKey(section))
-                return sections.ContainsKey(key);
+            if (ContainsSection(section))
+                return sections[section].ContainsKey(key);
 
             return false;
         }
 
-#if DEBUG
-        public override string ToString()
+        public Section GetSection(string section)
         {
-            var writer = new StringBuilder();
-            foreach (var section in sections.Keys)
-            {
-                writer.AppendFormat("{0}:\n", section);
-                foreach (var entry in sections[section].Keys)
-                {
-                    writer.AppendFormat("\t{0}={1}\n", entry, sections[section][entry]);
-                }
-                writer.AppendLine();
-            }
-            return writer.ToString();
+            if (sections.ContainsKey(section))
+                return sections[section];
+
+            return null;
         }
-#endif
     }
 }

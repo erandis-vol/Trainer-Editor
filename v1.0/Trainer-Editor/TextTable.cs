@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
+using System.Text;
 
-namespace HTE.GBA
+namespace Lost
 {
     public enum CharacterEncoding
     {
@@ -12,7 +12,6 @@ namespace HTE.GBA
 
     public static class TextTable
     {
-        // Everything you need to know:
         // http://bulbapedia.bulbagarden.net/wiki/Character_encoding_in_Generation_III
 
         public static readonly string[] EnglishTable = {
@@ -27,7 +26,7 @@ namespace HTE.GBA
             "ィ", "ゥ", "ェ", "ォ", "ャ", "ュ", "ョ", "ガ", "ギ", "グ", "ゲ", "ゴ", "ザ", "ジ", "ズ", "ゼ",
             "ゾ", "ダ", "ヂ", "ヅ", "デ", "ド", "バ", "ビ", "ブ", "ベ", "ボ", "パ", "ピ", "プ", "ペ", "ポ",
             "ッ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "?", ".", "-", "[.]",
-            "[...]", "[\"]", "\"", "[']", "'", "[m]", "[f]", "$", ",", "*", "/", "A", "B", "C", "D", "E",
+            "[...]", "[\"]", "\"", "[']", "'", "[m]", "[f]", "$", ",", "×", "/", "A", "B", "C", "D", "E",
             "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
             "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
             "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "[>]",
@@ -35,36 +34,25 @@ namespace HTE.GBA
         };
 
         public static readonly string[] JapaneseTable = {
-			//  0   1   2   3   4   5   6   7   8   9   a   b   c   d   e   f
-			" ", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "", "", "\\l", "\\p", "\\c", "\\v", "\\n", "\\x",
+            " ", "あ", "い", "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ",
+            "た", "ち", "つ", "て", "と", "な", "に", "ぬ", "ね", "の", "は", "ひ", "ふ", "へ", "ほ", "ま",
+            "み", "む", "め", "も", "や", "ゆ", "よ", "ら", "り", "る", "れ", "ろ", "わ", "を", "ん", "ぁ",
+            "ぃ", "ぅ", "ぇ", "ぉ", "ゃ", "ゅ", "ょ", "が", "ぎ", "ぐ", "げ", "ご", "ざ", "じ", "ず", "ぜ",
+            "ぞ", "だ", "ぢ", "づ", "で", "ど", "ば", "び", "ぶ", "べ", "ぼ", "ぱ", "ぴ", "ぷ", "ぺ", "ぽ",
+            "っ", "ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ", "サ", "シ", "ス	", "セ", "ソ",
+            "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "ヒ", "フ", "ヘ", "ホ", "マ",
+            "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ", "ワ", "ヲ", "ン", "ァ",
+            "ィ", "ゥ", "ェ", "ォ", "ャ", "ュ", "ョ", "ガ", "ギ", "グ", "ゲ", "ゴ", "ザ", "ジ", "ズ", "ゼ",
+            "ゾ", "ダ", "ヂ", "ヅ", "デ", "ド", "バ", "ビ", "ブ", "ベ", "ボ", "パ", "ピ", "プ", "ペ", "ポ",
+            "ッ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "！", "？", "。", "ー", "・",
+            "[・・]", "『", "』", "「", "」", "[m]", "[f]", "円", ".", "×", "/", "A", "B", "C", "D", "E",
+            "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
+            "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+            "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "[>]",
+            ":", "Ä", "Ö", "Ü", "ä", "ö", "ü", "[^]", "[v]", "[<]", "\\l", "\\p", "\\c", "\\v", "\\n", "\\x",
         };
 
-        public static string GetEnglishString(byte[] bytes)
-        {
-            return GetString(bytes, CharacterEncoding.English);
-        }
-
-        public static string GetJapaneseString(byte[] bytes)
-        {
-            return GetString(bytes, CharacterEncoding.Japanese);
-        }
-
-        public static string GetString(byte[] bytes, CharacterEncoding encoding)
+        public static string GetString(byte[] bytes, CharacterEncoding encoding = CharacterEncoding.English)
         {
             var sb = new StringBuilder();
             for (int i = 0; i < bytes.Length; i++)
@@ -116,7 +104,8 @@ namespace HTE.GBA
                             {
                                 sb.Append("[small]");
                             }
-                            else {
+                            else
+                            {
                                 sb.Append("[normal]");
                             }
                             break;
@@ -216,36 +205,23 @@ namespace HTE.GBA
                     // terminate string
                     break;
                 }
-                else {
+                else
+                {
                     // add character from japanese or english table
-                    sb.Append(encoding == CharacterEncoding.Japanese ? JapaneseTable[b] : EnglishTable[b]);
+                    //sb.Append(encoding == CharacterEncoding.Japanese ? JapaneseTable[b] : EnglishTable[b]);
+                    sb.Append(GetCharacter(b, encoding));
                 }
             }
 
             return sb.ToString();
         }
 
-        public static string GetEnglishCharacter(byte b)
-        {
-            return EnglishTable[b];
-        }
-
-        public static string GetJapaneseCharacter(byte b)
-        {
-            return JapaneseTable[b];
-        }
-
-        public static string GetCharacter(byte b, CharacterEncoding encoding)
+        public static string GetCharacter(byte b, CharacterEncoding encoding = CharacterEncoding.English)
         {
             return encoding == CharacterEncoding.Japanese ? JapaneseTable[b] : EnglishTable[b];
         }
 
-        public static byte[] GetEnglishBytes(string str)
-        {
-            return GetBytes(str, CharacterEncoding.English);
-        }
-
-        public static byte[] GetBytes(string str, CharacterEncoding encoding)
+        public static byte[] GetBytes(string str, CharacterEncoding encoding = CharacterEncoding.English)
         {
             // ignore an empty string
             if (str.Length == 0)
@@ -362,7 +338,7 @@ namespace HTE.GBA
                             break;
                     }
                 }
-                else if (ch.StartsWith("\\h"))
+                else if (ch == "\\h")
                 {
                     // hex value
                     // TODO: safe checking
@@ -381,7 +357,7 @@ namespace HTE.GBA
             return buffer.ToArray();
         }
 
-        public static byte GetByte(string c, CharacterEncoding encoding)
+        public static byte GetByte(string c, CharacterEncoding encoding = CharacterEncoding.English)
         {
             for (int i = 0; i <= 255; i++)
             {
@@ -398,4 +374,3 @@ namespace HTE.GBA
         }
     }
 }
-

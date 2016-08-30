@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Hopeless Trainer Editor")]
-[assembly: AssemblyDescription("Hopeless Trainer Editor")]
+[assembly: AssemblyTitle("Trainer Editor")]
+[assembly: AssemblyDescription("Trainer Editor")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Lost")]
-[assembly: AssemblyProduct("Hopeless Trainer Editor")]
+[assembly: AssemblyProduct("Trainer Editor")]
 [assembly: AssemblyCopyright("Copyright © Lost 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6527f77f-56df-4259-998d-57c324be79a1")]
+[assembly: Guid("d511f97b-8cc5-4608-ad34-461e3d3b6e38")]
 
 // Version information for an assembly consists of the following four values:
 //
