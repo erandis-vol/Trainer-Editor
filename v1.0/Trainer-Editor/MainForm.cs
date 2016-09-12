@@ -16,13 +16,23 @@ namespace Lost
         ROM rom;
         Settings romInfo;
 
-        PictureBox[] partyPictureBoxes;//= new PictureBox[6] { p1, p2, p3, p4, p5, p6 };
+        Bitmap invisible = new Bitmap(64, 64);
+        PictureBox[] partyPictureBoxes;
 
         public MainForm()
         {
             InitializeComponent();
 
             partyPictureBoxes = new PictureBox[6] { p1, p2, p3, p4, p5, p6 };
+            using (var g = Graphics.FromImage(invisible))
+                g.Clear(Color.Pink);
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+
+            invisible.Dispose();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -42,7 +52,7 @@ namespace Lost
             listTrainers.Items.Clear();
             for (int i = 0; i < trainerCount; i++)
             {
-                var item = new ListViewItem($"{i:D3}");
+                var item = new ListViewItem($"{i:X3}");
                 item.SubItems.Add(names[i]);
                 listTrainers.Items.Add(item);
             }
@@ -61,6 +71,18 @@ namespace Lost
 
             cHeld.Items.Clear();
             cHeld.Items.AddRange(items);
+
+            cSpecies.Items.Clear();
+            cSpecies.Items.AddRange(pokemon);
+
+            cAttack1.Items.Clear();
+            cAttack1.Items.AddRange(attacks);
+            cAttack2.Items.Clear();
+            cAttack2.Items.AddRange(attacks);
+            cAttack3.Items.Clear();
+            cAttack3.Items.AddRange(attacks);
+            cAttack4.Items.Clear();
+            cAttack4.Items.AddRange(attacks);
         }
 
         private void listTrainers_SelectedIndexChanged(object sender, EventArgs e)
@@ -71,17 +93,53 @@ namespace Lost
 
             if (index == -1) return;
 
+            // ------------------------------
             LoadTrainer(index);
+            for (int i = 0; i < 6; i++)
+            {
+                var sprite = invisible;
+                if (i < trainer.Party.Count)
+                {
+                    var data = LoadFrontSprite(trainer.Party[i].Species);
 
+
+                }
+                partyPictureBoxes[i].Image = sprite;
+            }
+
+            // ------------------------------
             txtName.Text = trainer.Name;
             rMale.Checked = trainer.Gender == 0;
             rFemale.Checked = trainer.Gender == 1;
             nSprite.Value = trainer.Sprite;
+
             cClass.SelectedIndex = trainer.Class;
+            txtClass.Text = classes[trainer.Class];
+
             cItem1.SelectedIndex = trainer.Items[0];
             cItem2.SelectedIndex = trainer.Items[1];
             cItem3.SelectedIndex = trainer.Items[2];
             cItem4.SelectedIndex = trainer.Items[3];
+
+            listParty.Items.Clear();
+            var p = 0;
+            foreach (var pk in trainer.Party)
+            {
+                var i = new ListViewItem((p++).ToString());
+                i.SubItems.Add(pokemon[pk.Species]);
+
+                listParty.Items.Add(i);
+            }
+
+            txtSpecies.Value = 0;
+            txtLevel.Value = 0;
+            txtEVs.Value = 0;
+            cSpecies.SelectedIndex = 0;
+            cHeld.SelectedIndex = 0;
+            cAttack1.SelectedIndex = 0;
+            cAttack2.SelectedIndex = 0;
+            cAttack3.SelectedIndex = 0;
+            cAttack4.SelectedIndex = 0;
         }
 
         bool OpenROM(string filename)
@@ -140,6 +198,8 @@ namespace Lost
             LoadPokemonNames();
             LoadAttacks();
             LoadItems();
+
+            txtSpecies.MaximumValue = pokemonCount;
         }
     }
 }

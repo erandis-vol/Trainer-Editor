@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,35 @@ namespace Lost
             {
                 rom.Seek(firstItem + i * 44);
                 items[i] = rom.ReadText(14, CharacterEncoding.English);
+            }
+        }
+
+        Tuple<byte[], Color[]> LoadFrontSprite(int id)
+        {
+            try
+            {
+                // ------------------------------
+                // read compressed sprite
+                rom.Seek(romInfo.GetInt32("pokemon_sprites", "FrontData", 16) + id * 8);
+                var spriteOffset = rom.ReadPointer();
+
+                rom.Seek(spriteOffset);
+                var sprite = rom.ReadCompressedBytes();
+
+                // ------------------------------
+                // read compressed palette
+                rom.Seek(romInfo.GetInt32("pokemon_sprites", "RegularPalettes", 16) + id * 8);
+                var paletteOffset = rom.ReadPointer();
+
+                rom.Seek(paletteOffset);
+                var palette = rom.ReadCompressedPalette();
+
+                // ------------------------------
+                return new Tuple<byte[], Color[]>(sprite, palette);
+            }
+            catch
+            {
+                return null;
             }
         }
     }

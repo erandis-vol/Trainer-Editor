@@ -37,7 +37,6 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpTrainer = new System.Windows.Forms.GroupBox();
             this.grpSprite = new System.Windows.Forms.GroupBox();
-            this.nSprite = new System.Windows.Forms.NumericUpDown();
             this.pSprite = new System.Windows.Forms.PictureBox();
             this.rFemale = new System.Windows.Forms.RadioButton();
             this.rMale = new System.Windows.Forms.RadioButton();
@@ -54,32 +53,35 @@
             this.cItem4 = new System.Windows.Forms.ComboBox();
             this.cItem3 = new System.Windows.Forms.ComboBox();
             this.grpParty = new System.Windows.Forms.GroupBox();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listParty = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cSpecies = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cHeld = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cAttack1 = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.cAttack2 = new System.Windows.Forms.ComboBox();
+            this.cAttack3 = new System.Windows.Forms.ComboBox();
+            this.cAttack4 = new System.Windows.Forms.ComboBox();
             this.p1 = new System.Windows.Forms.PictureBox();
             this.p2 = new System.Windows.Forms.PictureBox();
             this.p3 = new System.Windows.Forms.PictureBox();
             this.p4 = new System.Windows.Forms.PictureBox();
             this.p5 = new System.Windows.Forms.PictureBox();
             this.p6 = new System.Windows.Forms.PictureBox();
+            this.nSprite = new System.Windows.Forms.NumericUpDown();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtSpecies = new Lost.HexBox();
+            this.txtEVs = new Lost.DecimalBox();
+            this.txtLevel = new Lost.DecimalBox();
             this.menuStrip1.SuspendLayout();
             this.grpTrainer.SuspendLayout();
             this.grpSprite.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nSprite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pSprite)).BeginInit();
             this.grpClass.SuspendLayout();
             this.grpItems.SuspendLayout();
@@ -90,12 +92,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.p4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.p5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.p6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nSprite)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.settingsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(608, 24);
@@ -105,7 +109,8 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem});
+            this.openToolStripMenuItem,
+            this.saveToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
@@ -182,18 +187,6 @@
             this.grpSprite.TabIndex = 6;
             this.grpSprite.TabStop = false;
             this.grpSprite.Text = "Sprite";
-            // 
-            // nSprite
-            // 
-            this.nSprite.Location = new System.Drawing.Point(6, 89);
-            this.nSprite.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.nSprite.Name = "nSprite";
-            this.nSprite.Size = new System.Drawing.Size(64, 20);
-            this.nSprite.TabIndex = 1;
             // 
             // pSprite
             // 
@@ -337,26 +330,27 @@
             // 
             // grpParty
             // 
+            this.grpParty.Controls.Add(this.txtSpecies);
+            this.grpParty.Controls.Add(this.txtEVs);
+            this.grpParty.Controls.Add(this.txtLevel);
             this.grpParty.Controls.Add(this.p6);
             this.grpParty.Controls.Add(this.p5);
             this.grpParty.Controls.Add(this.p4);
             this.grpParty.Controls.Add(this.p3);
             this.grpParty.Controls.Add(this.p2);
             this.grpParty.Controls.Add(this.p1);
-            this.grpParty.Controls.Add(this.comboBox5);
-            this.grpParty.Controls.Add(this.comboBox4);
-            this.grpParty.Controls.Add(this.comboBox3);
+            this.grpParty.Controls.Add(this.cAttack4);
+            this.grpParty.Controls.Add(this.cAttack3);
+            this.grpParty.Controls.Add(this.cAttack2);
             this.grpParty.Controls.Add(this.label7);
-            this.grpParty.Controls.Add(this.comboBox2);
+            this.grpParty.Controls.Add(this.cAttack1);
             this.grpParty.Controls.Add(this.label6);
             this.grpParty.Controls.Add(this.cHeld);
-            this.grpParty.Controls.Add(this.textBox2);
             this.grpParty.Controls.Add(this.label5);
-            this.grpParty.Controls.Add(this.textBox1);
             this.grpParty.Controls.Add(this.label4);
             this.grpParty.Controls.Add(this.label3);
             this.grpParty.Controls.Add(this.cSpecies);
-            this.grpParty.Controls.Add(this.listView1);
+            this.grpParty.Controls.Add(this.listParty);
             this.grpParty.Location = new System.Drawing.Point(6, 258);
             this.grpParty.Name = "grpParty";
             this.grpParty.Size = new System.Drawing.Size(425, 329);
@@ -364,22 +358,22 @@
             this.grpParty.TabStop = false;
             this.grpParty.Text = "Party";
             // 
-            // listView1
+            // listParty
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listParty.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listParty.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader3,
             this.columnHeader4});
-            this.listView1.FullRowSelect = true;
-            this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(6, 86);
-            this.listView1.MultiSelect = false;
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(240, 237);
-            this.listView1.TabIndex = 2;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listParty.FullRowSelect = true;
+            this.listParty.GridLines = true;
+            this.listParty.Location = new System.Drawing.Point(6, 86);
+            this.listParty.MultiSelect = false;
+            this.listParty.Name = "listParty";
+            this.listParty.Size = new System.Drawing.Size(240, 237);
+            this.listParty.TabIndex = 2;
+            this.listParty.UseCompatibleStateImageBehavior = false;
+            this.listParty.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader3
             // 
@@ -395,9 +389,9 @@
             // 
             this.cSpecies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cSpecies.FormattingEnabled = true;
-            this.cSpecies.Location = new System.Drawing.Point(251, 102);
+            this.cSpecies.Location = new System.Drawing.Point(306, 102);
             this.cSpecies.Name = "cSpecies";
-            this.cSpecies.Size = new System.Drawing.Size(168, 21);
+            this.cSpecies.Size = new System.Drawing.Size(113, 21);
             this.cSpecies.TabIndex = 3;
             // 
             // label3
@@ -420,27 +414,11 @@
             this.label4.TabIndex = 5;
             this.label4.Text = "Level:";
             // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(251, 142);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(47, 20);
-            this.textBox1.TabIndex = 6;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(304, 142);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(47, 20);
-            this.textBox2.TabIndex = 8;
-            // 
             // label5
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(301, 126);
+            this.label5.Location = new System.Drawing.Point(303, 126);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(29, 13);
             this.label5.TabIndex = 7;
@@ -465,14 +443,14 @@
             this.label6.TabIndex = 10;
             this.label6.Text = "Held Item:";
             // 
-            // comboBox2
+            // cAttack1
             // 
-            this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(251, 221);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(168, 21);
-            this.comboBox2.TabIndex = 11;
+            this.cAttack1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cAttack1.FormattingEnabled = true;
+            this.cAttack1.Location = new System.Drawing.Point(251, 221);
+            this.cAttack1.Name = "cAttack1";
+            this.cAttack1.Size = new System.Drawing.Size(168, 21);
+            this.cAttack1.TabIndex = 11;
             // 
             // label7
             // 
@@ -484,32 +462,32 @@
             this.label7.TabIndex = 12;
             this.label7.Text = "Attacks:";
             // 
-            // comboBox3
+            // cAttack2
             // 
-            this.comboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(251, 248);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(168, 21);
-            this.comboBox3.TabIndex = 13;
+            this.cAttack2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cAttack2.FormattingEnabled = true;
+            this.cAttack2.Location = new System.Drawing.Point(251, 248);
+            this.cAttack2.Name = "cAttack2";
+            this.cAttack2.Size = new System.Drawing.Size(168, 21);
+            this.cAttack2.TabIndex = 13;
             // 
-            // comboBox4
+            // cAttack3
             // 
-            this.comboBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(251, 275);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(168, 21);
-            this.comboBox4.TabIndex = 14;
+            this.cAttack3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cAttack3.FormattingEnabled = true;
+            this.cAttack3.Location = new System.Drawing.Point(251, 275);
+            this.cAttack3.Name = "cAttack3";
+            this.cAttack3.Size = new System.Drawing.Size(168, 21);
+            this.cAttack3.TabIndex = 14;
             // 
-            // comboBox5
+            // cAttack4
             // 
-            this.comboBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(251, 302);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(168, 21);
-            this.comboBox5.TabIndex = 15;
+            this.cAttack4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cAttack4.FormattingEnabled = true;
+            this.cAttack4.Location = new System.Drawing.Point(251, 302);
+            this.cAttack4.Name = "cAttack4";
+            this.cAttack4.Size = new System.Drawing.Size(168, 21);
+            this.cAttack4.TabIndex = 15;
             // 
             // p1
             // 
@@ -559,6 +537,64 @@
             this.p6.TabIndex = 21;
             this.p6.TabStop = false;
             // 
+            // nSprite
+            // 
+            this.nSprite.Location = new System.Drawing.Point(6, 89);
+            this.nSprite.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nSprite.Name = "nSprite";
+            this.nSprite.Size = new System.Drawing.Size(64, 20);
+            this.nSprite.TabIndex = 1;
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Text = "&Settings";
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Text = "&Save";
+            // 
+            // txtSpecies
+            // 
+            this.txtSpecies.Location = new System.Drawing.Point(252, 102);
+            this.txtSpecies.MaximumValue = 2147483646;
+            this.txtSpecies.MinimumValue = 0;
+            this.txtSpecies.Name = "txtSpecies";
+            this.txtSpecies.Size = new System.Drawing.Size(48, 20);
+            this.txtSpecies.TabIndex = 24;
+            this.txtSpecies.Text = "0";
+            this.txtSpecies.Value = 0;
+            // 
+            // txtEVs
+            // 
+            this.txtEVs.Location = new System.Drawing.Point(306, 142);
+            this.txtEVs.MaximumValue = 255;
+            this.txtEVs.MinimumValue = 0;
+            this.txtEVs.Name = "txtEVs";
+            this.txtEVs.Size = new System.Drawing.Size(48, 20);
+            this.txtEVs.TabIndex = 23;
+            this.txtEVs.Text = "0";
+            this.txtEVs.Value = 0;
+            // 
+            // txtLevel
+            // 
+            this.txtLevel.Location = new System.Drawing.Point(252, 142);
+            this.txtLevel.MaximumValue = 255;
+            this.txtLevel.MinimumValue = 0;
+            this.txtLevel.Name = "txtLevel";
+            this.txtLevel.Size = new System.Drawing.Size(48, 20);
+            this.txtLevel.TabIndex = 22;
+            this.txtLevel.Text = "0";
+            this.txtLevel.Value = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -578,7 +614,6 @@
             this.grpTrainer.ResumeLayout(false);
             this.grpTrainer.PerformLayout();
             this.grpSprite.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nSprite)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pSprite)).EndInit();
             this.grpClass.ResumeLayout(false);
             this.grpClass.PerformLayout();
@@ -591,6 +626,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.p4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.p5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.p6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nSprite)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -617,35 +653,38 @@
         private System.Windows.Forms.RadioButton rMale;
         private System.Windows.Forms.GroupBox grpSprite;
         private System.Windows.Forms.PictureBox pSprite;
-        private System.Windows.Forms.NumericUpDown nSprite;
         private System.Windows.Forms.GroupBox grpItems;
         private System.Windows.Forms.ComboBox cItem2;
         private System.Windows.Forms.ComboBox cItem1;
         private System.Windows.Forms.ComboBox cItem4;
         private System.Windows.Forms.ComboBox cItem3;
         private System.Windows.Forms.GroupBox grpParty;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listParty;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ComboBox cSpecies;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cHeld;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cAttack4;
+        private System.Windows.Forms.ComboBox cAttack3;
+        private System.Windows.Forms.ComboBox cAttack2;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cAttack1;
         private System.Windows.Forms.PictureBox p6;
         private System.Windows.Forms.PictureBox p5;
         private System.Windows.Forms.PictureBox p4;
         private System.Windows.Forms.PictureBox p3;
         private System.Windows.Forms.PictureBox p2;
         private System.Windows.Forms.PictureBox p1;
+        private DecimalBox txtEVs;
+        private DecimalBox txtLevel;
+        private System.Windows.Forms.NumericUpDown nSprite;
+        private HexBox txtSpecies;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
     }
 }
 

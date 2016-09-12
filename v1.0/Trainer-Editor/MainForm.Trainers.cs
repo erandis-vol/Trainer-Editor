@@ -61,8 +61,10 @@ namespace Lost
                     for (int j = 0; j < 4; j++)
                         p.Attacks[j] = rom.ReadUInt16();
 
-                if (trainer.HasHeldItems) // TODO: would be neat to edit this
+                if (!trainer.HasHeldItems) // TODO: would be neat to edit this
                     rom.Skip(2);
+
+                trainer.Party.Add(p);
             }
 
             trainer.OriginalPartySize = rom.Position - partyStart;
