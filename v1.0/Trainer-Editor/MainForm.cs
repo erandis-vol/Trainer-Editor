@@ -24,8 +24,6 @@ namespace Lost
             InitializeComponent();
 
             partyPictureBoxes = new PictureBox[6] { p1, p2, p3, p4, p5, p6 };
-            using (var g = Graphics.FromImage(invisible))
-                g.Clear(Color.Pink);
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -100,9 +98,7 @@ namespace Lost
                 var sprite = invisible;
                 if (i < trainer.Party.Count)
                 {
-                    var data = LoadFrontSprite(trainer.Party[i].Species);
-
-
+                    sprite = LoadFrontSprite(trainer.Party[i].Species);
                 }
                 partyPictureBoxes[i].Image = sprite;
             }
