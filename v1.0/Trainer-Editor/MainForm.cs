@@ -16,9 +16,13 @@ namespace Lost
         ROM rom;
         Settings romInfo;
 
+        PictureBox[] partyPictureBoxes;//= new PictureBox[6] { p1, p2, p3, p4, p5, p6 };
+
         public MainForm()
         {
             InitializeComponent();
+
+            partyPictureBoxes = new PictureBox[6] { p1, p2, p3, p4, p5, p6 };
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -42,6 +46,42 @@ namespace Lost
                 item.SubItems.Add(names[i]);
                 listTrainers.Items.Add(item);
             }
+
+            cClass.Items.Clear();
+            cClass.Items.AddRange(classes);
+
+            cItem1.Items.Clear();
+            cItem1.Items.AddRange(items);
+            cItem2.Items.Clear();
+            cItem2.Items.AddRange(items);
+            cItem3.Items.Clear();
+            cItem3.Items.AddRange(items);
+            cItem4.Items.Clear();
+            cItem4.Items.AddRange(items);
+
+            cHeld.Items.Clear();
+            cHeld.Items.AddRange(items);
+        }
+
+        private void listTrainers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var index = -1;
+            foreach (int x in listTrainers.SelectedIndices)
+                index = x;
+
+            if (index == -1) return;
+
+            LoadTrainer(index);
+
+            txtName.Text = trainer.Name;
+            rMale.Checked = trainer.Gender == 0;
+            rFemale.Checked = trainer.Gender == 1;
+            nSprite.Value = trainer.Sprite;
+            cClass.SelectedIndex = trainer.Class;
+            cItem1.SelectedIndex = trainer.Items[0];
+            cItem2.SelectedIndex = trainer.Items[1];
+            cItem3.SelectedIndex = trainer.Items[2];
+            cItem4.SelectedIndex = trainer.Items[3];
         }
 
         bool OpenROM(string filename)
@@ -87,18 +127,18 @@ namespace Lost
 
             // get limits from .ini
             pokemonCount = romInfo.GetInt32("pokemon", "Count");
-            typeCount = 17;
             itemCount = romInfo.GetInt32("items", "Count");
             attackCount = romInfo.GetInt32("attacks", "Count");
 
             trainerCount = romInfo.GetInt32("trainers", "Count");
+            classCount = romInfo.GetInt32("trainer_classes", "Count");
 
             // load all data needed
             LoadNames();
+            LoadClasses();
 
             LoadPokemonNames();
             LoadAttacks();
-            LoadTypes();
             LoadItems();
         }
     }
