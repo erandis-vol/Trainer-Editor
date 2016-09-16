@@ -61,7 +61,7 @@ namespace Lost
 
     public class Pokemon
     {
-        public ushort IVs;
+        public ushort EVs;
         public ushort Species;
         public ushort Level;
         public ushort HeldItem;

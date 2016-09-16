@@ -47,8 +47,6 @@ namespace Lost
 
         Bitmap LoadFrontSprite(int id)
         {
-            Console.WriteLine($"front sprite {id}");
-
             try
             {
                 // ------------------------------
@@ -59,8 +57,6 @@ namespace Lost
                 rom.Seek(spriteOffset);
                 var sprite = rom.ReadCompressedBytes();
 
-                Console.WriteLine($" - data {spriteOffset:X}, length {sprite.Length}");
-
                 // ------------------------------
                 // read compressed palette
                 rom.Seek(romInfo.GetInt32("pokemon_sprites", "RegularPalettes", 16) + id * 8);
@@ -68,8 +64,6 @@ namespace Lost
 
                 rom.Seek(paletteOffset);
                 var palette = rom.ReadCompressedPalette();
-
-                Console.WriteLine($" - palette {paletteOffset:X}, length {palette.Length}");
 
                 // ------------------------------
                 return Sprites.Draw16(sprite, 8, 8, palette, false);

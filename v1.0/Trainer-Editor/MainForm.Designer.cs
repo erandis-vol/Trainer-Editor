@@ -31,12 +31,45 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.repointAutomaticallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.listTrainers = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpTrainer = new System.Windows.Forms.GroupBox();
-            this.grpSprite = new System.Windows.Forms.GroupBox();
+            this.grpParty = new System.Windows.Forms.GroupBox();
+            this.p6 = new System.Windows.Forms.PictureBox();
+            this.p5 = new System.Windows.Forms.PictureBox();
+            this.p4 = new System.Windows.Forms.PictureBox();
+            this.p3 = new System.Windows.Forms.PictureBox();
+            this.p2 = new System.Windows.Forms.PictureBox();
+            this.p1 = new System.Windows.Forms.PictureBox();
+            this.cAttack4 = new System.Windows.Forms.ComboBox();
+            this.cAttack3 = new System.Windows.Forms.ComboBox();
+            this.cAttack2 = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cAttack1 = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cHeld = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cSpecies = new System.Windows.Forms.ComboBox();
+            this.listParty = new System.Windows.Forms.ListView();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.grpItems = new System.Windows.Forms.GroupBox();
+            this.cItem4 = new System.Windows.Forms.ComboBox();
+            this.cItem3 = new System.Windows.Forms.ComboBox();
+            this.cItem2 = new System.Windows.Forms.ComboBox();
+            this.cItem1 = new System.Windows.Forms.ComboBox();
+            this.grpBasics = new System.Windows.Forms.GroupBox();
+            this.nSprite = new System.Windows.Forms.NumericUpDown();
             this.pSprite = new System.Windows.Forms.PictureBox();
             this.rFemale = new System.Windows.Forms.RadioButton();
             this.rMale = new System.Windows.Forms.RadioButton();
@@ -44,55 +77,36 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.grpClass = new System.Windows.Forms.GroupBox();
-            this.bClassEdit = new System.Windows.Forms.Button();
             this.txtClass = new System.Windows.Forms.TextBox();
             this.cClass = new System.Windows.Forms.ComboBox();
-            this.grpItems = new System.Windows.Forms.GroupBox();
-            this.cItem1 = new System.Windows.Forms.ComboBox();
-            this.cItem2 = new System.Windows.Forms.ComboBox();
-            this.cItem4 = new System.Windows.Forms.ComboBox();
-            this.cItem3 = new System.Windows.Forms.ComboBox();
-            this.grpParty = new System.Windows.Forms.GroupBox();
-            this.listParty = new System.Windows.Forms.ListView();
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.cSpecies = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cHeld = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cAttack1 = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cAttack2 = new System.Windows.Forms.ComboBox();
-            this.cAttack3 = new System.Windows.Forms.ComboBox();
-            this.cAttack4 = new System.Windows.Forms.ComboBox();
-            this.p1 = new System.Windows.Forms.PictureBox();
-            this.p2 = new System.Windows.Forms.PictureBox();
-            this.p3 = new System.Windows.Forms.PictureBox();
-            this.p4 = new System.Windows.Forms.PictureBox();
-            this.p5 = new System.Windows.Forms.PictureBox();
-            this.p6 = new System.Windows.Forms.PictureBox();
-            this.nSprite = new System.Windows.Forms.NumericUpDown();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label8 = new System.Windows.Forms.Label();
+            this.grpOptions = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.chkDoubleBattle = new System.Windows.Forms.CheckBox();
+            this.chkHeldItems = new System.Windows.Forms.CheckBox();
+            this.chkMovesets = new System.Windows.Forms.CheckBox();
+            this.txtAI = new Lost.DecimalBox();
+            this.txtMusic = new Lost.DecimalBox();
             this.txtSpecies = new Lost.HexBox();
             this.txtEVs = new Lost.DecimalBox();
             this.txtLevel = new Lost.DecimalBox();
+            this.txtClassID = new Lost.HexBox();
             this.menuStrip1.SuspendLayout();
             this.grpTrainer.SuspendLayout();
-            this.grpSprite.SuspendLayout();
+            this.grpParty.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.p6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.p5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.p4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.p3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.p2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.p1)).BeginInit();
+            this.grpItems.SuspendLayout();
+            this.grpBasics.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nSprite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pSprite)).BeginInit();
             this.grpClass.SuspendLayout();
-            this.grpItems.SuspendLayout();
-            this.grpParty.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.p1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.p2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.p3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.p4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.p5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.p6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nSprite)).BeginInit();
+            this.grpOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -110,7 +124,9 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
-            this.saveToolStripMenuItem});
+            this.saveToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
@@ -123,6 +139,43 @@
             this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Text = "&Save";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Image = global::Lost.Properties.Resources.Close_16x;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.repointAutomaticallyToolStripMenuItem});
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Text = "&Settings";
+            // 
+            // repointAutomaticallyToolStripMenuItem
+            // 
+            this.repointAutomaticallyToolStripMenuItem.Checked = true;
+            this.repointAutomaticallyToolStripMenuItem.CheckOnClick = true;
+            this.repointAutomaticallyToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.repointAutomaticallyToolStripMenuItem.Name = "repointAutomaticallyToolStripMenuItem";
+            this.repointAutomaticallyToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.repointAutomaticallyToolStripMenuItem.Text = "&Repoint Automatically";
             // 
             // openFileDialog1
             // 
@@ -161,14 +214,10 @@
             this.grpTrainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpTrainer.Controls.Add(this.grpOptions);
             this.grpTrainer.Controls.Add(this.grpParty);
             this.grpTrainer.Controls.Add(this.grpItems);
-            this.grpTrainer.Controls.Add(this.grpSprite);
-            this.grpTrainer.Controls.Add(this.rFemale);
-            this.grpTrainer.Controls.Add(this.rMale);
-            this.grpTrainer.Controls.Add(this.label2);
-            this.grpTrainer.Controls.Add(this.txtName);
-            this.grpTrainer.Controls.Add(this.label1);
+            this.grpTrainer.Controls.Add(this.grpBasics);
             this.grpTrainer.Controls.Add(this.grpClass);
             this.grpTrainer.Location = new System.Drawing.Point(159, 27);
             this.grpTrainer.Name = "grpTrainer";
@@ -176,157 +225,6 @@
             this.grpTrainer.TabIndex = 2;
             this.grpTrainer.TabStop = false;
             this.grpTrainer.Text = "Trainer";
-            // 
-            // grpSprite
-            // 
-            this.grpSprite.Controls.Add(this.nSprite);
-            this.grpSprite.Controls.Add(this.pSprite);
-            this.grpSprite.Location = new System.Drawing.Point(6, 58);
-            this.grpSprite.Name = "grpSprite";
-            this.grpSprite.Size = new System.Drawing.Size(76, 115);
-            this.grpSprite.TabIndex = 6;
-            this.grpSprite.TabStop = false;
-            this.grpSprite.Text = "Sprite";
-            // 
-            // pSprite
-            // 
-            this.pSprite.Location = new System.Drawing.Point(6, 19);
-            this.pSprite.Name = "pSprite";
-            this.pSprite.Size = new System.Drawing.Size(64, 64);
-            this.pSprite.TabIndex = 0;
-            this.pSprite.TabStop = false;
-            // 
-            // rFemale
-            // 
-            this.rFemale.AutoSize = true;
-            this.rFemale.ForeColor = System.Drawing.Color.HotPink;
-            this.rFemale.Location = new System.Drawing.Point(215, 33);
-            this.rFemale.Name = "rFemale";
-            this.rFemale.Size = new System.Drawing.Size(59, 17);
-            this.rFemale.TabIndex = 5;
-            this.rFemale.Text = "Female";
-            this.rFemale.UseVisualStyleBackColor = true;
-            // 
-            // rMale
-            // 
-            this.rMale.AutoSize = true;
-            this.rMale.Checked = true;
-            this.rMale.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.rMale.Location = new System.Drawing.Point(161, 33);
-            this.rMale.Name = "rMale";
-            this.rMale.Size = new System.Drawing.Size(48, 17);
-            this.rMale.TabIndex = 4;
-            this.rMale.TabStop = true;
-            this.rMale.Text = "Male";
-            this.rMale.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(158, 16);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Gender:";
-            // 
-            // txtName
-            // 
-            this.txtName.Location = new System.Drawing.Point(6, 32);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(146, 20);
-            this.txtName.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Name:";
-            // 
-            // grpClass
-            // 
-            this.grpClass.Controls.Add(this.bClassEdit);
-            this.grpClass.Controls.Add(this.txtClass);
-            this.grpClass.Controls.Add(this.cClass);
-            this.grpClass.Location = new System.Drawing.Point(231, 56);
-            this.grpClass.Name = "grpClass";
-            this.grpClass.Size = new System.Drawing.Size(200, 72);
-            this.grpClass.TabIndex = 0;
-            this.grpClass.TabStop = false;
-            this.grpClass.Text = "Class";
-            // 
-            // bClassEdit
-            // 
-            this.bClassEdit.Image = global::Lost.Properties.Resources.Edit_16x;
-            this.bClassEdit.Location = new System.Drawing.Point(145, 44);
-            this.bClassEdit.Name = "bClassEdit";
-            this.bClassEdit.Size = new System.Drawing.Size(49, 23);
-            this.bClassEdit.TabIndex = 2;
-            this.bClassEdit.Text = "Edit";
-            this.bClassEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.bClassEdit.UseVisualStyleBackColor = true;
-            // 
-            // txtClass
-            // 
-            this.txtClass.Location = new System.Drawing.Point(6, 46);
-            this.txtClass.Name = "txtClass";
-            this.txtClass.Size = new System.Drawing.Size(133, 20);
-            this.txtClass.TabIndex = 1;
-            // 
-            // cClass
-            // 
-            this.cClass.FormattingEnabled = true;
-            this.cClass.Location = new System.Drawing.Point(6, 19);
-            this.cClass.Name = "cClass";
-            this.cClass.Size = new System.Drawing.Size(133, 21);
-            this.cClass.TabIndex = 0;
-            // 
-            // grpItems
-            // 
-            this.grpItems.Controls.Add(this.cItem4);
-            this.grpItems.Controls.Add(this.cItem3);
-            this.grpItems.Controls.Add(this.cItem2);
-            this.grpItems.Controls.Add(this.cItem1);
-            this.grpItems.Location = new System.Drawing.Point(40, 179);
-            this.grpItems.Name = "grpItems";
-            this.grpItems.Size = new System.Drawing.Size(354, 73);
-            this.grpItems.TabIndex = 7;
-            this.grpItems.TabStop = false;
-            this.grpItems.Text = "Items";
-            // 
-            // cItem1
-            // 
-            this.cItem1.FormattingEnabled = true;
-            this.cItem1.Location = new System.Drawing.Point(6, 19);
-            this.cItem1.Name = "cItem1";
-            this.cItem1.Size = new System.Drawing.Size(168, 21);
-            this.cItem1.TabIndex = 0;
-            // 
-            // cItem2
-            // 
-            this.cItem2.FormattingEnabled = true;
-            this.cItem2.Location = new System.Drawing.Point(180, 19);
-            this.cItem2.Name = "cItem2";
-            this.cItem2.Size = new System.Drawing.Size(168, 21);
-            this.cItem2.TabIndex = 1;
-            // 
-            // cItem4
-            // 
-            this.cItem4.FormattingEnabled = true;
-            this.cItem4.Location = new System.Drawing.Point(180, 46);
-            this.cItem4.Name = "cItem4";
-            this.cItem4.Size = new System.Drawing.Size(168, 21);
-            this.cItem4.TabIndex = 3;
-            // 
-            // cItem3
-            // 
-            this.cItem3.FormattingEnabled = true;
-            this.cItem3.Location = new System.Drawing.Point(6, 46);
-            this.cItem3.Name = "cItem3";
-            this.cItem3.Size = new System.Drawing.Size(168, 21);
-            this.cItem3.TabIndex = 2;
             // 
             // grpParty
             // 
@@ -351,106 +249,87 @@
             this.grpParty.Controls.Add(this.label3);
             this.grpParty.Controls.Add(this.cSpecies);
             this.grpParty.Controls.Add(this.listParty);
-            this.grpParty.Location = new System.Drawing.Point(6, 258);
+            this.grpParty.Location = new System.Drawing.Point(6, 273);
             this.grpParty.Name = "grpParty";
             this.grpParty.Size = new System.Drawing.Size(425, 329);
             this.grpParty.TabIndex = 8;
             this.grpParty.TabStop = false;
             this.grpParty.Text = "Party";
             // 
-            // listParty
+            // p6
             // 
-            this.listParty.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listParty.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3,
-            this.columnHeader4});
-            this.listParty.FullRowSelect = true;
-            this.listParty.GridLines = true;
-            this.listParty.Location = new System.Drawing.Point(6, 86);
-            this.listParty.MultiSelect = false;
-            this.listParty.Name = "listParty";
-            this.listParty.Size = new System.Drawing.Size(240, 237);
-            this.listParty.TabIndex = 2;
-            this.listParty.UseCompatibleStateImageBehavior = false;
-            this.listParty.View = System.Windows.Forms.View.Details;
+            this.p6.Location = new System.Drawing.Point(356, 19);
+            this.p6.Name = "p6";
+            this.p6.Size = new System.Drawing.Size(64, 64);
+            this.p6.TabIndex = 21;
+            this.p6.TabStop = false;
             // 
-            // columnHeader3
+            // p5
             // 
-            this.columnHeader3.Text = "#";
-            this.columnHeader3.Width = 24;
+            this.p5.Location = new System.Drawing.Point(286, 19);
+            this.p5.Name = "p5";
+            this.p5.Size = new System.Drawing.Size(64, 64);
+            this.p5.TabIndex = 20;
+            this.p5.TabStop = false;
             // 
-            // columnHeader4
+            // p4
             // 
-            this.columnHeader4.Text = "Species";
-            this.columnHeader4.Width = 80;
+            this.p4.Location = new System.Drawing.Point(216, 19);
+            this.p4.Name = "p4";
+            this.p4.Size = new System.Drawing.Size(64, 64);
+            this.p4.TabIndex = 19;
+            this.p4.TabStop = false;
             // 
-            // cSpecies
+            // p3
             // 
-            this.cSpecies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cSpecies.FormattingEnabled = true;
-            this.cSpecies.Location = new System.Drawing.Point(306, 102);
-            this.cSpecies.Name = "cSpecies";
-            this.cSpecies.Size = new System.Drawing.Size(113, 21);
-            this.cSpecies.TabIndex = 3;
+            this.p3.Location = new System.Drawing.Point(146, 19);
+            this.p3.Name = "p3";
+            this.p3.Size = new System.Drawing.Size(64, 64);
+            this.p3.TabIndex = 18;
+            this.p3.TabStop = false;
             // 
-            // label3
+            // p2
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(248, 86);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(48, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Species:";
+            this.p2.Location = new System.Drawing.Point(76, 19);
+            this.p2.Name = "p2";
+            this.p2.Size = new System.Drawing.Size(64, 64);
+            this.p2.TabIndex = 17;
+            this.p2.TabStop = false;
             // 
-            // label4
+            // p1
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(248, 126);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(36, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Level:";
+            this.p1.Location = new System.Drawing.Point(6, 19);
+            this.p1.Name = "p1";
+            this.p1.Size = new System.Drawing.Size(64, 64);
+            this.p1.TabIndex = 16;
+            this.p1.TabStop = false;
             // 
-            // label5
+            // cAttack4
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(303, 126);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 13);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "EVs:";
+            this.cAttack4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cAttack4.FormattingEnabled = true;
+            this.cAttack4.Location = new System.Drawing.Point(251, 302);
+            this.cAttack4.Name = "cAttack4";
+            this.cAttack4.Size = new System.Drawing.Size(168, 21);
+            this.cAttack4.TabIndex = 15;
             // 
-            // cHeld
+            // cAttack3
             // 
-            this.cHeld.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cHeld.FormattingEnabled = true;
-            this.cHeld.Location = new System.Drawing.Point(251, 181);
-            this.cHeld.Name = "cHeld";
-            this.cHeld.Size = new System.Drawing.Size(168, 21);
-            this.cHeld.TabIndex = 9;
+            this.cAttack3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cAttack3.FormattingEnabled = true;
+            this.cAttack3.Location = new System.Drawing.Point(251, 275);
+            this.cAttack3.Name = "cAttack3";
+            this.cAttack3.Size = new System.Drawing.Size(168, 21);
+            this.cAttack3.TabIndex = 14;
             // 
-            // label6
+            // cAttack2
             // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(248, 165);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(55, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Held Item:";
-            // 
-            // cAttack1
-            // 
-            this.cAttack1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cAttack1.FormattingEnabled = true;
-            this.cAttack1.Location = new System.Drawing.Point(251, 221);
-            this.cAttack1.Name = "cAttack1";
-            this.cAttack1.Size = new System.Drawing.Size(168, 21);
-            this.cAttack1.TabIndex = 11;
+            this.cAttack2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cAttack2.FormattingEnabled = true;
+            this.cAttack2.Location = new System.Drawing.Point(251, 248);
+            this.cAttack2.Name = "cAttack2";
+            this.cAttack2.Size = new System.Drawing.Size(168, 21);
+            this.cAttack2.TabIndex = 13;
             // 
             // label7
             // 
@@ -462,84 +341,172 @@
             this.label7.TabIndex = 12;
             this.label7.Text = "Attacks:";
             // 
-            // cAttack2
+            // cAttack1
             // 
-            this.cAttack2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cAttack2.FormattingEnabled = true;
-            this.cAttack2.Location = new System.Drawing.Point(251, 248);
-            this.cAttack2.Name = "cAttack2";
-            this.cAttack2.Size = new System.Drawing.Size(168, 21);
-            this.cAttack2.TabIndex = 13;
+            this.cAttack1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cAttack1.FormattingEnabled = true;
+            this.cAttack1.Location = new System.Drawing.Point(251, 221);
+            this.cAttack1.Name = "cAttack1";
+            this.cAttack1.Size = new System.Drawing.Size(168, 21);
+            this.cAttack1.TabIndex = 11;
             // 
-            // cAttack3
+            // label6
             // 
-            this.cAttack3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cAttack3.FormattingEnabled = true;
-            this.cAttack3.Location = new System.Drawing.Point(251, 275);
-            this.cAttack3.Name = "cAttack3";
-            this.cAttack3.Size = new System.Drawing.Size(168, 21);
-            this.cAttack3.TabIndex = 14;
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(248, 165);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(55, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Held Item:";
             // 
-            // cAttack4
+            // cHeld
             // 
-            this.cAttack4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cAttack4.FormattingEnabled = true;
-            this.cAttack4.Location = new System.Drawing.Point(251, 302);
-            this.cAttack4.Name = "cAttack4";
-            this.cAttack4.Size = new System.Drawing.Size(168, 21);
-            this.cAttack4.TabIndex = 15;
+            this.cHeld.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cHeld.FormattingEnabled = true;
+            this.cHeld.Location = new System.Drawing.Point(251, 181);
+            this.cHeld.Name = "cHeld";
+            this.cHeld.Size = new System.Drawing.Size(168, 21);
+            this.cHeld.TabIndex = 9;
             // 
-            // p1
+            // label5
             // 
-            this.p1.Location = new System.Drawing.Point(6, 19);
-            this.p1.Name = "p1";
-            this.p1.Size = new System.Drawing.Size(64, 64);
-            this.p1.TabIndex = 16;
-            this.p1.TabStop = false;
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(303, 126);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(29, 13);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "EVs:";
             // 
-            // p2
+            // label4
             // 
-            this.p2.Location = new System.Drawing.Point(76, 19);
-            this.p2.Name = "p2";
-            this.p2.Size = new System.Drawing.Size(64, 64);
-            this.p2.TabIndex = 17;
-            this.p2.TabStop = false;
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(248, 126);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(36, 13);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Level:";
             // 
-            // p3
+            // label3
             // 
-            this.p3.Location = new System.Drawing.Point(146, 19);
-            this.p3.Name = "p3";
-            this.p3.Size = new System.Drawing.Size(64, 64);
-            this.p3.TabIndex = 18;
-            this.p3.TabStop = false;
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(248, 86);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(48, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Species:";
             // 
-            // p4
+            // cSpecies
             // 
-            this.p4.Location = new System.Drawing.Point(216, 19);
-            this.p4.Name = "p4";
-            this.p4.Size = new System.Drawing.Size(64, 64);
-            this.p4.TabIndex = 19;
-            this.p4.TabStop = false;
+            this.cSpecies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cSpecies.FormattingEnabled = true;
+            this.cSpecies.Location = new System.Drawing.Point(306, 102);
+            this.cSpecies.Name = "cSpecies";
+            this.cSpecies.Size = new System.Drawing.Size(113, 21);
+            this.cSpecies.TabIndex = 3;
             // 
-            // p5
+            // listParty
             // 
-            this.p5.Location = new System.Drawing.Point(286, 19);
-            this.p5.Name = "p5";
-            this.p5.Size = new System.Drawing.Size(64, 64);
-            this.p5.TabIndex = 20;
-            this.p5.TabStop = false;
+            this.listParty.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listParty.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5});
+            this.listParty.FullRowSelect = true;
+            this.listParty.GridLines = true;
+            this.listParty.Location = new System.Drawing.Point(6, 86);
+            this.listParty.MultiSelect = false;
+            this.listParty.Name = "listParty";
+            this.listParty.Size = new System.Drawing.Size(240, 183);
+            this.listParty.TabIndex = 2;
+            this.listParty.UseCompatibleStateImageBehavior = false;
+            this.listParty.View = System.Windows.Forms.View.Details;
+            this.listParty.SelectedIndexChanged += new System.EventHandler(this.listParty_SelectedIndexChanged);
             // 
-            // p6
+            // columnHeader3
             // 
-            this.p6.Location = new System.Drawing.Point(356, 19);
-            this.p6.Name = "p6";
-            this.p6.Size = new System.Drawing.Size(64, 64);
-            this.p6.TabIndex = 21;
-            this.p6.TabStop = false;
+            this.columnHeader3.Text = "#";
+            this.columnHeader3.Width = 24;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Species";
+            this.columnHeader4.Width = 96;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Level";
+            this.columnHeader5.Width = 48;
+            // 
+            // grpItems
+            // 
+            this.grpItems.Controls.Add(this.cItem4);
+            this.grpItems.Controls.Add(this.cItem3);
+            this.grpItems.Controls.Add(this.cItem2);
+            this.grpItems.Controls.Add(this.cItem1);
+            this.grpItems.Location = new System.Drawing.Point(251, 19);
+            this.grpItems.Name = "grpItems";
+            this.grpItems.Size = new System.Drawing.Size(180, 127);
+            this.grpItems.TabIndex = 7;
+            this.grpItems.TabStop = false;
+            this.grpItems.Text = "Items";
+            // 
+            // cItem4
+            // 
+            this.cItem4.FormattingEnabled = true;
+            this.cItem4.Location = new System.Drawing.Point(6, 100);
+            this.cItem4.Name = "cItem4";
+            this.cItem4.Size = new System.Drawing.Size(168, 21);
+            this.cItem4.TabIndex = 3;
+            // 
+            // cItem3
+            // 
+            this.cItem3.FormattingEnabled = true;
+            this.cItem3.Location = new System.Drawing.Point(6, 73);
+            this.cItem3.Name = "cItem3";
+            this.cItem3.Size = new System.Drawing.Size(168, 21);
+            this.cItem3.TabIndex = 2;
+            // 
+            // cItem2
+            // 
+            this.cItem2.FormattingEnabled = true;
+            this.cItem2.Location = new System.Drawing.Point(6, 46);
+            this.cItem2.Name = "cItem2";
+            this.cItem2.Size = new System.Drawing.Size(168, 21);
+            this.cItem2.TabIndex = 1;
+            // 
+            // cItem1
+            // 
+            this.cItem1.FormattingEnabled = true;
+            this.cItem1.Location = new System.Drawing.Point(6, 19);
+            this.cItem1.Name = "cItem1";
+            this.cItem1.Size = new System.Drawing.Size(168, 21);
+            this.cItem1.TabIndex = 0;
+            // 
+            // grpBasics
+            // 
+            this.grpBasics.Controls.Add(this.label8);
+            this.grpBasics.Controls.Add(this.nSprite);
+            this.grpBasics.Controls.Add(this.pSprite);
+            this.grpBasics.Controls.Add(this.txtName);
+            this.grpBasics.Controls.Add(this.rFemale);
+            this.grpBasics.Controls.Add(this.label1);
+            this.grpBasics.Controls.Add(this.rMale);
+            this.grpBasics.Controls.Add(this.label2);
+            this.grpBasics.Location = new System.Drawing.Point(6, 19);
+            this.grpBasics.Name = "grpBasics";
+            this.grpBasics.Size = new System.Drawing.Size(239, 131);
+            this.grpBasics.TabIndex = 6;
+            this.grpBasics.TabStop = false;
+            this.grpBasics.Text = "Basics";
             // 
             // nSprite
             // 
-            this.nSprite.Location = new System.Drawing.Point(6, 89);
+            this.nSprite.Location = new System.Drawing.Point(6, 105);
             this.nSprite.Maximum = new decimal(new int[] {
             255,
             0,
@@ -549,18 +516,184 @@
             this.nSprite.Size = new System.Drawing.Size(64, 20);
             this.nSprite.TabIndex = 1;
             // 
-            // settingsToolStripMenuItem
+            // pSprite
             // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.settingsToolStripMenuItem.Text = "&Settings";
+            this.pSprite.Location = new System.Drawing.Point(6, 35);
+            this.pSprite.Name = "pSprite";
+            this.pSprite.Size = new System.Drawing.Size(64, 64);
+            this.pSprite.TabIndex = 0;
+            this.pSprite.TabStop = false;
             // 
-            // saveToolStripMenuItem
+            // rFemale
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.saveToolStripMenuItem.Text = "&Save";
+            this.rFemale.AutoSize = true;
+            this.rFemale.ForeColor = System.Drawing.Color.HotPink;
+            this.rFemale.Location = new System.Drawing.Point(130, 74);
+            this.rFemale.Name = "rFemale";
+            this.rFemale.Size = new System.Drawing.Size(59, 17);
+            this.rFemale.TabIndex = 5;
+            this.rFemale.Text = "Female";
+            this.rFemale.UseVisualStyleBackColor = true;
+            // 
+            // rMale
+            // 
+            this.rMale.AutoSize = true;
+            this.rMale.Checked = true;
+            this.rMale.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.rMale.Location = new System.Drawing.Point(76, 74);
+            this.rMale.Name = "rMale";
+            this.rMale.Size = new System.Drawing.Size(48, 17);
+            this.rMale.TabIndex = 4;
+            this.rMale.TabStop = true;
+            this.rMale.Text = "Male";
+            this.rMale.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(76, 58);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Gender:";
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(76, 35);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(146, 20);
+            this.txtName.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(76, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Name:";
+            // 
+            // grpClass
+            // 
+            this.grpClass.Controls.Add(this.txtClassID);
+            this.grpClass.Controls.Add(this.txtClass);
+            this.grpClass.Controls.Add(this.cClass);
+            this.grpClass.Location = new System.Drawing.Point(6, 156);
+            this.grpClass.Name = "grpClass";
+            this.grpClass.Size = new System.Drawing.Size(200, 72);
+            this.grpClass.TabIndex = 0;
+            this.grpClass.TabStop = false;
+            this.grpClass.Text = "Class";
+            // 
+            // txtClass
+            // 
+            this.txtClass.Location = new System.Drawing.Point(60, 46);
+            this.txtClass.Name = "txtClass";
+            this.txtClass.Size = new System.Drawing.Size(134, 20);
+            this.txtClass.TabIndex = 1;
+            // 
+            // cClass
+            // 
+            this.cClass.FormattingEnabled = true;
+            this.cClass.Location = new System.Drawing.Point(60, 19);
+            this.cClass.Name = "cClass";
+            this.cClass.Size = new System.Drawing.Size(134, 21);
+            this.cClass.TabIndex = 0;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 19);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(37, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "Sprite:";
+            // 
+            // grpOptions
+            // 
+            this.grpOptions.Controls.Add(this.chkMovesets);
+            this.grpOptions.Controls.Add(this.chkHeldItems);
+            this.grpOptions.Controls.Add(this.chkDoubleBattle);
+            this.grpOptions.Controls.Add(this.label10);
+            this.grpOptions.Controls.Add(this.txtAI);
+            this.grpOptions.Controls.Add(this.txtMusic);
+            this.grpOptions.Controls.Add(this.label9);
+            this.grpOptions.Location = new System.Drawing.Point(251, 152);
+            this.grpOptions.Name = "grpOptions";
+            this.grpOptions.Size = new System.Drawing.Size(180, 101);
+            this.grpOptions.TabIndex = 9;
+            this.grpOptions.TabStop = false;
+            this.grpOptions.Text = "Options";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(4, 16);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(43, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Theme:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 55);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(20, 13);
+            this.label10.TabIndex = 24;
+            this.label10.Text = "AI:";
+            // 
+            // chkDoubleBattle
+            // 
+            this.chkDoubleBattle.AutoSize = true;
+            this.chkDoubleBattle.Location = new System.Drawing.Point(60, 32);
+            this.chkDoubleBattle.Name = "chkDoubleBattle";
+            this.chkDoubleBattle.Size = new System.Drawing.Size(90, 17);
+            this.chkDoubleBattle.TabIndex = 25;
+            this.chkDoubleBattle.Text = "Double Battle";
+            this.chkDoubleBattle.UseVisualStyleBackColor = true;
+            // 
+            // chkHeldItems
+            // 
+            this.chkHeldItems.AutoSize = true;
+            this.chkHeldItems.Location = new System.Drawing.Point(60, 55);
+            this.chkHeldItems.Name = "chkHeldItems";
+            this.chkHeldItems.Size = new System.Drawing.Size(114, 17);
+            this.chkHeldItems.TabIndex = 26;
+            this.chkHeldItems.Text = "Custom Held Items";
+            this.chkHeldItems.UseVisualStyleBackColor = true;
+            // 
+            // chkMovesets
+            // 
+            this.chkMovesets.AutoSize = true;
+            this.chkMovesets.Location = new System.Drawing.Point(60, 78);
+            this.chkMovesets.Name = "chkMovesets";
+            this.chkMovesets.Size = new System.Drawing.Size(110, 17);
+            this.chkMovesets.TabIndex = 27;
+            this.chkMovesets.Text = "Custom Movesets";
+            this.chkMovesets.UseVisualStyleBackColor = true;
+            // 
+            // txtAI
+            // 
+            this.txtAI.Location = new System.Drawing.Point(6, 71);
+            this.txtAI.MaximumValue = 512;
+            this.txtAI.MinimumValue = 0;
+            this.txtAI.Name = "txtAI";
+            this.txtAI.Size = new System.Drawing.Size(48, 20);
+            this.txtAI.TabIndex = 23;
+            this.txtAI.Text = "0";
+            this.txtAI.Value = 0;
+            // 
+            // txtMusic
+            // 
+            this.txtMusic.Location = new System.Drawing.Point(6, 32);
+            this.txtMusic.MaximumValue = 255;
+            this.txtMusic.MinimumValue = 0;
+            this.txtMusic.Name = "txtMusic";
+            this.txtMusic.Size = new System.Drawing.Size(48, 20);
+            this.txtMusic.TabIndex = 23;
+            this.txtMusic.Text = "0";
+            this.txtMusic.Value = 0;
             // 
             // txtSpecies
             // 
@@ -595,6 +728,17 @@
             this.txtLevel.Text = "0";
             this.txtLevel.Value = 0;
             // 
+            // txtClassID
+            // 
+            this.txtClassID.Location = new System.Drawing.Point(6, 19);
+            this.txtClassID.MaximumValue = 2147483646;
+            this.txtClassID.MinimumValue = 0;
+            this.txtClassID.Name = "txtClassID";
+            this.txtClassID.Size = new System.Drawing.Size(48, 20);
+            this.txtClassID.TabIndex = 25;
+            this.txtClassID.Text = "0";
+            this.txtClassID.Value = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -612,21 +756,23 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.grpTrainer.ResumeLayout(false);
-            this.grpTrainer.PerformLayout();
-            this.grpSprite.ResumeLayout(false);
+            this.grpParty.ResumeLayout(false);
+            this.grpParty.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.p6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.p5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.p4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.p3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.p2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.p1)).EndInit();
+            this.grpItems.ResumeLayout(false);
+            this.grpBasics.ResumeLayout(false);
+            this.grpBasics.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nSprite)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pSprite)).EndInit();
             this.grpClass.ResumeLayout(false);
             this.grpClass.PerformLayout();
-            this.grpItems.ResumeLayout(false);
-            this.grpParty.ResumeLayout(false);
-            this.grpParty.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.p1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.p2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.p3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.p4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.p5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.p6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nSprite)).EndInit();
+            this.grpOptions.ResumeLayout(false);
+            this.grpOptions.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -645,13 +791,12 @@
         private System.Windows.Forms.GroupBox grpClass;
         private System.Windows.Forms.ComboBox cClass;
         private System.Windows.Forms.TextBox txtClass;
-        private System.Windows.Forms.Button bClassEdit;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RadioButton rFemale;
         private System.Windows.Forms.RadioButton rMale;
-        private System.Windows.Forms.GroupBox grpSprite;
+        private System.Windows.Forms.GroupBox grpBasics;
         private System.Windows.Forms.PictureBox pSprite;
         private System.Windows.Forms.GroupBox grpItems;
         private System.Windows.Forms.ComboBox cItem2;
@@ -685,6 +830,20 @@
         private HexBox txtSpecies;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ToolStripMenuItem repointAutomaticallyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.GroupBox grpOptions;
+        private System.Windows.Forms.Label label9;
+        private DecimalBox txtMusic;
+        private System.Windows.Forms.Label label10;
+        private DecimalBox txtAI;
+        private System.Windows.Forms.CheckBox chkMovesets;
+        private System.Windows.Forms.CheckBox chkHeldItems;
+        private System.Windows.Forms.CheckBox chkDoubleBattle;
+        private HexBox txtClassID;
     }
 }
 

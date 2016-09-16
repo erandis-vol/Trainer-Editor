@@ -57,6 +57,7 @@ namespace Lost
 
             cClass.Items.Clear();
             cClass.Items.AddRange(classes);
+            txtClassID.MaximumValue = classCount;
 
             cItem1.Items.Clear();
             cItem1.Items.AddRange(items);
@@ -81,6 +82,11 @@ namespace Lost
             cAttack3.Items.AddRange(attacks);
             cAttack4.Items.Clear();
             cAttack4.Items.AddRange(attacks);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void listTrainers_SelectedIndexChanged(object sender, EventArgs e)
@@ -110,6 +116,7 @@ namespace Lost
             nSprite.Value = trainer.Sprite;
 
             cClass.SelectedIndex = trainer.Class;
+            txtClassID.Value = trainer.Class;
             txtClass.Text = classes[trainer.Class];
 
             cItem1.SelectedIndex = trainer.Items[0];
@@ -117,12 +124,20 @@ namespace Lost
             cItem3.SelectedIndex = trainer.Items[2];
             cItem4.SelectedIndex = trainer.Items[3];
 
+            txtMusic.Value = trainer.Music;
+            txtAI.Value = (int)(trainer.AI & 0x1FF); // AI is the first 9 bits
+
+            chkDoubleBattle.Checked = trainer.DoubleBattle;
+            chkHeldItems.Checked = trainer.HasHeldItems;
+            chkMovesets.Checked = trainer.HasCustomAttacks;
+
             listParty.Items.Clear();
             var p = 0;
             foreach (var pk in trainer.Party)
             {
-                var i = new ListViewItem((p++).ToString());
+                var i = new ListViewItem((++p).ToString());
                 i.SubItems.Add(pokemon[pk.Species]);
+                i.SubItems.Add($"{pk.Level}");
 
                 listParty.Items.Add(i);
             }
@@ -136,6 +151,60 @@ namespace Lost
             cAttack2.SelectedIndex = 0;
             cAttack3.SelectedIndex = 0;
             cAttack4.SelectedIndex = 0;
+
+            if (trainer.HasHeldItems)
+            {
+                cHeld.Enabled = true;
+            }
+            else
+            {
+                cHeld.Enabled = false;
+            }
+
+            if (trainer.HasCustomAttacks)
+            {
+                cAttack1.Enabled = true;
+                cAttack2.Enabled = true;
+                cAttack3.Enabled = true;
+                cAttack4.Enabled = true;
+            }
+            else
+            {
+                cAttack1.Enabled = false;
+                cAttack2.Enabled = false;
+                cAttack3.Enabled = false;
+                cAttack4.Enabled = false;
+            }
+        }
+
+        private void listParty_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var index = -1;
+            foreach (int x in listParty.SelectedIndices)
+                index = x;
+
+            if (index == -1)
+                return;
+
+            // ------------------------------
+            var pk = trainer.Party[index];
+
+            txtSpecies.Value = pk.Species;
+            cSpecies.SelectedIndex = pk.Species;
+            txtLevel.Value = pk.Level;
+            txtEVs.Value = pk.EVs;
+
+            if (trainer.HasHeldItems)
+                cHeld.SelectedIndex = pk.HeldItem;
+            
+
+            if (trainer.HasCustomAttacks)
+            {
+                cAttack1.SelectedIndex = pk.Attacks[0];
+                cAttack2.SelectedIndex = pk.Attacks[1];
+                cAttack3.SelectedIndex = pk.Attacks[2];
+                cAttack4.SelectedIndex = pk.Attacks[3];
+            }
         }
 
         bool OpenROM(string filename)

@@ -50,7 +50,7 @@ namespace Lost
             for (int i = 0; i < partyCount; i++)
             {
                 var p = new Pokemon();
-                p.IVs = rom.ReadUInt16();
+                p.EVs = rom.ReadUInt16();
                 p.Level = rom.ReadUInt16();
                 p.Species = rom.ReadUInt16();
 
