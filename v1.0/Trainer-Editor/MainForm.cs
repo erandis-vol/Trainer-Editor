@@ -102,6 +102,8 @@ namespace Lost
 
             // ------------------------------
             LoadTrainer(index);
+            member = null;
+
             for (int i = 0; i < 6; i++)
             {
                 var sprite = invisible;
@@ -178,23 +180,23 @@ namespace Lost
             ignore = true;
 
             // ------------------------------
-            var pk = trainer.Party[index];
+            member = trainer.Party[index];
 
-            txtSpecies.Value = pk.Species;
-            cSpecies.SelectedIndex = pk.Species;
-            txtLevel.Value = pk.Level;
-            txtEVs.Value = pk.EVs;
+            txtSpecies.Value = member.Species;
+            cSpecies.SelectedIndex = member.Species;
+            txtLevel.Value = member.Level;
+            txtEVs.Value = member.EVs;
 
             if (trainer.HasHeldItems)
-                cHeld.SelectedIndex = pk.HeldItem;
+                cHeld.SelectedIndex = member.HeldItem;
             
 
             if (trainer.HasCustomAttacks)
             {
-                cAttack1.SelectedIndex = pk.Attacks[0];
-                cAttack2.SelectedIndex = pk.Attacks[1];
-                cAttack3.SelectedIndex = pk.Attacks[2];
-                cAttack4.SelectedIndex = pk.Attacks[3];
+                cAttack1.SelectedIndex = member.Attacks[0];
+                cAttack2.SelectedIndex = member.Attacks[1];
+                cAttack3.SelectedIndex = member.Attacks[2];
+                cAttack4.SelectedIndex = member.Attacks[3];
             }
 
             ignore = false;
@@ -379,13 +381,13 @@ namespace Lost
             ignore = true;
             cHeld.Enabled = trainer.HasHeldItems;
 
-            if (trainer.HasHeldItems)
+            if (!trainer.HasHeldItems || member == null)
             {
                 cHeld.SelectedIndex = 0;
             }
             else
             {
-                cHeld.SelectedIndex = 0;
+                cHeld.SelectedIndex = member.HeldItem;
             }
             ignore = false;
         }
@@ -403,7 +405,7 @@ namespace Lost
             cAttack3.Enabled = trainer.HasCustomAttacks;
             cAttack4.Enabled = trainer.HasCustomAttacks;
 
-            if (trainer.HasCustomAttacks)
+            if (!trainer.HasCustomAttacks || member == null)
             {
                 cAttack1.SelectedIndex = 0;
                 cAttack2.SelectedIndex = 0;
@@ -412,12 +414,81 @@ namespace Lost
             }
             else
             {
-                cAttack1.SelectedIndex = 0;
-                cAttack2.SelectedIndex = 0;
-                cAttack3.SelectedIndex = 0;
-                cAttack4.SelectedIndex = 0;
+                cAttack1.SelectedIndex = member.Attacks[0];
+                cAttack2.SelectedIndex = member.Attacks[1];
+                cAttack3.SelectedIndex = member.Attacks[2];
+                cAttack4.SelectedIndex = member.Attacks[3];
             }
             ignore = false;
+        }
+
+        private void txtSpecies_TextChanged(object sender, EventArgs e)
+        {
+            if (ignore || member == null)
+                return;
+
+            member.Species = (ushort)txtSpecies.Value;
+
+            ignore = true;
+            cSpecies.SelectedIndex = member.Species;
+
+            partyPictureBoxes[member.Index].Image = LoadFrontSprite(member.Species);
+            listParty.Items[member.Index].SubItems[1].Text = pokemon[member.Species];
+            ignore = false;
+        }
+
+        private void cSpecies_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ignore || member == null)
+                return;
+
+            member.Species = (ushort)cSpecies.SelectedIndex;
+
+            ignore = true;
+            txtSpecies.Value = member.Species;
+
+            partyPictureBoxes[member.Index].Image = LoadFrontSprite(member.Species);
+            listParty.Items[member.Index].SubItems[1].Text = pokemon[member.Species];
+            ignore = false;
+        }
+
+        private void txtLevel_TextChanged(object sender, EventArgs e)
+        {
+            if (ignore || member == null)
+                return;
+
+            member.Level = (ushort)((member.Level & 0xFF00) | (byte)txtLevel.Value);
+
+            ignore = true;
+            listParty.Items[member.Index].SubItems[2].Text = member.Level.ToString();
+            ignore = false;
+        }
+
+        private void txtEVs_TextChanged(object sender, EventArgs e)
+        {
+            if (ignore || member == null)
+                return;
+
+            member.EVs = (ushort)((member.EVs & 0xFF00) | (byte)txtEVs.Value);
+        }
+
+        private void cHeld_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ignore || member == null)
+                return;
+
+            member.HeldItem = (ushort)cHeld.SelectedIndex;
+        }
+
+        private void cAttack_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ignore || member == null)
+                return;
+
+            member.Attacks[0] = (ushort)cAttack1.SelectedIndex;
+            member.Attacks[1] = (ushort)cAttack2.SelectedIndex;
+            member.Attacks[2] = (ushort)cAttack3.SelectedIndex;
+            member.Attacks[3] = (ushort)cAttack4.SelectedIndex;
         }
     }
 }

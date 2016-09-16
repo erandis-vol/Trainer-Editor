@@ -10,6 +10,7 @@ namespace Lost
     public partial class MainForm
     {
         Trainer trainer;
+        Pokemon member = null;
 
         int trainerCount;
         int trainerSpriteCount;
@@ -51,7 +52,7 @@ namespace Lost
 
             for (int i = 0; i < partyCount; i++)
             {
-                var p = new Pokemon();
+                var p = new Pokemon(i);
                 p.EVs = rom.ReadUInt16();
                 p.Level = rom.ReadUInt16();
                 p.Species = rom.ReadUInt16();

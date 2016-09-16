@@ -4,7 +4,7 @@ namespace Lost
 {
     public class Trainer
     {
-        public int Index;
+        public int Index { get; }
 
         public byte Class;
         public byte Gender;
@@ -61,10 +61,17 @@ namespace Lost
 
     public class Pokemon
     {
-        public ushort EVs;
-        public ushort Species;
-        public ushort Level;
-        public ushort HeldItem;
-        public ushort[] Attacks = new ushort[4];
+        public Pokemon(int index)
+        {
+            Index = index;
+        }
+
+        public int Index { get; }
+
+        public ushort EVs { get; set; } = 0;
+        public ushort Species { get; set; } = 0;
+        public ushort Level { get; set; } = 0;
+        public ushort HeldItem { get; set; } = 0;
+        public ushort[] Attacks { get; } = new ushort[4];
     }
 }
