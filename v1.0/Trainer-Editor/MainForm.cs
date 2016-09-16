@@ -157,29 +157,12 @@ namespace Lost
             cAttack3.SelectedIndex = 0;
             cAttack4.SelectedIndex = 0;
 
-            if (trainer.HasHeldItems)
-            {
-                cHeld.Enabled = true;
-            }
-            else
-            {
-                cHeld.Enabled = false;
-            }
+            cHeld.Enabled = trainer.HasHeldItems;
 
-            if (trainer.HasCustomAttacks)
-            {
-                cAttack1.Enabled = true;
-                cAttack2.Enabled = true;
-                cAttack3.Enabled = true;
-                cAttack4.Enabled = true;
-            }
-            else
-            {
-                cAttack1.Enabled = false;
-                cAttack2.Enabled = false;
-                cAttack3.Enabled = false;
-                cAttack4.Enabled = false;
-            }
+            cAttack1.Enabled = trainer.HasCustomAttacks;
+            cAttack2.Enabled = trainer.HasCustomAttacks;
+            cAttack3.Enabled = trainer.HasCustomAttacks;
+            cAttack4.Enabled = trainer.HasCustomAttacks;
 
             ignore = false;
         }
@@ -275,9 +258,166 @@ namespace Lost
             LoadAttacks();
             LoadItems();
 
-            txtSpecies.MaximumValue = pokemonCount;
-            txtClassID.MaximumValue = classCount;
-            nSprite.Maximum = trainerSpriteCount;
+            txtSpecies.MaximumValue = pokemonCount - 1;
+            txtClassID.MaximumValue = classCount - 1;
+            nSprite.Maximum = trainerSpriteCount - 1;
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            if (ignore)
+                return;
+
+            trainer.Name = txtName.Text;
+            listTrainers.Items[trainer.Index].SubItems[1].Text = txtName.Text;
+        }
+
+        private void rMale_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ignore)
+                return;
+
+            if (rMale.Checked)
+                trainer.Gender = 0;
+        }
+
+        private void rFemale_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ignore)
+                return;
+
+            if (rFemale.Checked)
+                trainer.Gender = 1;
+        }
+
+        private void nSprite_ValueChanged(object sender, EventArgs e)
+        {
+            if (ignore)
+                return;
+
+            trainer.Sprite = (byte)nSprite.Value;
+            pSprite.Image = LoadTrainerSprite(trainer.Sprite);
+        }
+
+        private void txtClassID_TextChanged(object sender, EventArgs e)
+        {
+            if (ignore || txtClassID.Value >= classCount)
+                return;
+
+            trainer.Class = (byte)txtClassID.Value;
+
+            ignore = true;
+            cClass.SelectedIndex = txtClassID.Value;
+            txtClass.Text = classes[trainer.Class];
+            ignore = false;
+        }
+
+        private void cClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ignore)
+                return;
+
+            trainer.Class = (byte)cClass.SelectedIndex;
+
+            ignore = true;
+            txtClassID.Value = cClass.SelectedIndex;
+            txtClass.Text = classes[trainer.Class];
+            ignore = false;
+        }
+
+        private void txtClass_TextChanged(object sender, EventArgs e)
+        {
+            if (ignore)
+                return;
+
+            classes[trainer.Class] = txtClass.Text;
+            cClass.Items[trainer.Class] = txtClass.Text;
+        }
+
+        private void cItem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ignore)
+                return;
+
+            trainer.Items[0] = (ushort)cItem1.SelectedIndex;
+            trainer.Items[1] = (ushort)cItem2.SelectedIndex;
+            trainer.Items[2] = (ushort)cItem3.SelectedIndex;
+            trainer.Items[3] = (ushort)cItem4.SelectedIndex;
+        }
+
+        private void txtMusic_TextChanged(object sender, EventArgs e)
+        {
+            if (ignore)
+                return;
+
+            trainer.Music = (byte)txtMusic.Value;
+        }
+
+        private void txtAI_TextChanged(object sender, EventArgs e)
+        {
+            if (ignore)
+                return;
+
+            trainer.AI = (trainer.AI & ~0x1FFu) | (uint)(txtAI.Value & 0x1FF);
+        }
+
+        private void chkDoubleBattle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ignore)
+                return;
+
+            trainer.DoubleBattle = chkDoubleBattle.Checked;
+        }
+
+        private void chkHeldItems_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ignore)
+                return;
+
+            trainer.HasHeldItems = chkHeldItems.Checked;
+
+            ignore = true;
+            cHeld.Enabled = trainer.HasHeldItems;
+
+            if (trainer.HasHeldItems)
+            {
+                cHeld.SelectedIndex = 0;
+            }
+            else
+            {
+                cHeld.SelectedIndex = 0;
+            }
+            ignore = false;
+        }
+
+        private void chkMovesets_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ignore)
+                return;
+
+            trainer.HasCustomAttacks = chkMovesets.Checked;
+
+            ignore = true;
+            cAttack1.Enabled = trainer.HasCustomAttacks;
+            cAttack2.Enabled = trainer.HasCustomAttacks;
+            cAttack3.Enabled = trainer.HasCustomAttacks;
+            cAttack4.Enabled = trainer.HasCustomAttacks;
+
+            if (trainer.HasCustomAttacks)
+            {
+                cAttack1.SelectedIndex = 0;
+                cAttack2.SelectedIndex = 0;
+                cAttack3.SelectedIndex = 0;
+                cAttack4.SelectedIndex = 0;
+            }
+            else
+            {
+                cAttack1.SelectedIndex = 0;
+                cAttack2.SelectedIndex = 0;
+                cAttack3.SelectedIndex = 0;
+                cAttack4.SelectedIndex = 0;
+            }
+            ignore = false;
         }
     }
 }

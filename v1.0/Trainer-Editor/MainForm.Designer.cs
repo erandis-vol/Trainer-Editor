@@ -41,6 +41,12 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpTrainer = new System.Windows.Forms.GroupBox();
+            this.grpOptions = new System.Windows.Forms.GroupBox();
+            this.chkMovesets = new System.Windows.Forms.CheckBox();
+            this.chkHeldItems = new System.Windows.Forms.CheckBox();
+            this.chkDoubleBattle = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.grpParty = new System.Windows.Forms.GroupBox();
             this.p6 = new System.Windows.Forms.PictureBox();
             this.p5 = new System.Windows.Forms.PictureBox();
@@ -69,23 +75,17 @@
             this.cItem2 = new System.Windows.Forms.ComboBox();
             this.cItem1 = new System.Windows.Forms.ComboBox();
             this.grpBasics = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.nSprite = new System.Windows.Forms.NumericUpDown();
             this.pSprite = new System.Windows.Forms.PictureBox();
+            this.txtName = new System.Windows.Forms.TextBox();
             this.rFemale = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
             this.rMale = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.grpClass = new System.Windows.Forms.GroupBox();
             this.txtClass = new System.Windows.Forms.TextBox();
             this.cClass = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.grpOptions = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.chkDoubleBattle = new System.Windows.Forms.CheckBox();
-            this.chkHeldItems = new System.Windows.Forms.CheckBox();
-            this.chkMovesets = new System.Windows.Forms.CheckBox();
             this.txtAI = new Lost.DecimalBox();
             this.txtMusic = new Lost.DecimalBox();
             this.txtSpecies = new Lost.HexBox();
@@ -94,6 +94,7 @@
             this.txtClassID = new Lost.HexBox();
             this.menuStrip1.SuspendLayout();
             this.grpTrainer.SuspendLayout();
+            this.grpOptions.SuspendLayout();
             this.grpParty.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.p6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.p5)).BeginInit();
@@ -106,7 +107,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nSprite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pSprite)).BeginInit();
             this.grpClass.SuspendLayout();
-            this.grpOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -190,6 +190,8 @@
             this.columnHeader2});
             this.listTrainers.FullRowSelect = true;
             this.listTrainers.GridLines = true;
+            this.listTrainers.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listTrainers.HideSelection = false;
             this.listTrainers.Location = new System.Drawing.Point(12, 27);
             this.listTrainers.MultiSelect = false;
             this.listTrainers.Name = "listTrainers";
@@ -225,6 +227,73 @@
             this.grpTrainer.TabIndex = 2;
             this.grpTrainer.TabStop = false;
             this.grpTrainer.Text = "Trainer";
+            // 
+            // grpOptions
+            // 
+            this.grpOptions.Controls.Add(this.chkMovesets);
+            this.grpOptions.Controls.Add(this.chkHeldItems);
+            this.grpOptions.Controls.Add(this.chkDoubleBattle);
+            this.grpOptions.Controls.Add(this.label10);
+            this.grpOptions.Controls.Add(this.txtAI);
+            this.grpOptions.Controls.Add(this.txtMusic);
+            this.grpOptions.Controls.Add(this.label9);
+            this.grpOptions.Location = new System.Drawing.Point(251, 152);
+            this.grpOptions.Name = "grpOptions";
+            this.grpOptions.Size = new System.Drawing.Size(180, 101);
+            this.grpOptions.TabIndex = 9;
+            this.grpOptions.TabStop = false;
+            this.grpOptions.Text = "Options";
+            // 
+            // chkMovesets
+            // 
+            this.chkMovesets.AutoSize = true;
+            this.chkMovesets.Location = new System.Drawing.Point(60, 78);
+            this.chkMovesets.Name = "chkMovesets";
+            this.chkMovesets.Size = new System.Drawing.Size(110, 17);
+            this.chkMovesets.TabIndex = 27;
+            this.chkMovesets.Text = "Custom Movesets";
+            this.chkMovesets.UseVisualStyleBackColor = true;
+            this.chkMovesets.CheckedChanged += new System.EventHandler(this.chkMovesets_CheckedChanged);
+            // 
+            // chkHeldItems
+            // 
+            this.chkHeldItems.AutoSize = true;
+            this.chkHeldItems.Location = new System.Drawing.Point(60, 55);
+            this.chkHeldItems.Name = "chkHeldItems";
+            this.chkHeldItems.Size = new System.Drawing.Size(114, 17);
+            this.chkHeldItems.TabIndex = 26;
+            this.chkHeldItems.Text = "Custom Held Items";
+            this.chkHeldItems.UseVisualStyleBackColor = true;
+            this.chkHeldItems.CheckedChanged += new System.EventHandler(this.chkHeldItems_CheckedChanged);
+            // 
+            // chkDoubleBattle
+            // 
+            this.chkDoubleBattle.AutoSize = true;
+            this.chkDoubleBattle.Location = new System.Drawing.Point(60, 32);
+            this.chkDoubleBattle.Name = "chkDoubleBattle";
+            this.chkDoubleBattle.Size = new System.Drawing.Size(90, 17);
+            this.chkDoubleBattle.TabIndex = 25;
+            this.chkDoubleBattle.Text = "Double Battle";
+            this.chkDoubleBattle.UseVisualStyleBackColor = true;
+            this.chkDoubleBattle.CheckedChanged += new System.EventHandler(this.chkDoubleBattle_CheckedChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 55);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(20, 13);
+            this.label10.TabIndex = 24;
+            this.label10.Text = "AI:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(4, 16);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(43, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Theme:";
             // 
             // grpParty
             // 
@@ -418,6 +487,8 @@
             this.columnHeader5});
             this.listParty.FullRowSelect = true;
             this.listParty.GridLines = true;
+            this.listParty.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listParty.HideSelection = false;
             this.listParty.Location = new System.Drawing.Point(6, 86);
             this.listParty.MultiSelect = false;
             this.listParty.Name = "listParty";
@@ -462,6 +533,7 @@
             this.cItem4.Name = "cItem4";
             this.cItem4.Size = new System.Drawing.Size(168, 21);
             this.cItem4.TabIndex = 3;
+            this.cItem4.SelectedIndexChanged += new System.EventHandler(this.cItem_SelectedIndexChanged);
             // 
             // cItem3
             // 
@@ -470,6 +542,7 @@
             this.cItem3.Name = "cItem3";
             this.cItem3.Size = new System.Drawing.Size(168, 21);
             this.cItem3.TabIndex = 2;
+            this.cItem3.SelectedIndexChanged += new System.EventHandler(this.cItem_SelectedIndexChanged);
             // 
             // cItem2
             // 
@@ -478,6 +551,7 @@
             this.cItem2.Name = "cItem2";
             this.cItem2.Size = new System.Drawing.Size(168, 21);
             this.cItem2.TabIndex = 1;
+            this.cItem2.SelectedIndexChanged += new System.EventHandler(this.cItem_SelectedIndexChanged);
             // 
             // cItem1
             // 
@@ -486,6 +560,7 @@
             this.cItem1.Name = "cItem1";
             this.cItem1.Size = new System.Drawing.Size(168, 21);
             this.cItem1.TabIndex = 0;
+            this.cItem1.SelectedIndexChanged += new System.EventHandler(this.cItem_SelectedIndexChanged);
             // 
             // grpBasics
             // 
@@ -504,6 +579,15 @@
             this.grpBasics.TabStop = false;
             this.grpBasics.Text = "Basics";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 19);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(37, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "Sprite:";
+            // 
             // nSprite
             // 
             this.nSprite.Location = new System.Drawing.Point(6, 105);
@@ -515,6 +599,7 @@
             this.nSprite.Name = "nSprite";
             this.nSprite.Size = new System.Drawing.Size(64, 20);
             this.nSprite.TabIndex = 1;
+            this.nSprite.ValueChanged += new System.EventHandler(this.nSprite_ValueChanged);
             // 
             // pSprite
             // 
@@ -523,6 +608,15 @@
             this.pSprite.Size = new System.Drawing.Size(64, 64);
             this.pSprite.TabIndex = 0;
             this.pSprite.TabStop = false;
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(76, 35);
+            this.txtName.MaxLength = 11;
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(146, 20);
+            this.txtName.TabIndex = 2;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // rFemale
             // 
@@ -534,6 +628,16 @@
             this.rFemale.TabIndex = 5;
             this.rFemale.Text = "Female";
             this.rFemale.UseVisualStyleBackColor = true;
+            this.rFemale.CheckedChanged += new System.EventHandler(this.rFemale_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(76, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Name:";
             // 
             // rMale
             // 
@@ -547,6 +651,7 @@
             this.rMale.TabStop = true;
             this.rMale.Text = "Male";
             this.rMale.UseVisualStyleBackColor = true;
+            this.rMale.CheckedChanged += new System.EventHandler(this.rMale_CheckedChanged);
             // 
             // label2
             // 
@@ -556,22 +661,6 @@
             this.label2.Size = new System.Drawing.Size(45, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Gender:";
-            // 
-            // txtName
-            // 
-            this.txtName.Location = new System.Drawing.Point(76, 35);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(146, 20);
-            this.txtName.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(76, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Name:";
             // 
             // grpClass
             // 
@@ -591,6 +680,7 @@
             this.txtClass.Name = "txtClass";
             this.txtClass.Size = new System.Drawing.Size(134, 20);
             this.txtClass.TabIndex = 1;
+            this.txtClass.TextChanged += new System.EventHandler(this.txtClass_TextChanged);
             // 
             // cClass
             // 
@@ -599,90 +689,19 @@
             this.cClass.Name = "cClass";
             this.cClass.Size = new System.Drawing.Size(134, 21);
             this.cClass.TabIndex = 0;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 19);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(37, 13);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "Sprite:";
-            // 
-            // grpOptions
-            // 
-            this.grpOptions.Controls.Add(this.chkMovesets);
-            this.grpOptions.Controls.Add(this.chkHeldItems);
-            this.grpOptions.Controls.Add(this.chkDoubleBattle);
-            this.grpOptions.Controls.Add(this.label10);
-            this.grpOptions.Controls.Add(this.txtAI);
-            this.grpOptions.Controls.Add(this.txtMusic);
-            this.grpOptions.Controls.Add(this.label9);
-            this.grpOptions.Location = new System.Drawing.Point(251, 152);
-            this.grpOptions.Name = "grpOptions";
-            this.grpOptions.Size = new System.Drawing.Size(180, 101);
-            this.grpOptions.TabIndex = 9;
-            this.grpOptions.TabStop = false;
-            this.grpOptions.Text = "Options";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(4, 16);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(43, 13);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "Theme:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 55);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(20, 13);
-            this.label10.TabIndex = 24;
-            this.label10.Text = "AI:";
-            // 
-            // chkDoubleBattle
-            // 
-            this.chkDoubleBattle.AutoSize = true;
-            this.chkDoubleBattle.Location = new System.Drawing.Point(60, 32);
-            this.chkDoubleBattle.Name = "chkDoubleBattle";
-            this.chkDoubleBattle.Size = new System.Drawing.Size(90, 17);
-            this.chkDoubleBattle.TabIndex = 25;
-            this.chkDoubleBattle.Text = "Double Battle";
-            this.chkDoubleBattle.UseVisualStyleBackColor = true;
-            // 
-            // chkHeldItems
-            // 
-            this.chkHeldItems.AutoSize = true;
-            this.chkHeldItems.Location = new System.Drawing.Point(60, 55);
-            this.chkHeldItems.Name = "chkHeldItems";
-            this.chkHeldItems.Size = new System.Drawing.Size(114, 17);
-            this.chkHeldItems.TabIndex = 26;
-            this.chkHeldItems.Text = "Custom Held Items";
-            this.chkHeldItems.UseVisualStyleBackColor = true;
-            // 
-            // chkMovesets
-            // 
-            this.chkMovesets.AutoSize = true;
-            this.chkMovesets.Location = new System.Drawing.Point(60, 78);
-            this.chkMovesets.Name = "chkMovesets";
-            this.chkMovesets.Size = new System.Drawing.Size(110, 17);
-            this.chkMovesets.TabIndex = 27;
-            this.chkMovesets.Text = "Custom Movesets";
-            this.chkMovesets.UseVisualStyleBackColor = true;
+            this.cClass.SelectedIndexChanged += new System.EventHandler(this.cClass_SelectedIndexChanged);
             // 
             // txtAI
             // 
             this.txtAI.Location = new System.Drawing.Point(6, 71);
-            this.txtAI.MaximumValue = 512;
+            this.txtAI.MaximumValue = 511;
             this.txtAI.MinimumValue = 0;
             this.txtAI.Name = "txtAI";
             this.txtAI.Size = new System.Drawing.Size(48, 20);
             this.txtAI.TabIndex = 23;
             this.txtAI.Text = "0";
             this.txtAI.Value = 0;
+            this.txtAI.TextChanged += new System.EventHandler(this.txtAI_TextChanged);
             // 
             // txtMusic
             // 
@@ -694,6 +713,7 @@
             this.txtMusic.TabIndex = 23;
             this.txtMusic.Text = "0";
             this.txtMusic.Value = 0;
+            this.txtMusic.TextChanged += new System.EventHandler(this.txtMusic_TextChanged);
             // 
             // txtSpecies
             // 
@@ -738,6 +758,7 @@
             this.txtClassID.TabIndex = 25;
             this.txtClassID.Text = "0";
             this.txtClassID.Value = 0;
+            this.txtClassID.TextChanged += new System.EventHandler(this.txtClassID_TextChanged);
             // 
             // MainForm
             // 
@@ -756,6 +777,8 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.grpTrainer.ResumeLayout(false);
+            this.grpOptions.ResumeLayout(false);
+            this.grpOptions.PerformLayout();
             this.grpParty.ResumeLayout(false);
             this.grpParty.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.p6)).EndInit();
@@ -771,8 +794,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pSprite)).EndInit();
             this.grpClass.ResumeLayout(false);
             this.grpClass.PerformLayout();
-            this.grpOptions.ResumeLayout(false);
-            this.grpOptions.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
