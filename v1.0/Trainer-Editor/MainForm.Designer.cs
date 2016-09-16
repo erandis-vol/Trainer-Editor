@@ -46,13 +46,8 @@
             this.chkHeldItems = new System.Windows.Forms.CheckBox();
             this.chkDoubleBattle = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.txtAI = new Lost.DecimalBox();
-            this.txtMusic = new Lost.DecimalBox();
             this.label9 = new System.Windows.Forms.Label();
             this.grpParty = new System.Windows.Forms.GroupBox();
-            this.txtSpecies = new Lost.HexBox();
-            this.txtEVs = new Lost.DecimalBox();
-            this.txtLevel = new Lost.DecimalBox();
             this.p6 = new System.Windows.Forms.PictureBox();
             this.p5 = new System.Windows.Forms.PictureBox();
             this.p4 = new System.Windows.Forms.PictureBox();
@@ -89,9 +84,14 @@
             this.rMale = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.grpClass = new System.Windows.Forms.GroupBox();
-            this.txtClassID = new Lost.HexBox();
             this.txtClass = new System.Windows.Forms.TextBox();
             this.cClass = new System.Windows.Forms.ComboBox();
+            this.txtAI = new Lost.DecimalBox();
+            this.txtMusic = new Lost.DecimalBox();
+            this.txtSpecies = new Lost.HexBox();
+            this.txtEVs = new Lost.DecimalBox();
+            this.txtLevel = new Lost.DecimalBox();
+            this.txtClassID = new Lost.HexBox();
             this.menuStrip1.SuspendLayout();
             this.grpTrainer.SuspendLayout();
             this.grpOptions.SuspendLayout();
@@ -136,7 +136,7 @@
             this.openToolStripMenuItem.Image = global::Lost.Properties.Resources.OpenFolder_16x;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -144,19 +144,20 @@
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "&Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::Lost.Properties.Resources.Close_16x;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -286,30 +287,6 @@
             this.label10.TabIndex = 24;
             this.label10.Text = "AI:";
             // 
-            // txtAI
-            // 
-            this.txtAI.Location = new System.Drawing.Point(6, 71);
-            this.txtAI.MaximumValue = 511;
-            this.txtAI.MinimumValue = 0;
-            this.txtAI.Name = "txtAI";
-            this.txtAI.Size = new System.Drawing.Size(48, 20);
-            this.txtAI.TabIndex = 23;
-            this.txtAI.Text = "0";
-            this.txtAI.Value = 0;
-            this.txtAI.TextChanged += new System.EventHandler(this.txtAI_TextChanged);
-            // 
-            // txtMusic
-            // 
-            this.txtMusic.Location = new System.Drawing.Point(6, 32);
-            this.txtMusic.MaximumValue = 255;
-            this.txtMusic.MinimumValue = 0;
-            this.txtMusic.Name = "txtMusic";
-            this.txtMusic.Size = new System.Drawing.Size(48, 20);
-            this.txtMusic.TabIndex = 23;
-            this.txtMusic.Text = "0";
-            this.txtMusic.Value = 0;
-            this.txtMusic.TextChanged += new System.EventHandler(this.txtMusic_TextChanged);
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -348,42 +325,6 @@
             this.grpParty.TabIndex = 8;
             this.grpParty.TabStop = false;
             this.grpParty.Text = "Party";
-            // 
-            // txtSpecies
-            // 
-            this.txtSpecies.Location = new System.Drawing.Point(252, 102);
-            this.txtSpecies.MaximumValue = 2147483646;
-            this.txtSpecies.MinimumValue = 0;
-            this.txtSpecies.Name = "txtSpecies";
-            this.txtSpecies.Size = new System.Drawing.Size(48, 20);
-            this.txtSpecies.TabIndex = 24;
-            this.txtSpecies.Text = "0";
-            this.txtSpecies.Value = 0;
-            this.txtSpecies.TextChanged += new System.EventHandler(this.txtSpecies_TextChanged);
-            // 
-            // txtEVs
-            // 
-            this.txtEVs.Location = new System.Drawing.Point(306, 142);
-            this.txtEVs.MaximumValue = 511;
-            this.txtEVs.MinimumValue = 0;
-            this.txtEVs.Name = "txtEVs";
-            this.txtEVs.Size = new System.Drawing.Size(48, 20);
-            this.txtEVs.TabIndex = 23;
-            this.txtEVs.Text = "0";
-            this.txtEVs.Value = 0;
-            this.txtEVs.TextChanged += new System.EventHandler(this.txtEVs_TextChanged);
-            // 
-            // txtLevel
-            // 
-            this.txtLevel.Location = new System.Drawing.Point(252, 142);
-            this.txtLevel.MaximumValue = 255;
-            this.txtLevel.MinimumValue = 0;
-            this.txtLevel.Name = "txtLevel";
-            this.txtLevel.Size = new System.Drawing.Size(48, 20);
-            this.txtLevel.TabIndex = 22;
-            this.txtLevel.Text = "0";
-            this.txtLevel.Value = 0;
-            this.txtLevel.TextChanged += new System.EventHandler(this.txtLevel_TextChanged);
             // 
             // p6
             // 
@@ -740,18 +681,6 @@
             this.grpClass.TabStop = false;
             this.grpClass.Text = "Class";
             // 
-            // txtClassID
-            // 
-            this.txtClassID.Location = new System.Drawing.Point(6, 19);
-            this.txtClassID.MaximumValue = 2147483646;
-            this.txtClassID.MinimumValue = 0;
-            this.txtClassID.Name = "txtClassID";
-            this.txtClassID.Size = new System.Drawing.Size(48, 20);
-            this.txtClassID.TabIndex = 25;
-            this.txtClassID.Text = "0";
-            this.txtClassID.Value = 0;
-            this.txtClassID.TextChanged += new System.EventHandler(this.txtClassID_TextChanged);
-            // 
             // txtClass
             // 
             this.txtClass.Location = new System.Drawing.Point(60, 46);
@@ -768,6 +697,78 @@
             this.cClass.Size = new System.Drawing.Size(134, 21);
             this.cClass.TabIndex = 0;
             this.cClass.SelectedIndexChanged += new System.EventHandler(this.cClass_SelectedIndexChanged);
+            // 
+            // txtAI
+            // 
+            this.txtAI.Location = new System.Drawing.Point(6, 71);
+            this.txtAI.MaximumValue = 511;
+            this.txtAI.MinimumValue = 0;
+            this.txtAI.Name = "txtAI";
+            this.txtAI.Size = new System.Drawing.Size(48, 20);
+            this.txtAI.TabIndex = 23;
+            this.txtAI.Text = "0";
+            this.txtAI.Value = 0;
+            this.txtAI.TextChanged += new System.EventHandler(this.txtAI_TextChanged);
+            // 
+            // txtMusic
+            // 
+            this.txtMusic.Location = new System.Drawing.Point(6, 32);
+            this.txtMusic.MaximumValue = 127;
+            this.txtMusic.MinimumValue = 0;
+            this.txtMusic.Name = "txtMusic";
+            this.txtMusic.Size = new System.Drawing.Size(48, 20);
+            this.txtMusic.TabIndex = 23;
+            this.txtMusic.Text = "0";
+            this.txtMusic.Value = 0;
+            this.txtMusic.TextChanged += new System.EventHandler(this.txtMusic_TextChanged);
+            // 
+            // txtSpecies
+            // 
+            this.txtSpecies.Location = new System.Drawing.Point(252, 102);
+            this.txtSpecies.MaximumValue = 2147483646;
+            this.txtSpecies.MinimumValue = 0;
+            this.txtSpecies.Name = "txtSpecies";
+            this.txtSpecies.Size = new System.Drawing.Size(48, 20);
+            this.txtSpecies.TabIndex = 24;
+            this.txtSpecies.Text = "0";
+            this.txtSpecies.Value = 0;
+            this.txtSpecies.TextChanged += new System.EventHandler(this.txtSpecies_TextChanged);
+            // 
+            // txtEVs
+            // 
+            this.txtEVs.Location = new System.Drawing.Point(306, 142);
+            this.txtEVs.MaximumValue = 511;
+            this.txtEVs.MinimumValue = 0;
+            this.txtEVs.Name = "txtEVs";
+            this.txtEVs.Size = new System.Drawing.Size(48, 20);
+            this.txtEVs.TabIndex = 23;
+            this.txtEVs.Text = "0";
+            this.txtEVs.Value = 0;
+            this.txtEVs.TextChanged += new System.EventHandler(this.txtEVs_TextChanged);
+            // 
+            // txtLevel
+            // 
+            this.txtLevel.Location = new System.Drawing.Point(252, 142);
+            this.txtLevel.MaximumValue = 255;
+            this.txtLevel.MinimumValue = 0;
+            this.txtLevel.Name = "txtLevel";
+            this.txtLevel.Size = new System.Drawing.Size(48, 20);
+            this.txtLevel.TabIndex = 22;
+            this.txtLevel.Text = "0";
+            this.txtLevel.Value = 0;
+            this.txtLevel.TextChanged += new System.EventHandler(this.txtLevel_TextChanged);
+            // 
+            // txtClassID
+            // 
+            this.txtClassID.Location = new System.Drawing.Point(6, 19);
+            this.txtClassID.MaximumValue = 2147483646;
+            this.txtClassID.MinimumValue = 0;
+            this.txtClassID.Name = "txtClassID";
+            this.txtClassID.Size = new System.Drawing.Size(48, 20);
+            this.txtClassID.TabIndex = 25;
+            this.txtClassID.Text = "0";
+            this.txtClassID.Value = 0;
+            this.txtClassID.TextChanged += new System.EventHandler(this.txtClassID_TextChanged);
             // 
             // MainForm
             // 

@@ -375,7 +375,10 @@ namespace Lost
                 throw new Exception(string.Format("Offset 0x{0:X6} too large for a ROM pointer (0 <= offset <= 0x1FFFFFF)!"));
             }
 
-            WriteInt32(offset | 0x8000000);
+            if (offset > 0)
+                WriteInt32(offset | 0x8000000);
+            else
+                WriteInt32(0);
         }
 
         public void WriteString(string str)

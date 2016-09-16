@@ -55,7 +55,7 @@ namespace Lost
         /// </summary>
         public bool RequiresRepoint
         {
-            get { return PartySize > OriginalPartySize; }
+            get { return PartySize > OriginalPartySize || (PartyOffset == 0 && Party.Count != 0); }
         }
     }
 

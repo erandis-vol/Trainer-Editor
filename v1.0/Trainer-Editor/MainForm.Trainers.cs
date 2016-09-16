@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Lost
 {
@@ -71,6 +71,76 @@ namespace Lost
             }
 
             trainer.OriginalPartySize = rom.Position - partyStart;
+        }
+
+        void SaveTrainer()
+        {
+            // repoint party
+            if (trainer.RequiresRepoint)
+            {
+                int newOffset = -1;
+
+                if (repointAutomaticallyToolStripMenuItem.Checked)
+                {
+                    newOffset = rom.FindFreeSpace(trainer.PartySize, 0xFF, 0x720000, 4);
+                }
+                else
+                {
+                    // TODO
+                    throw new NotImplementedException();
+                }
+
+                if (newOffset == -1)
+                {
+                    MessageBox.Show("Unable to repoint party!\nIt was not saved.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // TODO: overwrite old party with freespace
+                trainer.PartyOffset = newOffset;
+                Console.WriteLine("repointing to: 0x{0:X6}", newOffset);
+            }
+
+            rom.Seek(romInfo.GetInt32("trainers", "Data", 16) + trainer.Index * 40);
+
+            // write trainer data
+            rom.WriteByte((byte)((trainer.HasCustomAttacks ? 1 : 0) + (trainer.HasHeldItems ? 2 : 0)));
+            rom.WriteByte(trainer.Class);
+            rom.WriteByte((byte)((trainer.Gender << 7) + trainer.Music));
+            rom.WriteByte(trainer.Sprite);
+            rom.WriteText(trainer.Name, 12, CharacterEncoding.English);
+            for (int i = 0; i < 4; i++)
+                rom.WriteUInt16(trainer.Items[i]);
+            rom.WriteByte((byte)(trainer.DoubleBattle ? 1 : 0));
+            rom.Skip(3);
+            rom.WriteUInt32(trainer.AI);
+            rom.WriteByte((byte)trainer.Party.Count);
+            rom.Skip(3);
+            rom.WritePointer(trainer.PartyOffset);
+
+            if (trainer.Party.Count == 0)
+                return;
+
+            // write party
+            rom.Seek(trainer.PartyOffset);
+
+            foreach (var p in trainer.Party)
+            {
+                rom.WriteUInt16(p.EVs);
+                rom.WriteUInt16(p.Level);
+                rom.WriteUInt16(p.Species);
+
+                if (trainer.HasHeldItems)
+                    rom.WriteUInt16(p.HeldItem);
+
+                if (trainer.HasCustomAttacks)
+                    for (int i = 0; i < 4; i++)
+                        rom.WriteUInt16(p.Attacks[i]);
+
+                if (!trainer.HasHeldItems)
+                    rom.WriteUInt16(0);
+            }
         }
 
         void LoadNames()

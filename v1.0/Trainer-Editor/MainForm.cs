@@ -85,6 +85,15 @@ namespace Lost
             cAttack4.Items.AddRange(attacks);
         }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (trainer == null)
+                return;
+
+            SaveTrainer();
+            rom.Save();
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
@@ -165,6 +174,9 @@ namespace Lost
             cAttack2.Enabled = trainer.HasCustomAttacks;
             cAttack3.Enabled = trainer.HasCustomAttacks;
             cAttack4.Enabled = trainer.HasCustomAttacks;
+
+            grpTrainer.Text = $"Trainer (0x{trainer.Index:X3})";
+            grpParty.Text = $"Party (0x{trainer.PartyOffset:X7})";
 
             ignore = false;
         }
