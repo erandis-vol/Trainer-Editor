@@ -4,46 +4,30 @@ namespace Lost
 {
     public static class Sprites
     {
-        public static Bitmap Draw16(byte[] sprite, int width, int height, Color[] palette, bool showColor0 = true)
+        public static Bitmap Draw16(byte[] sprite, int width, int height, Color[] palette)
         {
             var bmp = new Bitmap(width * 8, height * 8);
 
-            int x = -1;
-            int y = 0;
-            int blockX = 0;
-            int blockY = 0;
-
-            for (int i = 0; i < sprite.Length * 2; i++)
+            int i = 0;
+            for (int bY = 0; bY < height && i < sprite.Length; bY++)
             {
-                x++;
-                if (x >= 8) // 8 pixels per block
+                for (int bX = 0; bX < width && i < sprite.Length; bX++)
                 {
-                    x = 0;
-                    y++;
+                    for (int y = 0; y < 8 && i < sprite.Length; y++)
+                    {
+                        for (int x = 0; x < 8 && i < sprite.Length; x += 2, i++)
+                        {
+                            var left = sprite[i] & 0xF;
+                            var right = sprite[i] >> 4;
+
+                            if (left > 0)
+                                bmp.SetPixel(x + bX * 8, y + bY * 8, palette[left]);
+
+                            if (right > 0)
+                                bmp.SetPixel(x + 1 + bX * 8, y + bY * 8, palette[right]);
+                        }
+                    }
                 }
-
-                if (y >= 8) // 8 pixels per block
-                {
-                    y = 0;
-                    blockX++;
-                }
-
-                if (blockX >= width) // width
-                {
-                    blockX = 0;
-                    blockY++;
-                }
-
-                byte pal = sprite[i / 2];
-                if ((i & 1) == 0)
-                    pal &= 0xF;
-                else
-                    pal = (byte)((pal & 0xF0) >> 4);
-
-                if (pal == 0 && !showColor0)
-                    ;
-                else
-                    bmp.SetPixel(x + blockX * 8, y + blockY * 8, palette[pal]);
             }
 
             return bmp;

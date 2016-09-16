@@ -66,10 +66,12 @@ namespace Lost
                 var palette = rom.ReadCompressedPalette();
 
                 // ------------------------------
-                return Sprites.Draw16(sprite, 8, 8, palette, false);
+                return Sprites.Draw16(sprite, 8, 8, palette);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + "\n" + ex.StackTrace);
+
                 return invisible;
             }
         }
