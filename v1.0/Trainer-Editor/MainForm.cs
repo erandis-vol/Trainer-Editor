@@ -19,6 +19,8 @@ namespace Lost
         Bitmap invisible = new Bitmap(64, 64);
         PictureBox[] partyPictureBoxes;
 
+        bool ignore = false;
+
         public MainForm()
         {
             InitializeComponent();
@@ -57,7 +59,6 @@ namespace Lost
 
             cClass.Items.Clear();
             cClass.Items.AddRange(classes);
-            txtClassID.MaximumValue = classCount;
 
             cItem1.Items.Clear();
             cItem1.Items.AddRange(items);
@@ -95,7 +96,9 @@ namespace Lost
             foreach (int x in listTrainers.SelectedIndices)
                 index = x;
 
-            if (index == -1) return;
+            if (index == -1)
+                return;
+            ignore = true;
 
             // ------------------------------
             LoadTrainer(index);
@@ -108,11 +111,13 @@ namespace Lost
                 }
                 partyPictureBoxes[i].Image = sprite;
             }
+            pSprite.Image = LoadTrainerSprite(trainer.Sprite);
 
             // ------------------------------
             txtName.Text = trainer.Name;
             rMale.Checked = trainer.Gender == 0;
             rFemale.Checked = trainer.Gender == 1;
+
             nSprite.Value = trainer.Sprite;
 
             cClass.SelectedIndex = trainer.Class;
@@ -175,6 +180,8 @@ namespace Lost
                 cAttack3.Enabled = false;
                 cAttack4.Enabled = false;
             }
+
+            ignore = false;
         }
 
         private void listParty_SelectedIndexChanged(object sender, EventArgs e)
@@ -185,6 +192,7 @@ namespace Lost
 
             if (index == -1)
                 return;
+            ignore = true;
 
             // ------------------------------
             var pk = trainer.Party[index];
@@ -205,6 +213,8 @@ namespace Lost
                 cAttack3.SelectedIndex = pk.Attacks[2];
                 cAttack4.SelectedIndex = pk.Attacks[3];
             }
+
+            ignore = false;
         }
 
         bool OpenROM(string filename)
@@ -254,6 +264,7 @@ namespace Lost
             attackCount = romInfo.GetInt32("attacks", "Count");
 
             trainerCount = romInfo.GetInt32("trainers", "Count");
+            trainerSpriteCount = romInfo.GetInt32("trainer_sprites", "Count");
             classCount = romInfo.GetInt32("trainer_classes", "Count");
 
             // load all data needed
@@ -265,6 +276,8 @@ namespace Lost
             LoadItems();
 
             txtSpecies.MaximumValue = pokemonCount;
+            txtClassID.MaximumValue = classCount;
+            nSprite.Maximum = trainerSpriteCount;
         }
     }
 }

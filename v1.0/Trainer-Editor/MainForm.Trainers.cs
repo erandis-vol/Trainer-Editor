@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace Lost
         Trainer trainer;
 
         int trainerCount;
+        int trainerSpriteCount;
         int classCount;
 
         string[] names;
@@ -88,6 +90,35 @@ namespace Lost
 
             rom.Seek(table);
             classes = rom.ReadTextTable(13, classCount, CharacterEncoding.English);
+        }
+
+        Bitmap LoadTrainerSprite(int id)
+        {
+            try
+            {
+                // ------------------------------
+                // read compressed sprite
+                rom.Seek(romInfo.GetInt32("trainer_sprites", "Data", 16) + id * 8);
+                var spriteOffset = rom.ReadPointer();
+
+                rom.Seek(spriteOffset);
+                var sprite = rom.ReadCompressedBytes();
+
+                // ------------------------------
+                // read compressed palette
+                rom.Seek(romInfo.GetInt32("trainer_sprites", "Palettes", 16) + id * 8);
+                var paletteOffset = rom.ReadPointer();
+
+                rom.Seek(paletteOffset);
+                var palette = rom.ReadCompressedPalette();
+
+                // ------------------------------
+                return Sprites.Draw16(sprite, 8, 8, palette, false);
+            }
+            catch
+            {
+                return invisible;
+            }
         }
     }
 }
