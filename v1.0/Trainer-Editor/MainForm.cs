@@ -219,22 +219,36 @@ namespace Lost
             bool success = true;
             ROM temp = null;
 
+            var custom = Path.ChangeExtension(filename, ".h");
+
             try
             {
                 // create a new ROM
                 temp = new ROM(filename);
 
-                // check that it is valid
-                if (!File.Exists($@"ROMs\{temp.Code}.ini"))
-                    throw new Exception($"ROM type {temp.Code} is not supported!");
+                // first check for custom settings
+                if (File.Exists(custom))
+                {
+                    romInfo = Settings.FromFile(custom, "ini");
+                }
+                else
+                {
+                    // check that it is valid
+                    if (!File.Exists($@"ROMs\{temp.Code}.ini"))
+                        throw new Exception($"ROM type {temp.Code} is not supported!");
 
-                // TODO: custom settings
-                romInfo = Settings.FromFile($@"ROMs\{temp.Code}.ini", "ini");
+                    // load default settings
+                    romInfo = Settings.FromFile($@"ROMs\{temp.Code}.ini", "ini");
+
+                    // copy and save to custom settings
+                    romInfo.Save(custom, "ini");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message}\n\nStack Trace:\n{ex.StackTrace}",
+                MessageBox.Show($"{ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 success = false;
             }
 
