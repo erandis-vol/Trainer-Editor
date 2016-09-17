@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -155,6 +156,69 @@ namespace Lost
 
             // finally, update original party size
             trainer.OriginalPartySize = trainer.PartySize;
+        }
+
+        void ResizeTrainers(int newCount)
+        {
+            // repoint the trainer table
+
+            // original information
+            var originalOffset = romInfo.GetInt32("trainers", "Data", 16);
+            var originalSize = trainerCount * 40;
+
+            var newOffset = -1;
+            var newSize = newCount * 40;
+
+            var buffer = new int[newCount];
+
+            // copy old table for moving
+            rom.Seek(originalOffset);
+            for (int i = 0; i < Math.Min(trainerCount, newCount); i++)
+                buffer[i] = rom.ReadPointer();
+
+            // overwrite old table with free space
+            rom.Seek(originalOffset);
+            for (int i = 0; i < trainerCount; i++)
+                rom.WriteUInt32(0xFFFFFFFFu);
+
+            // find space for the new table
+            if (newCount > trainerCount)
+            {
+                if (repointAutomaticallyToolStripMenuItem.Checked)
+                {
+                    newOffset = rom.FindFreeSpace(newSize, 0xFF, 0x720000, 4);
+                }
+                else
+                {
+                    using (var fs = new FreeSpaceDialog(rom, newSize, 0x720000))
+                    {
+                        fs.Text = "Repoint Trainer Table";
+
+                        if (fs.ShowDialog() == DialogResult.OK)
+                            newOffset = fs.Offset;
+                    }
+                }
+            }
+            else
+            {
+                newOffset = originalOffset;
+            }
+
+            if (newOffset == -1)
+            {
+                MessageBox.Show("Unable to resize trainer table!\nAborted.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
+            // write new table
+            rom.Seek(newOffset);
+            for (int i = 0; i < newCount; i++)
+                rom.WritePointer(buffer[i]);
+            
+            // TODO: trainers with an offset of 0 result in error, allow for 'blank' trainer
+            // TODO: find and replace all pointers to table
         }
 
         void LoadNames()
