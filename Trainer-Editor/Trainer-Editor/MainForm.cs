@@ -83,6 +83,9 @@ namespace Lost
             cAttack3.Items.AddRange(attacks);
             cAttack4.Items.Clear();
             cAttack4.Items.AddRange(attacks);
+
+            DisplayTrainer();
+            DisplayPartyMember();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -94,11 +97,56 @@ namespace Lost
             SaveClasses();
 
             rom.Save();
+
+            grpParty.Text = $"Party (0x{trainer.PartyOffset:X7})";
+            listTrainers.Items[trainer.Index].SubItems[1].Text = txtName.Text;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (trainer == null)
+                return;
+
+            openFileDialog1.Title = $"Import Trainer {trainer.Index}";
+            openFileDialog1.Filter = "Trainer Files|*.trainer";
+            openFileDialog1.FileName = "";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                ImportTrainer(openFileDialog1.FileName);
+
+                DisplayTrainer();
+                member = null;
+
+                for (int i = 0; i < 6; i++)
+                {
+                    var sprite = invisible;
+                    if (i < trainer.Party.Count)
+                    {
+                        sprite = LoadFrontSprite(trainer.Party[i].Species);
+                    }
+                    partyPictureBoxes[i].Image = sprite;
+                }
+                pSprite.Image = LoadTrainerSprite(trainer.Sprite);
+            }
+        }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (trainer == null)
+                return;
+
+            saveFileDialog1.Title = $"Export Trainer {trainer.Index}";
+            saveFileDialog1.Filter = "Trainer Files|*.trainer";
+            saveFileDialog1.FileName = $"{trainer.Index:X3} {trainer.Name}";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                ExportTrainer(saveFileDialog1.FileName);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -115,7 +163,6 @@ namespace Lost
 
             if (index == -1)
                 return;
-            ignore = true;
 
             // ------------------------------
             LoadTrainer(index);
@@ -133,58 +180,8 @@ namespace Lost
             pSprite.Image = LoadTrainerSprite(trainer.Sprite);
 
             // ------------------------------
-            txtName.Text = trainer.Name;
-            rMale.Checked = trainer.Gender == 0;
-            rFemale.Checked = trainer.Gender == 1;
-
-            nSprite.Value = trainer.Sprite;
-
-            cClass.SelectedIndex = trainer.Class;
-            txtClassID.Value = trainer.Class;
-            txtClass.Text = classes[trainer.Class];
-
-            cItem1.SelectedIndex = trainer.Items[0];
-            cItem2.SelectedIndex = trainer.Items[1];
-            cItem3.SelectedIndex = trainer.Items[2];
-            cItem4.SelectedIndex = trainer.Items[3];
-
-            txtMusic.Value = trainer.Music;
-            txtAI.Value = (int)(trainer.AI & 0x1FF); // AI is the first 9 bits
-
-            chkDoubleBattle.Checked = trainer.DoubleBattle;
-            chkHeldItems.Checked = trainer.HasHeldItems;
-            chkMovesets.Checked = trainer.HasCustomAttacks;
-
-            listParty.Items.Clear();
-            foreach (var pk in trainer.Party)
-            {
-                var i = new ListViewItem(pokemon[pk.Species]);
-                i.SubItems.Add($"{pk.Level}");
-
-                listParty.Items.Add(i);
-            }
-
-            txtSpecies.Value = 0;
-            txtLevel.Value = 0;
-            txtEVs.Value = 0;
-            cSpecies.SelectedIndex = 0;
-            cHeld.SelectedIndex = 0;
-            cAttack1.SelectedIndex = 0;
-            cAttack2.SelectedIndex = 0;
-            cAttack3.SelectedIndex = 0;
-            cAttack4.SelectedIndex = 0;
-
-            cHeld.Enabled = trainer.HasHeldItems;
-
-            cAttack1.Enabled = trainer.HasCustomAttacks;
-            cAttack2.Enabled = trainer.HasCustomAttacks;
-            cAttack3.Enabled = trainer.HasCustomAttacks;
-            cAttack4.Enabled = trainer.HasCustomAttacks;
-
-            grpTrainer.Text = $"Trainer (0x{trainer.Index:X3})";
-            grpParty.Text = $"Party (0x{trainer.PartyOffset:X7})";
-
-            ignore = false;
+            DisplayTrainer();
+            DisplayPartyMember();
         }
 
         private void listParty_SelectedIndexChanged(object sender, EventArgs e)
@@ -195,29 +192,10 @@ namespace Lost
 
             if (index == -1)
                 return;
-            ignore = true;
 
             // ------------------------------
             member = trainer.Party[index];
-
-            txtSpecies.Value = member.Species;
-            cSpecies.SelectedIndex = member.Species;
-            txtLevel.Value = member.Level;
-            txtEVs.Value = member.EVs;
-
-            if (trainer.HasHeldItems)
-                cHeld.SelectedIndex = member.HeldItem;
-            
-
-            if (trainer.HasCustomAttacks)
-            {
-                cAttack1.SelectedIndex = member.Attacks[0];
-                cAttack2.SelectedIndex = member.Attacks[1];
-                cAttack3.SelectedIndex = member.Attacks[2];
-                cAttack4.SelectedIndex = member.Attacks[3];
-            }
-
-            ignore = false;
+            DisplayPartyMember();
         }
 
         bool OpenROM(string filename)
@@ -303,7 +281,6 @@ namespace Lost
                 return;
 
             trainer.Name = txtName.Text;
-            listTrainers.Items[trainer.Index].SubItems[1].Text = txtName.Text;
         }
 
         private void rMale_CheckedChanged(object sender, EventArgs e)

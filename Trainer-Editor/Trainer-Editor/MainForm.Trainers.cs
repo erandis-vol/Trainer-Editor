@@ -102,9 +102,12 @@ namespace Lost
                 }
 
                 // overwrite old party with freespace
-                rom.Seek(trainer.PartyOffset);
-                for (int i = 0; i < trainer.OriginalPartySize; i++)
-                    rom.WriteByte(0xFF);
+                if (cleanRepointedTrainersToolStripMenuItem.Checked)
+                {
+                    rom.Seek(trainer.PartyOffset);
+                    for (int i = 0; i < trainer.OriginalPartySize; i++)
+                        rom.WriteByte(0xFF);
+                }
 
                 // set new offset for party
                 trainer.PartyOffset = newOffset;
@@ -244,11 +247,6 @@ namespace Lost
                     for (int i = 0; i < 4; i++)
                         bw.Write(p.Attacks[i]);
                 }
-
-                // write game information
-                // # of attacks, etc
-                //bw.Write(pokemonCount);
-                //bw.Write(attackCount);
             }
         }
 
@@ -268,6 +266,10 @@ namespace Lost
                 for (int i = 0; i < 4; i++)
                     trainer.Items[i] = br.ReadUInt16();
 
+                trainer.DoubleBattle = br.ReadBoolean();
+                trainer.HasCustomAttacks = br.ReadBoolean();
+                trainer.HasHeldItems = br.ReadBoolean();
+
                 trainer.Party.Clear();
                 var count = br.ReadInt32();
 
@@ -286,6 +288,132 @@ namespace Lost
 
                 // TODO: check that values <= game max for safe importing
             }
+        }
+
+        void DisplayTrainer()
+        {
+            ignore = true;
+            if (trainer == null)
+            {
+                txtName.Text = string.Empty; ;
+                rMale.Checked = true;
+                rFemale.Checked = false;
+
+                nSprite.Value = 0;
+
+                cClass.SelectedIndex = 0;
+                txtClassID.Value = 0;
+                txtClass.Text = classes[0];
+
+                cItem1.SelectedIndex = 0;
+                cItem2.SelectedIndex = 0;
+                cItem3.SelectedIndex = 0;
+                cItem4.SelectedIndex = 0;
+
+                txtMusic.Value = 0;
+                txtAI.Value = 0;
+
+                chkDoubleBattle.Checked = false;
+                chkHeldItems.Checked = false;
+                chkMovesets.Checked = false;
+
+                listParty.Items.Clear();
+                cHeld.Enabled = false;
+                cAttack1.Enabled = false;
+                cAttack2.Enabled = false;
+                cAttack3.Enabled = false;
+                cAttack4.Enabled = false;
+
+                pSprite.Image = invisible;
+                for (int i = 0; i < 6; i++)
+                    partyPictureBoxes[i].Image = invisible;
+
+                grpTrainer.Text = "Trainer";
+                grpParty.Text = "Party";
+            }
+            else
+            {
+                txtName.Text = trainer.Name;
+                rMale.Checked = trainer.Gender == 0;
+                rFemale.Checked = trainer.Gender == 1;
+
+                nSprite.Value = trainer.Sprite;
+
+                cClass.SelectedIndex = trainer.Class;
+                txtClassID.Value = trainer.Class;
+                txtClass.Text = classes[trainer.Class];
+
+                cItem1.SelectedIndex = trainer.Items[0];
+                cItem2.SelectedIndex = trainer.Items[1];
+                cItem3.SelectedIndex = trainer.Items[2];
+                cItem4.SelectedIndex = trainer.Items[3];
+
+                txtMusic.Value = trainer.Music;
+                txtAI.Value = (int)(trainer.AI & 0x1FF); // AI is the first 9 bits
+
+                chkDoubleBattle.Checked = trainer.DoubleBattle;
+                chkHeldItems.Checked = trainer.HasHeldItems;
+                chkMovesets.Checked = trainer.HasCustomAttacks;
+
+                listParty.Items.Clear();
+                foreach (var pk in trainer.Party)
+                {
+                    var i = new ListViewItem(pokemon[pk.Species]);
+                    i.SubItems.Add($"{pk.Level}");
+
+                    listParty.Items.Add(i);
+                }
+
+                cHeld.Enabled = trainer.HasHeldItems;
+
+                cAttack1.Enabled = trainer.HasCustomAttacks;
+                cAttack2.Enabled = trainer.HasCustomAttacks;
+                cAttack3.Enabled = trainer.HasCustomAttacks;
+                cAttack4.Enabled = trainer.HasCustomAttacks;
+
+                grpTrainer.Text = $"Trainer (0x{trainer.Index:X3})";
+                grpParty.Text = $"Party (0x{trainer.PartyOffset:X7})";
+                if (trainer.RequiresRepoint) grpParty.Text += "*";
+            }
+            ignore = false;
+        }
+
+        void DisplayPartyMember()
+        {
+            ignore = true;
+
+            if (member == null)
+            {
+                txtSpecies.Value = 0;
+                txtLevel.Value = 0;
+                txtEVs.Value = 0;
+                cSpecies.SelectedIndex = 0;
+                cHeld.SelectedIndex = 0;
+                cAttack1.SelectedIndex = 0;
+                cAttack2.SelectedIndex = 0;
+                cAttack3.SelectedIndex = 0;
+                cAttack4.SelectedIndex = 0;
+            }
+            else
+            {
+                txtSpecies.Value = member.Species;
+                cSpecies.SelectedIndex = member.Species;
+                txtLevel.Value = member.Level;
+                txtEVs.Value = member.EVs;
+
+                if (trainer.HasHeldItems)
+                    cHeld.SelectedIndex = member.HeldItem;
+
+                if (trainer.HasCustomAttacks)
+                {
+                    cAttack1.SelectedIndex = member.Attacks[0];
+                    cAttack2.SelectedIndex = member.Attacks[1];
+                    cAttack3.SelectedIndex = member.Attacks[2];
+                    cAttack4.SelectedIndex = member.Attacks[3];
+                }
+            }
+
+            ignore = false;
         }
     }
 }
