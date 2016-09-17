@@ -71,6 +71,7 @@ namespace Lost
                 item.SubItems.Add(names[i]);
                 listTrainers.Items.Add(item);
             }
+            txtSearchId.MaximumValue = trainerCount - 1;
 
             cClass.Items.Clear();
             cClass.Items.AddRange(classes);
@@ -114,7 +115,9 @@ namespace Lost
             rom.Save();
 
             grpParty.Text = $"Party (0x{trainer.PartyOffset:X7})";
-            listTrainers.Items[trainer.Index].SubItems[1].Text = txtName.Text;
+
+            listTrainers.Items[trainer.Index].SubItems[1].Text = trainer.Name;
+            names[trainer.Index] = trainer.Name;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -460,7 +463,7 @@ namespace Lost
 
         private void txtSpecies_TextChanged(object sender, EventArgs e)
         {
-            if (ignore || member == null)
+            if (ignore || member == null || txtSpecies.Value >= pokemonCount)
                 return;
 
             member.Species = (ushort)txtSpecies.Value;
@@ -589,6 +592,63 @@ namespace Lost
 
                 partyPictureBoxes[i].Image = sprite;
             }
+        }
+
+        private void txtSearchId_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (rom == null)
+                return;
+
+            if (e.KeyCode == Keys.Enter /*&& txtSearchId.Value <= trainerCount*/)
+            {
+                listTrainers.TopItem = listTrainers.Items[txtSearchId.Value];
+                listTrainers.TopItem.Selected = true;
+
+                e.Handled = e.SuppressKeyPress = true;
+            }
+        }
+
+        private void txtSearchName_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (rom == null || e.KeyCode != Keys.Enter || txtSearchName.TextLength <= 0)
+                return;
+
+            // get text to search for
+            var search = txtSearchName.Text.ToLower();
+
+            // get initial position to search from
+            var start = listTrainers.TopItem.Index;
+            if (start > 0)
+                start++;
+
+            var result = -1;
+
+        search:
+            // search names for text
+            for (int i = start; i < trainerCount; i++)
+            {
+                var name = names[i].ToLower();
+                if (name.IndexOf(search) >= 0)
+                {
+                    result = i;
+                    break;
+                }
+            }
+
+            if (result == -1 && start > 0)
+            {
+                // first time not found, search from top
+                start = 0;
+                goto search;
+            }
+            else if (result >= 0)
+            {
+                // result found
+                listTrainers.TopItem = listTrainers.Items[result];
+                listTrainers.TopItem.Selected = true;
+            }
+
+            e.Handled = e.SuppressKeyPress = true;
         }
     }
 }
