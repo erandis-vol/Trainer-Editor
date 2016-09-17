@@ -30,10 +30,7 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.repointAutomaticallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -48,12 +45,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.grpParty = new System.Windows.Forms.GroupBox();
-            this.p6 = new System.Windows.Forms.PictureBox();
-            this.p5 = new System.Windows.Forms.PictureBox();
-            this.p4 = new System.Windows.Forms.PictureBox();
-            this.p3 = new System.Windows.Forms.PictureBox();
-            this.p2 = new System.Windows.Forms.PictureBox();
-            this.p1 = new System.Windows.Forms.PictureBox();
             this.cAttack4 = new System.Windows.Forms.ComboBox();
             this.cAttack3 = new System.Windows.Forms.ComboBox();
             this.cAttack2 = new System.Windows.Forms.ComboBox();
@@ -76,7 +67,6 @@
             this.grpBasics = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.nSprite = new System.Windows.Forms.NumericUpDown();
-            this.pSprite = new System.Windows.Forms.PictureBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.rFemale = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
@@ -85,8 +75,20 @@
             this.grpClass = new System.Windows.Forms.GroupBox();
             this.txtClass = new System.Windows.Forms.TextBox();
             this.cClass = new System.Windows.Forms.ComboBox();
-            this.bPartyAdd = new System.Windows.Forms.Button();
             this.bPartyRemove = new System.Windows.Forms.Button();
+            this.bPartyAdd = new System.Windows.Forms.Button();
+            this.p6 = new System.Windows.Forms.PictureBox();
+            this.p5 = new System.Windows.Forms.PictureBox();
+            this.p4 = new System.Windows.Forms.PictureBox();
+            this.p3 = new System.Windows.Forms.PictureBox();
+            this.p2 = new System.Windows.Forms.PictureBox();
+            this.p1 = new System.Windows.Forms.PictureBox();
+            this.pSprite = new System.Windows.Forms.PictureBox();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtAI = new Lost.DecimalBox();
             this.txtMusic = new Lost.DecimalBox();
             this.txtSpecies = new Lost.HexBox();
@@ -97,24 +99,25 @@
             this.grpTrainer.SuspendLayout();
             this.grpOptions.SuspendLayout();
             this.grpParty.SuspendLayout();
+            this.grpItems.SuspendLayout();
+            this.grpBasics.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nSprite)).BeginInit();
+            this.grpClass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.p6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.p5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.p4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.p3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.p2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.p1)).BeginInit();
-            this.grpItems.SuspendLayout();
-            this.grpBasics.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nSprite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pSprite)).BeginInit();
-            this.grpClass.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.settingsToolStripMenuItem});
+            this.settingsToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(608, 24);
@@ -132,36 +135,10 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Image = global::Lost.Properties.Resources.OpenFolder_16x;
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.openToolStripMenuItem.Text = "&Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Image = global::Lost.Properties.Resources.Save_16x;
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.saveToolStripMenuItem.Text = "&Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Image = global::Lost.Properties.Resources.Close_16x;
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -329,54 +306,6 @@
             this.grpParty.TabIndex = 8;
             this.grpParty.TabStop = false;
             this.grpParty.Text = "Party";
-            // 
-            // p6
-            // 
-            this.p6.Location = new System.Drawing.Point(356, 19);
-            this.p6.Name = "p6";
-            this.p6.Size = new System.Drawing.Size(64, 64);
-            this.p6.TabIndex = 21;
-            this.p6.TabStop = false;
-            // 
-            // p5
-            // 
-            this.p5.Location = new System.Drawing.Point(286, 19);
-            this.p5.Name = "p5";
-            this.p5.Size = new System.Drawing.Size(64, 64);
-            this.p5.TabIndex = 20;
-            this.p5.TabStop = false;
-            // 
-            // p4
-            // 
-            this.p4.Location = new System.Drawing.Point(216, 19);
-            this.p4.Name = "p4";
-            this.p4.Size = new System.Drawing.Size(64, 64);
-            this.p4.TabIndex = 19;
-            this.p4.TabStop = false;
-            // 
-            // p3
-            // 
-            this.p3.Location = new System.Drawing.Point(146, 19);
-            this.p3.Name = "p3";
-            this.p3.Size = new System.Drawing.Size(64, 64);
-            this.p3.TabIndex = 18;
-            this.p3.TabStop = false;
-            // 
-            // p2
-            // 
-            this.p2.Location = new System.Drawing.Point(76, 19);
-            this.p2.Name = "p2";
-            this.p2.Size = new System.Drawing.Size(64, 64);
-            this.p2.TabIndex = 17;
-            this.p2.TabStop = false;
-            // 
-            // p1
-            // 
-            this.p1.Location = new System.Drawing.Point(6, 19);
-            this.p1.Name = "p1";
-            this.p1.Size = new System.Drawing.Size(64, 64);
-            this.p1.TabIndex = 16;
-            this.p1.TabStop = false;
             // 
             // cAttack4
             // 
@@ -606,14 +535,6 @@
             this.nSprite.TabIndex = 1;
             this.nSprite.ValueChanged += new System.EventHandler(this.nSprite_ValueChanged);
             // 
-            // pSprite
-            // 
-            this.pSprite.Location = new System.Drawing.Point(6, 35);
-            this.pSprite.Name = "pSprite";
-            this.pSprite.Size = new System.Drawing.Size(64, 64);
-            this.pSprite.TabIndex = 0;
-            this.pSprite.TabStop = false;
-            // 
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(76, 35);
@@ -696,25 +617,128 @@
             this.cClass.TabIndex = 0;
             this.cClass.SelectedIndexChanged += new System.EventHandler(this.cClass_SelectedIndexChanged);
             // 
-            // bPartyAdd
-            // 
-            this.bPartyAdd.Location = new System.Drawing.Point(90, 275);
-            this.bPartyAdd.Name = "bPartyAdd";
-            this.bPartyAdd.Size = new System.Drawing.Size(75, 23);
-            this.bPartyAdd.TabIndex = 25;
-            this.bPartyAdd.Text = "Add";
-            this.bPartyAdd.UseVisualStyleBackColor = true;
-            this.bPartyAdd.Click += new System.EventHandler(this.bPartyAdd_Click);
-            // 
             // bPartyRemove
             // 
+            this.bPartyRemove.Image = global::Lost.Properties.Resources.Remove_16x;
             this.bPartyRemove.Location = new System.Drawing.Point(171, 275);
             this.bPartyRemove.Name = "bPartyRemove";
             this.bPartyRemove.Size = new System.Drawing.Size(75, 23);
             this.bPartyRemove.TabIndex = 26;
             this.bPartyRemove.Text = "Remove";
+            this.bPartyRemove.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.bPartyRemove.UseVisualStyleBackColor = true;
             this.bPartyRemove.Click += new System.EventHandler(this.bPartyRemove_Click);
+            // 
+            // bPartyAdd
+            // 
+            this.bPartyAdd.Image = global::Lost.Properties.Resources.Add_16x;
+            this.bPartyAdd.Location = new System.Drawing.Point(90, 275);
+            this.bPartyAdd.Name = "bPartyAdd";
+            this.bPartyAdd.Size = new System.Drawing.Size(75, 23);
+            this.bPartyAdd.TabIndex = 25;
+            this.bPartyAdd.Text = "Add";
+            this.bPartyAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.bPartyAdd.UseVisualStyleBackColor = true;
+            this.bPartyAdd.Click += new System.EventHandler(this.bPartyAdd_Click);
+            // 
+            // p6
+            // 
+            this.p6.Location = new System.Drawing.Point(356, 19);
+            this.p6.Name = "p6";
+            this.p6.Size = new System.Drawing.Size(64, 64);
+            this.p6.TabIndex = 21;
+            this.p6.TabStop = false;
+            // 
+            // p5
+            // 
+            this.p5.Location = new System.Drawing.Point(286, 19);
+            this.p5.Name = "p5";
+            this.p5.Size = new System.Drawing.Size(64, 64);
+            this.p5.TabIndex = 20;
+            this.p5.TabStop = false;
+            // 
+            // p4
+            // 
+            this.p4.Location = new System.Drawing.Point(216, 19);
+            this.p4.Name = "p4";
+            this.p4.Size = new System.Drawing.Size(64, 64);
+            this.p4.TabIndex = 19;
+            this.p4.TabStop = false;
+            // 
+            // p3
+            // 
+            this.p3.Location = new System.Drawing.Point(146, 19);
+            this.p3.Name = "p3";
+            this.p3.Size = new System.Drawing.Size(64, 64);
+            this.p3.TabIndex = 18;
+            this.p3.TabStop = false;
+            // 
+            // p2
+            // 
+            this.p2.Location = new System.Drawing.Point(76, 19);
+            this.p2.Name = "p2";
+            this.p2.Size = new System.Drawing.Size(64, 64);
+            this.p2.TabIndex = 17;
+            this.p2.TabStop = false;
+            // 
+            // p1
+            // 
+            this.p1.Location = new System.Drawing.Point(6, 19);
+            this.p1.Name = "p1";
+            this.p1.Size = new System.Drawing.Size(64, 64);
+            this.p1.TabIndex = 16;
+            this.p1.TabStop = false;
+            // 
+            // pSprite
+            // 
+            this.pSprite.Location = new System.Drawing.Point(6, 35);
+            this.pSprite.Name = "pSprite";
+            this.pSprite.Size = new System.Drawing.Size(64, 64);
+            this.pSprite.TabIndex = 0;
+            this.pSprite.TabStop = false;
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Image = global::Lost.Properties.Resources.OpenFolder_16x;
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Text = "&Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Image = global::Lost.Properties.Resources.Save_16x;
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Text = "&Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Image = global::Lost.Properties.Resources.Close_16x;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "&Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Image = global::Lost.Properties.Resources.InformationSymbol_16x;
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "&About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // txtAI
             // 
@@ -809,19 +833,19 @@
             this.grpOptions.PerformLayout();
             this.grpParty.ResumeLayout(false);
             this.grpParty.PerformLayout();
+            this.grpItems.ResumeLayout(false);
+            this.grpBasics.ResumeLayout(false);
+            this.grpBasics.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nSprite)).EndInit();
+            this.grpClass.ResumeLayout(false);
+            this.grpClass.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.p6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.p5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.p4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.p3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.p2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.p1)).EndInit();
-            this.grpItems.ResumeLayout(false);
-            this.grpBasics.ResumeLayout(false);
-            this.grpBasics.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nSprite)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pSprite)).EndInit();
-            this.grpClass.ResumeLayout(false);
-            this.grpClass.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -894,6 +918,8 @@
         private HexBox txtClassID;
         private System.Windows.Forms.Button bPartyRemove;
         private System.Windows.Forms.Button bPartyAdd;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
 

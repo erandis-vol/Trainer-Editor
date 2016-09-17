@@ -101,6 +101,12 @@ namespace Lost
             Close();
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var a = new AboutDialog())
+                a.ShowDialog();
+        }
+
         private void listTrainers_SelectedIndexChanged(object sender, EventArgs e)
         {
             var index = -1;
