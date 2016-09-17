@@ -66,7 +66,7 @@ namespace Lost
             Index = index;
         }
 
-        public int Index { get; }
+        public int Index { get; set; }
 
         public ushort EVs { get; set; } = 0;
         public ushort Species { get; set; } = 0;

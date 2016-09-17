@@ -91,6 +91,8 @@ namespace Lost
                 return;
 
             SaveTrainer();
+            SaveClasses();
+
             rom.Save();
         }
 
@@ -148,11 +150,9 @@ namespace Lost
             chkMovesets.Checked = trainer.HasCustomAttacks;
 
             listParty.Items.Clear();
-            var p = 0;
             foreach (var pk in trainer.Party)
             {
-                var i = new ListViewItem((++p).ToString());
-                i.SubItems.Add(pokemon[pk.Species]);
+                var i = new ListViewItem(pokemon[pk.Species]);
                 i.SubItems.Add($"{pk.Level}");
 
                 listParty.Items.Add(i);
@@ -459,7 +459,7 @@ namespace Lost
             cSpecies.SelectedIndex = member.Species;
 
             partyPictureBoxes[member.Index].Image = LoadFrontSprite(member.Species);
-            listParty.Items[member.Index].SubItems[1].Text = pokemon[member.Species];
+            listParty.Items[member.Index].SubItems[0].Text = pokemon[member.Species];
             ignore = false;
         }
 
@@ -474,7 +474,7 @@ namespace Lost
             txtSpecies.Value = member.Species;
 
             partyPictureBoxes[member.Index].Image = LoadFrontSprite(member.Species);
-            listParty.Items[member.Index].SubItems[1].Text = pokemon[member.Species];
+            listParty.Items[member.Index].SubItems[0].Text = pokemon[member.Species];
             ignore = false;
         }
 
@@ -486,7 +486,7 @@ namespace Lost
             member.Level = (ushort)((member.Level & 0xFF00) | (byte)txtLevel.Value);
 
             ignore = true;
-            listParty.Items[member.Index].SubItems[2].Text = member.Level.ToString();
+            listParty.Items[member.Index].SubItems[1].Text = member.Level.ToString();
             ignore = false;
         }
 
@@ -515,6 +515,70 @@ namespace Lost
             member.Attacks[1] = (ushort)cAttack2.SelectedIndex;
             member.Attacks[2] = (ushort)cAttack3.SelectedIndex;
             member.Attacks[3] = (ushort)cAttack4.SelectedIndex;
+        }
+
+        private void bPartyAdd_Click(object sender, EventArgs e)
+        {
+            if (trainer == null || trainer.Party.Count >= 6)
+                return;
+
+            var p = new Pokemon(trainer.Party.Count);
+            trainer.Party.Add(p);
+
+            ignore = true;
+            var i = new ListViewItem(pokemon[0]);
+            i.SubItems.Add("0");
+            listParty.Items.Add(i);
+
+            grpParty.Text = $"Party (0x{trainer.PartyOffset:X7})";
+            if (trainer.RequiresRepoint) grpParty.Text += "*";
+
+            ShiftParty();
+            ignore = false;
+        }
+
+        private void bPartyRemove_Click(object sender, EventArgs e)
+        {
+            if (member == null || trainer.Party.Count <= 1)
+                return;
+
+            trainer.Party.RemoveAt(member.Index);
+
+            ignore = true;
+            listParty.Items.RemoveAt(member.Index);
+            member = null;
+
+            txtSpecies.Value = 0;
+            txtLevel.Value = 0;
+            txtEVs.Value = 0;
+            cSpecies.SelectedIndex = 0;
+            cHeld.SelectedIndex = 0;
+            cAttack1.SelectedIndex = 0;
+            cAttack2.SelectedIndex = 0;
+            cAttack3.SelectedIndex = 0;
+            cAttack4.SelectedIndex = 0;
+
+            grpParty.Text = $"Party (0x{trainer.PartyOffset:X7})";
+            if (trainer.RequiresRepoint) grpParty.Text += "*";
+
+            ShiftParty();
+
+            ignore = false;
+        }
+
+        void ShiftParty()
+        {
+            for (int i = 0; i < trainer.Party.Count; i++)
+                trainer.Party[i].Index = i;
+
+            for (int i = 0; i < 6; i++)
+            {
+                var sprite = invisible;
+                if (i < trainer.Party.Count)
+                    sprite = LoadFrontSprite(trainer.Party[i].Species);
+
+                partyPictureBoxes[i].Image = sprite;
+            }
         }
     }
 }

@@ -66,7 +66,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cSpecies = new System.Windows.Forms.ComboBox();
             this.listParty = new System.Windows.Forms.ListView();
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpItems = new System.Windows.Forms.GroupBox();
@@ -86,6 +85,8 @@
             this.grpClass = new System.Windows.Forms.GroupBox();
             this.txtClass = new System.Windows.Forms.TextBox();
             this.cClass = new System.Windows.Forms.ComboBox();
+            this.bPartyAdd = new System.Windows.Forms.Button();
+            this.bPartyRemove = new System.Windows.Forms.Button();
             this.txtAI = new Lost.DecimalBox();
             this.txtMusic = new Lost.DecimalBox();
             this.txtSpecies = new Lost.HexBox();
@@ -136,7 +137,7 @@
             this.openToolStripMenuItem.Image = global::Lost.Properties.Resources.OpenFolder_16x;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -145,20 +146,20 @@
             this.saveToolStripMenuItem.Image = global::Lost.Properties.Resources.Save_16x;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::Lost.Properties.Resources.Close_16x;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -293,12 +294,14 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(4, 16);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(43, 13);
+            this.label9.Size = new System.Drawing.Size(38, 13);
             this.label9.TabIndex = 0;
-            this.label9.Text = "Theme:";
+            this.label9.Text = "Music:";
             // 
             // grpParty
             // 
+            this.grpParty.Controls.Add(this.bPartyRemove);
+            this.grpParty.Controls.Add(this.bPartyAdd);
             this.grpParty.Controls.Add(this.txtSpecies);
             this.grpParty.Controls.Add(this.txtEVs);
             this.grpParty.Controls.Add(this.txtLevel);
@@ -490,7 +493,6 @@
             this.listParty.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.listParty.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5});
             this.listParty.FullRowSelect = true;
@@ -505,11 +507,6 @@
             this.listParty.UseCompatibleStateImageBehavior = false;
             this.listParty.View = System.Windows.Forms.View.Details;
             this.listParty.SelectedIndexChanged += new System.EventHandler(this.listParty_SelectedIndexChanged);
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "#";
-            this.columnHeader3.Width = 24;
             // 
             // columnHeader4
             // 
@@ -699,6 +696,26 @@
             this.cClass.TabIndex = 0;
             this.cClass.SelectedIndexChanged += new System.EventHandler(this.cClass_SelectedIndexChanged);
             // 
+            // bPartyAdd
+            // 
+            this.bPartyAdd.Location = new System.Drawing.Point(90, 275);
+            this.bPartyAdd.Name = "bPartyAdd";
+            this.bPartyAdd.Size = new System.Drawing.Size(75, 23);
+            this.bPartyAdd.TabIndex = 25;
+            this.bPartyAdd.Text = "Add";
+            this.bPartyAdd.UseVisualStyleBackColor = true;
+            this.bPartyAdd.Click += new System.EventHandler(this.bPartyAdd_Click);
+            // 
+            // bPartyRemove
+            // 
+            this.bPartyRemove.Location = new System.Drawing.Point(171, 275);
+            this.bPartyRemove.Name = "bPartyRemove";
+            this.bPartyRemove.Size = new System.Drawing.Size(75, 23);
+            this.bPartyRemove.TabIndex = 26;
+            this.bPartyRemove.Text = "Remove";
+            this.bPartyRemove.UseVisualStyleBackColor = true;
+            this.bPartyRemove.Click += new System.EventHandler(this.bPartyRemove_Click);
+            // 
             // txtAI
             // 
             this.txtAI.Location = new System.Drawing.Point(6, 71);
@@ -837,7 +854,6 @@
         private System.Windows.Forms.ComboBox cItem3;
         private System.Windows.Forms.GroupBox grpParty;
         private System.Windows.Forms.ListView listParty;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ComboBox cSpecies;
         private System.Windows.Forms.Label label3;
@@ -876,6 +892,8 @@
         private System.Windows.Forms.CheckBox chkHeldItems;
         private System.Windows.Forms.CheckBox chkDoubleBattle;
         private HexBox txtClassID;
+        private System.Windows.Forms.Button bPartyRemove;
+        private System.Windows.Forms.Button bPartyAdd;
     }
 }
 

@@ -163,6 +163,14 @@ namespace Lost
             classes = rom.ReadTextTable(13, classCount, CharacterEncoding.English);
         }
 
+        void SaveClasses()
+        {
+            var table = romInfo.GetInt32("trainer_classes", "Names", 16);
+
+            rom.Seek(table);
+            rom.WriteTextTable(classes, 13, CharacterEncoding.English);
+        }
+
         Bitmap LoadTrainerSprite(int id)
         {
             try
