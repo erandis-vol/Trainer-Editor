@@ -129,6 +129,9 @@
     <None Include="ROMs\BPRE.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Settings.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -153,6 +156,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\InformationSymbol_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Import_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Export_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

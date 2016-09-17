@@ -13,6 +13,8 @@ namespace Lost
 {
     public partial class MainForm : Form
     {
+        Settings settings;
+
         ROM rom;
         Settings romInfo;
 
@@ -26,6 +28,19 @@ namespace Lost
             InitializeComponent();
 
             partyPictureBoxes = new PictureBox[6] { p1, p2, p3, p4, p5, p6 };
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            if (!File.Exists("Settings.ini"))
+                return;
+
+            settings = Settings.FromFile("Settings.ini", "ini");
+
+            repointAutomaticallyToolStripMenuItem.Checked = settings.GetBoolean("Settings", "RepointAutomatically");
+            cleanRepointedTrainersToolStripMenuItem.Checked = settings.GetBoolean("Settings", "CleanRepointed");
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -132,7 +147,7 @@ namespace Lost
                     }
                     partyPictureBoxes[i].Image = sprite;
                 }
-                pSprite.Image = LoadTrainerSprite(trainer.Sprite);
+                pSprite.Image = LoadTrainerSprite(trainer.Sprite);  
             }
         }
 
@@ -147,6 +162,18 @@ namespace Lost
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 ExportTrainer(saveFileDialog1.FileName);
+        }
+
+        private void repointAutomaticallyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            settings.Set("Settings", "RepointAutomatically", repointAutomaticallyToolStripMenuItem.Checked);
+            settings.Save("Settings.ini", "ini");
+        }
+
+        private void cleanRepointedTrainersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            settings.Set("Settings", "CleanRepointed", cleanRepointedTrainersToolStripMenuItem.Checked);
+            settings.Save("Settings.ini", "ini");
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

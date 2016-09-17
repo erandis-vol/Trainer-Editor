@@ -34,8 +34,12 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trainerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.repointAutomaticallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cleanRepointedTrainersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -48,10 +52,15 @@
             this.chkHeldItems = new System.Windows.Forms.CheckBox();
             this.chkDoubleBattle = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.txtAI = new Lost.DecimalBox();
+            this.txtMusic = new Lost.DecimalBox();
             this.label9 = new System.Windows.Forms.Label();
             this.grpParty = new System.Windows.Forms.GroupBox();
             this.bPartyRemove = new System.Windows.Forms.Button();
             this.bPartyAdd = new System.Windows.Forms.Button();
+            this.txtSpecies = new Lost.HexBox();
+            this.txtEVs = new Lost.DecimalBox();
+            this.txtLevel = new Lost.DecimalBox();
             this.p6 = new System.Windows.Forms.PictureBox();
             this.p5 = new System.Windows.Forms.PictureBox();
             this.p4 = new System.Windows.Forms.PictureBox();
@@ -87,19 +96,10 @@
             this.rMale = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.grpClass = new System.Windows.Forms.GroupBox();
+            this.txtClassID = new Lost.HexBox();
             this.txtClass = new System.Windows.Forms.TextBox();
             this.cClass = new System.Windows.Forms.ComboBox();
-            this.cleanRepointedTrainersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.trainerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.txtAI = new Lost.DecimalBox();
-            this.txtMusic = new Lost.DecimalBox();
-            this.txtSpecies = new Lost.HexBox();
-            this.txtEVs = new Lost.DecimalBox();
-            this.txtLevel = new Lost.DecimalBox();
-            this.txtClassID = new Lost.HexBox();
             this.menuStrip1.SuspendLayout();
             this.grpTrainer.SuspendLayout();
             this.grpOptions.SuspendLayout();
@@ -146,7 +146,7 @@
             this.openToolStripMenuItem.Image = global::Lost.Properties.Resources.OpenFolder_16x;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -155,23 +155,50 @@
             this.saveToolStripMenuItem.Image = global::Lost.Properties.Resources.Save_16x;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::Lost.Properties.Resources.Close_16x;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // trainerToolStripMenuItem
+            // 
+            this.trainerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importToolStripMenuItem,
+            this.exportToolStripMenuItem});
+            this.trainerToolStripMenuItem.Name = "trainerToolStripMenuItem";
+            this.trainerToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.trainerToolStripMenuItem.Text = "&Trainer";
+            // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.Image = global::Lost.Properties.Resources.Import_16x;
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.importToolStripMenuItem.Text = "Import";
+            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.Image = global::Lost.Properties.Resources.Export_16x;
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.exportToolStripMenuItem.Text = "Export";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -190,6 +217,17 @@
             this.repointAutomaticallyToolStripMenuItem.Name = "repointAutomaticallyToolStripMenuItem";
             this.repointAutomaticallyToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.repointAutomaticallyToolStripMenuItem.Text = "&Repoint Automatically";
+            this.repointAutomaticallyToolStripMenuItem.Click += new System.EventHandler(this.repointAutomaticallyToolStripMenuItem_Click);
+            // 
+            // cleanRepointedTrainersToolStripMenuItem
+            // 
+            this.cleanRepointedTrainersToolStripMenuItem.Checked = true;
+            this.cleanRepointedTrainersToolStripMenuItem.CheckOnClick = true;
+            this.cleanRepointedTrainersToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cleanRepointedTrainersToolStripMenuItem.Name = "cleanRepointedTrainersToolStripMenuItem";
+            this.cleanRepointedTrainersToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.cleanRepointedTrainersToolStripMenuItem.Text = "&Clean Repointed Trainers";
+            this.cleanRepointedTrainersToolStripMenuItem.Click += new System.EventHandler(this.cleanRepointedTrainersToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -203,8 +241,9 @@
             // 
             this.aboutToolStripMenuItem.Image = global::Lost.Properties.Resources.InformationSymbol_16x;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.A)));
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -317,6 +356,30 @@
             this.label10.TabIndex = 24;
             this.label10.Text = "AI:";
             // 
+            // txtAI
+            // 
+            this.txtAI.Location = new System.Drawing.Point(6, 71);
+            this.txtAI.MaximumValue = 511;
+            this.txtAI.MinimumValue = 0;
+            this.txtAI.Name = "txtAI";
+            this.txtAI.Size = new System.Drawing.Size(48, 20);
+            this.txtAI.TabIndex = 23;
+            this.txtAI.Text = "0";
+            this.txtAI.Value = 0;
+            this.txtAI.TextChanged += new System.EventHandler(this.txtAI_TextChanged);
+            // 
+            // txtMusic
+            // 
+            this.txtMusic.Location = new System.Drawing.Point(6, 32);
+            this.txtMusic.MaximumValue = 127;
+            this.txtMusic.MinimumValue = 0;
+            this.txtMusic.Name = "txtMusic";
+            this.txtMusic.Size = new System.Drawing.Size(48, 20);
+            this.txtMusic.TabIndex = 23;
+            this.txtMusic.Text = "0";
+            this.txtMusic.Value = 0;
+            this.txtMusic.TextChanged += new System.EventHandler(this.txtMusic_TextChanged);
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -381,6 +444,42 @@
             this.bPartyAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.bPartyAdd.UseVisualStyleBackColor = true;
             this.bPartyAdd.Click += new System.EventHandler(this.bPartyAdd_Click);
+            // 
+            // txtSpecies
+            // 
+            this.txtSpecies.Location = new System.Drawing.Point(252, 102);
+            this.txtSpecies.MaximumValue = 2147483646;
+            this.txtSpecies.MinimumValue = 0;
+            this.txtSpecies.Name = "txtSpecies";
+            this.txtSpecies.Size = new System.Drawing.Size(48, 20);
+            this.txtSpecies.TabIndex = 24;
+            this.txtSpecies.Text = "0";
+            this.txtSpecies.Value = 0;
+            this.txtSpecies.TextChanged += new System.EventHandler(this.txtSpecies_TextChanged);
+            // 
+            // txtEVs
+            // 
+            this.txtEVs.Location = new System.Drawing.Point(306, 142);
+            this.txtEVs.MaximumValue = 511;
+            this.txtEVs.MinimumValue = 0;
+            this.txtEVs.Name = "txtEVs";
+            this.txtEVs.Size = new System.Drawing.Size(48, 20);
+            this.txtEVs.TabIndex = 23;
+            this.txtEVs.Text = "0";
+            this.txtEVs.Value = 0;
+            this.txtEVs.TextChanged += new System.EventHandler(this.txtEVs_TextChanged);
+            // 
+            // txtLevel
+            // 
+            this.txtLevel.Location = new System.Drawing.Point(252, 142);
+            this.txtLevel.MaximumValue = 255;
+            this.txtLevel.MinimumValue = 0;
+            this.txtLevel.Name = "txtLevel";
+            this.txtLevel.Size = new System.Drawing.Size(48, 20);
+            this.txtLevel.TabIndex = 22;
+            this.txtLevel.Text = "0";
+            this.txtLevel.Value = 0;
+            this.txtLevel.TextChanged += new System.EventHandler(this.txtLevel_TextChanged);
             // 
             // p6
             // 
@@ -669,7 +768,7 @@
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(76, 35);
-            this.txtName.MaxLength = 11;
+            this.txtName.MaxLength = 128;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(146, 20);
             this.txtName.TabIndex = 2;
@@ -731,9 +830,22 @@
             this.grpClass.TabStop = false;
             this.grpClass.Text = "Class";
             // 
+            // txtClassID
+            // 
+            this.txtClassID.Location = new System.Drawing.Point(6, 19);
+            this.txtClassID.MaximumValue = 2147483646;
+            this.txtClassID.MinimumValue = 0;
+            this.txtClassID.Name = "txtClassID";
+            this.txtClassID.Size = new System.Drawing.Size(48, 20);
+            this.txtClassID.TabIndex = 25;
+            this.txtClassID.Text = "0";
+            this.txtClassID.Value = 0;
+            this.txtClassID.TextChanged += new System.EventHandler(this.txtClassID_TextChanged);
+            // 
             // txtClass
             // 
             this.txtClass.Location = new System.Drawing.Point(60, 46);
+            this.txtClass.MaxLength = 128;
             this.txtClass.Name = "txtClass";
             this.txtClass.Size = new System.Drawing.Size(134, 20);
             this.txtClass.TabIndex = 1;
@@ -747,112 +859,6 @@
             this.cClass.Size = new System.Drawing.Size(134, 21);
             this.cClass.TabIndex = 0;
             this.cClass.SelectedIndexChanged += new System.EventHandler(this.cClass_SelectedIndexChanged);
-            // 
-            // cleanRepointedTrainersToolStripMenuItem
-            // 
-            this.cleanRepointedTrainersToolStripMenuItem.Checked = true;
-            this.cleanRepointedTrainersToolStripMenuItem.CheckOnClick = true;
-            this.cleanRepointedTrainersToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cleanRepointedTrainersToolStripMenuItem.Name = "cleanRepointedTrainersToolStripMenuItem";
-            this.cleanRepointedTrainersToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.cleanRepointedTrainersToolStripMenuItem.Text = "&Clean Repointed Trainers";
-            // 
-            // trainerToolStripMenuItem
-            // 
-            this.trainerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importToolStripMenuItem,
-            this.exportToolStripMenuItem});
-            this.trainerToolStripMenuItem.Name = "trainerToolStripMenuItem";
-            this.trainerToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
-            this.trainerToolStripMenuItem.Text = "&Trainer";
-            // 
-            // importToolStripMenuItem
-            // 
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.importToolStripMenuItem.Text = "Import";
-            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
-            // 
-            // exportToolStripMenuItem
-            // 
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exportToolStripMenuItem.Text = "Export";
-            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
-            // 
-            // txtAI
-            // 
-            this.txtAI.Location = new System.Drawing.Point(6, 71);
-            this.txtAI.MaximumValue = 511;
-            this.txtAI.MinimumValue = 0;
-            this.txtAI.Name = "txtAI";
-            this.txtAI.Size = new System.Drawing.Size(48, 20);
-            this.txtAI.TabIndex = 23;
-            this.txtAI.Text = "0";
-            this.txtAI.Value = 0;
-            this.txtAI.TextChanged += new System.EventHandler(this.txtAI_TextChanged);
-            // 
-            // txtMusic
-            // 
-            this.txtMusic.Location = new System.Drawing.Point(6, 32);
-            this.txtMusic.MaximumValue = 127;
-            this.txtMusic.MinimumValue = 0;
-            this.txtMusic.Name = "txtMusic";
-            this.txtMusic.Size = new System.Drawing.Size(48, 20);
-            this.txtMusic.TabIndex = 23;
-            this.txtMusic.Text = "0";
-            this.txtMusic.Value = 0;
-            this.txtMusic.TextChanged += new System.EventHandler(this.txtMusic_TextChanged);
-            // 
-            // txtSpecies
-            // 
-            this.txtSpecies.Location = new System.Drawing.Point(252, 102);
-            this.txtSpecies.MaximumValue = 2147483646;
-            this.txtSpecies.MinimumValue = 0;
-            this.txtSpecies.Name = "txtSpecies";
-            this.txtSpecies.Size = new System.Drawing.Size(48, 20);
-            this.txtSpecies.TabIndex = 24;
-            this.txtSpecies.Text = "0";
-            this.txtSpecies.Value = 0;
-            this.txtSpecies.TextChanged += new System.EventHandler(this.txtSpecies_TextChanged);
-            // 
-            // txtEVs
-            // 
-            this.txtEVs.Location = new System.Drawing.Point(306, 142);
-            this.txtEVs.MaximumValue = 511;
-            this.txtEVs.MinimumValue = 0;
-            this.txtEVs.Name = "txtEVs";
-            this.txtEVs.Size = new System.Drawing.Size(48, 20);
-            this.txtEVs.TabIndex = 23;
-            this.txtEVs.Text = "0";
-            this.txtEVs.Value = 0;
-            this.txtEVs.TextChanged += new System.EventHandler(this.txtEVs_TextChanged);
-            // 
-            // txtLevel
-            // 
-            this.txtLevel.Location = new System.Drawing.Point(252, 142);
-            this.txtLevel.MaximumValue = 255;
-            this.txtLevel.MinimumValue = 0;
-            this.txtLevel.Name = "txtLevel";
-            this.txtLevel.Size = new System.Drawing.Size(48, 20);
-            this.txtLevel.TabIndex = 22;
-            this.txtLevel.Text = "0";
-            this.txtLevel.Value = 0;
-            this.txtLevel.TextChanged += new System.EventHandler(this.txtLevel_TextChanged);
-            // 
-            // txtClassID
-            // 
-            this.txtClassID.Location = new System.Drawing.Point(6, 19);
-            this.txtClassID.MaximumValue = 2147483646;
-            this.txtClassID.MinimumValue = 0;
-            this.txtClassID.Name = "txtClassID";
-            this.txtClassID.Size = new System.Drawing.Size(48, 20);
-            this.txtClassID.TabIndex = 25;
-            this.txtClassID.Text = "0";
-            this.txtClassID.Value = 0;
-            this.txtClassID.TextChanged += new System.EventHandler(this.txtClassID_TextChanged);
             // 
             // MainForm
             // 
