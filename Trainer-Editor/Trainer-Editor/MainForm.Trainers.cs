@@ -80,26 +80,37 @@ namespace Lost
             {
                 int newOffset = -1;
 
+                // find freespace
                 if (repointAutomaticallyToolStripMenuItem.Checked)
                 {
                     newOffset = rom.FindFreeSpace(trainer.PartySize, 0xFF, 0x720000, 4);
                 }
                 else
                 {
-                    // TODO
-                    throw new NotImplementedException();
+                    using (var fs = new FreeSpaceDialog(rom, trainer.PartySize, 0x720000))
+                    {
+                        fs.Text = "Repoint Party";
+
+                        if (fs.ShowDialog() == DialogResult.OK)
+                            newOffset = fs.Offset;
+                    }
                 }
 
                 if (newOffset == -1)
                 {
                     MessageBox.Show("Unable to repoint party!\nIt was not saved.",
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                     return;
                 }
 
-                // TODO: overwrite old party with freespace
+                // overwrite old party with freespace
+                rom.Seek(newOffset);
+                for (int i = 0; i < trainer.OriginalPartySize; i++)
+                    rom.WriteByte(0xFF);
+
+                // set new offset for party
                 trainer.PartyOffset = newOffset;
-                Console.WriteLine("repointing to: 0x{0:X6}", newOffset);
             }
 
             rom.Seek(romInfo.GetInt32("trainers", "Data", 16) + trainer.Index * 40);
@@ -141,6 +152,9 @@ namespace Lost
                 if (!trainer.HasHeldItems)
                     rom.WriteUInt16(0);
             }
+
+            // finally, update original party size
+            trainer.OriginalPartySize = trainer.PartySize;
         }
 
         void LoadNames()
