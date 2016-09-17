@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Lost
@@ -105,7 +102,7 @@ namespace Lost
                 }
 
                 // overwrite old party with freespace
-                rom.Seek(newOffset);
+                rom.Seek(trainer.PartyOffset);
                 for (int i = 0; i < trainer.OriginalPartySize; i++)
                     rom.WriteByte(0xFF);
 
@@ -211,6 +208,83 @@ namespace Lost
             catch
             {
                 return invisible;
+            }
+        }
+
+        void ExportTrainer(string filename)
+        {
+            // dump a trainer to a file
+            if (trainer == null)
+                return;
+
+            using (var fs = File.Create(filename))
+            using (var bw = new BinaryWriter(fs))
+            {
+                // write trainer data
+                bw.Write(trainer.Name);
+                bw.Write(trainer.Class);
+                bw.Write(trainer.Gender);
+                bw.Write(trainer.Sprite);
+                bw.Write(trainer.Music);
+                for (int i = 0; i < 4; i++)
+                    bw.Write(trainer.Items[i]);
+
+                bw.Write(trainer.DoubleBattle);
+                bw.Write(trainer.HasCustomAttacks);
+                bw.Write(trainer.HasHeldItems);
+
+                // write party
+                bw.Write(trainer.Party.Count);
+                foreach (var p in trainer.Party)
+                {
+                    bw.Write(p.Species);
+                    bw.Write(p.Level);
+                    bw.Write(p.EVs);
+                    bw.Write(p.HeldItem);
+                    for (int i = 0; i < 4; i++)
+                        bw.Write(p.Attacks[i]);
+                }
+
+                // write game information
+                // # of attacks, etc
+                //bw.Write(pokemonCount);
+                //bw.Write(attackCount);
+            }
+        }
+
+        void ImportTrainer(string filename)
+        {
+            if (trainer == null)
+                return;
+
+            using (var fs = File.OpenRead(filename))
+            using (var br = new BinaryReader(fs))
+            {
+                trainer.Name = br.ReadString();
+                trainer.Class = br.ReadByte();
+                trainer.Gender = br.ReadByte();
+                trainer.Sprite = br.ReadByte();
+                trainer.Music = br.ReadByte();
+                for (int i = 0; i < 4; i++)
+                    trainer.Items[i] = br.ReadUInt16();
+
+                trainer.Party.Clear();
+                var count = br.ReadInt32();
+
+                for (int i = 0; i < count; i++)
+                {
+                    var p = new Pokemon(i);
+                    p.Species = br.ReadUInt16();
+                    p.Level = br.ReadUInt16();
+                    p.EVs = br.ReadUInt16();
+                    p.HeldItem = br.ReadUInt16();
+                    for (int j = 0; j < 4; j++)
+                        p.Attacks[j] = br.ReadUInt16();
+
+                    trainer.Party.Add(p);
+                }
+
+                // TODO: check that values <= game max for safe importing
             }
         }
     }
