@@ -96,6 +96,9 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtSearchName = new System.Windows.Forms.TextBox();
+            this.bRandomize = new System.Windows.Forms.Button();
             this.txtSearchId = new Lost.HexBox();
             this.txtAI = new Lost.DecimalBox();
             this.txtMusic = new Lost.DecimalBox();
@@ -103,8 +106,6 @@
             this.txtEVs = new Lost.DecimalBox();
             this.txtLevel = new Lost.DecimalBox();
             this.txtClassID = new Lost.HexBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.txtSearchName = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.grpTrainer.SuspendLayout();
             this.grpOptions.SuspendLayout();
@@ -151,7 +152,7 @@
             this.openToolStripMenuItem.Image = global::Lost.Properties.Resources.OpenFolder_16x;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -160,21 +161,21 @@
             this.saveToolStripMenuItem.Image = global::Lost.Properties.Resources.Save_16x;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::Lost.Properties.Resources.Close_16x;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -813,6 +814,33 @@
             this.textBox2.TabIndex = 27;
             this.textBox2.Text = "0x";
             // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(6, 19);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(17, 20);
+            this.textBox3.TabIndex = 28;
+            this.textBox3.Text = "0x";
+            // 
+            // txtSearchName
+            // 
+            this.txtSearchName.Location = new System.Drawing.Point(66, 389);
+            this.txtSearchName.Name = "txtSearchName";
+            this.txtSearchName.Size = new System.Drawing.Size(87, 20);
+            this.txtSearchName.TabIndex = 9;
+            this.txtSearchName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearchName_KeyUp);
+            // 
+            // bRandomize
+            // 
+            this.bRandomize.Location = new System.Drawing.Point(12, 612);
+            this.bRandomize.Name = "bRandomize";
+            this.bRandomize.Size = new System.Drawing.Size(141, 23);
+            this.bRandomize.TabIndex = 10;
+            this.bRandomize.Text = "Randomize";
+            this.bRandomize.UseVisualStyleBackColor = true;
+            this.bRandomize.Click += new System.EventHandler(this.bRandomize_Click);
+            // 
             // txtSearchId
             // 
             this.txtSearchId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -899,28 +927,12 @@
             this.txtClassID.Value = 0;
             this.txtClassID.TextChanged += new System.EventHandler(this.txtClassID_TextChanged);
             // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(6, 19);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(17, 20);
-            this.textBox3.TabIndex = 28;
-            this.textBox3.Text = "0x";
-            // 
-            // txtSearchName
-            // 
-            this.txtSearchName.Location = new System.Drawing.Point(66, 389);
-            this.txtSearchName.Name = "txtSearchName";
-            this.txtSearchName.Size = new System.Drawing.Size(87, 20);
-            this.txtSearchName.TabIndex = 9;
-            this.txtSearchName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearchName_KeyUp);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(608, 647);
+            this.Controls.Add(this.bRandomize);
             this.Controls.Add(this.txtSearchName);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.txtSearchId);
@@ -1037,6 +1049,7 @@
         private HexBox txtSearchId;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox txtSearchName;
+        private System.Windows.Forms.Button bRandomize;
     }
 }
 

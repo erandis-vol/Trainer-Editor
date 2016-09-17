@@ -650,5 +650,43 @@ namespace Lost
 
             e.Handled = e.SuppressKeyPress = true;
         }
+
+        private void bRandomize_Click(object sender, EventArgs e)
+        {
+            if (rom == null)
+                return;
+
+            // confirm that the user actually wants to randomize
+            if (MessageBox.Show("This will randomize every single trainer's party.\n" +
+                "Are you sure you want to do this?",
+                "Randomize?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            // (simple) randomize all trainers
+            RandomizeTrainers();
+            rom.Save();
+
+            // reload current trainer
+            if (trainer != null)
+            {
+                LoadTrainer(trainer.Index);
+
+                if (member != null)
+                    member = trainer.Party[member.Index];
+
+                DisplayTrainer();
+                DisplayPartyMember();
+
+                for (int i = 0; i < 6; i++)
+                {
+                    var sprite = invisible;
+                    if (i < trainer.Party.Count)
+                    {
+                        sprite = LoadFrontSprite(trainer.Party[i].Species);
+                    }
+                    partyPictureBoxes[i].Image = sprite;
+                }
+            }
+        }
     }
 }

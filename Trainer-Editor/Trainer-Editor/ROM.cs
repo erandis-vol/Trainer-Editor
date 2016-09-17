@@ -440,6 +440,34 @@ namespace Lost
             return -1;
         }
 
+        public void ReplaceAllPointers(int originalOffset, int newOffset)
+        {
+            // replace any pointers from original to new
+            var originalPtr = BitConverter.GetBytes(originalOffset | 0x8000000);
+            var newPtr = BitConverter.GetBytes(newOffset | 0x8000000);
+
+            for (int i = 0; i < buffer.Length - 4; i++)
+            {
+                var match = true;
+                for (int j = 0; j < 4; j++)
+                {
+                    if (buffer[i+j] != originalPtr[j])
+                    {
+                        match = false;
+                        break;
+                    }
+                }
+
+                if (match)
+                {
+                    Console.WriteLine("pointer at 0x{0:X7}", i);
+
+                    for (int j = 0; j < 4; j++)
+                        buffer[i++] = newPtr[j];
+                }
+            }
+        }
+
         #endregion
 
         #region Properties

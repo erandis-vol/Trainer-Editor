@@ -218,7 +218,37 @@ namespace Lost
                 rom.WritePointer(buffer[i]);
             
             // TODO: trainers with an offset of 0 result in error, allow for 'blank' trainer
-            // TODO: find and replace all pointers to table
+            //       find and replace all pointers to table
+            //       update ini
+        }
+
+        void RandomizeTrainers()
+        {
+            // preserve current trainer
+            var t = trainer;
+            var m = member;
+            var r = new Random();
+
+            // for every trainer, randomize just the species
+            // of every pokemon in their party
+            for (int i = 0; i < trainerCount; i++)
+            {
+                LoadTrainer(i);
+
+                foreach (var member in trainer.Party)
+                {
+                    var s = r.Next(0, pokemonCount);
+                    while ((s > 251 && s < 277) || (s > 411 && s < 440)) // unsafe indexes
+                        s = r.Next(0, pokemonCount);
+
+                    member.Species = (ushort)s;
+                }
+
+                SaveTrainer();
+            }
+
+            trainer = t;
+            member = m;
         }
 
         void LoadNames()
