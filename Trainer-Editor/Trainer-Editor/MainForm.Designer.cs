@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,10 +53,16 @@
             this.chkHeldItems = new System.Windows.Forms.CheckBox();
             this.chkDoubleBattle = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.txtAI = new Lost.DecimalBox();
+            this.txtMusic = new Lost.DecimalBox();
             this.label9 = new System.Windows.Forms.Label();
             this.grpParty = new System.Windows.Forms.GroupBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.bPartyRemove = new System.Windows.Forms.Button();
             this.bPartyAdd = new System.Windows.Forms.Button();
+            this.txtSpecies = new Lost.HexBox();
+            this.txtEVs = new Lost.DecimalBox();
+            this.txtLevel = new Lost.DecimalBox();
             this.p6 = new System.Windows.Forms.PictureBox();
             this.p5 = new System.Windows.Forms.PictureBox();
             this.p4 = new System.Windows.Forms.PictureBox();
@@ -91,21 +98,15 @@
             this.rMale = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.grpClass = new System.Windows.Forms.GroupBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtClassID = new Lost.HexBox();
             this.txtClass = new System.Windows.Forms.TextBox();
             this.cClass = new System.Windows.Forms.ComboBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.txtSearchName = new System.Windows.Forms.TextBox();
             this.bRandomize = new System.Windows.Forms.Button();
             this.txtSearchId = new Lost.HexBox();
-            this.txtAI = new Lost.DecimalBox();
-            this.txtMusic = new Lost.DecimalBox();
-            this.txtSpecies = new Lost.HexBox();
-            this.txtEVs = new Lost.DecimalBox();
-            this.txtLevel = new Lost.DecimalBox();
-            this.txtClassID = new Lost.HexBox();
             this.menuStrip1.SuspendLayout();
             this.grpTrainer.SuspendLayout();
             this.grpOptions.SuspendLayout();
@@ -152,7 +153,7 @@
             this.openToolStripMenuItem.Image = global::Lost.Properties.Resources.OpenFolder_16x;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -161,21 +162,21 @@
             this.saveToolStripMenuItem.Image = global::Lost.Properties.Resources.Save_16x;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::Lost.Properties.Resources.Close_16x;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -271,7 +272,7 @@
             this.listTrainers.Location = new System.Drawing.Point(12, 27);
             this.listTrainers.MultiSelect = false;
             this.listTrainers.Name = "listTrainers";
-            this.listTrainers.Size = new System.Drawing.Size(141, 356);
+            this.listTrainers.Size = new System.Drawing.Size(141, 409);
             this.listTrainers.TabIndex = 1;
             this.listTrainers.UseCompatibleStateImageBehavior = false;
             this.listTrainers.View = System.Windows.Forms.View.Details;
@@ -362,6 +363,30 @@
             this.label10.TabIndex = 24;
             this.label10.Text = "AI:";
             // 
+            // txtAI
+            // 
+            this.txtAI.Location = new System.Drawing.Point(6, 71);
+            this.txtAI.MaximumValue = 511;
+            this.txtAI.MinimumValue = 0;
+            this.txtAI.Name = "txtAI";
+            this.txtAI.Size = new System.Drawing.Size(48, 20);
+            this.txtAI.TabIndex = 23;
+            this.txtAI.Text = "0";
+            this.txtAI.Value = 0;
+            this.txtAI.TextChanged += new System.EventHandler(this.txtAI_TextChanged);
+            // 
+            // txtMusic
+            // 
+            this.txtMusic.Location = new System.Drawing.Point(6, 32);
+            this.txtMusic.MaximumValue = 127;
+            this.txtMusic.MinimumValue = 0;
+            this.txtMusic.Name = "txtMusic";
+            this.txtMusic.Size = new System.Drawing.Size(48, 20);
+            this.txtMusic.TabIndex = 23;
+            this.txtMusic.Text = "0";
+            this.txtMusic.Value = 0;
+            this.txtMusic.TextChanged += new System.EventHandler(this.txtMusic_TextChanged);
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -404,6 +429,15 @@
             this.grpParty.TabStop = false;
             this.grpParty.Text = "Party";
             // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(252, 102);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(17, 20);
+            this.textBox2.TabIndex = 27;
+            this.textBox2.Text = "0x";
+            // 
             // bPartyRemove
             // 
             this.bPartyRemove.Image = global::Lost.Properties.Resources.Remove_16x;
@@ -427,6 +461,42 @@
             this.bPartyAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.bPartyAdd.UseVisualStyleBackColor = true;
             this.bPartyAdd.Click += new System.EventHandler(this.bPartyAdd_Click);
+            // 
+            // txtSpecies
+            // 
+            this.txtSpecies.Location = new System.Drawing.Point(268, 102);
+            this.txtSpecies.MaximumValue = 2147483646;
+            this.txtSpecies.MinimumValue = 0;
+            this.txtSpecies.Name = "txtSpecies";
+            this.txtSpecies.Size = new System.Drawing.Size(32, 20);
+            this.txtSpecies.TabIndex = 24;
+            this.txtSpecies.Text = "0";
+            this.txtSpecies.Value = 0;
+            this.txtSpecies.TextChanged += new System.EventHandler(this.txtSpecies_TextChanged);
+            // 
+            // txtEVs
+            // 
+            this.txtEVs.Location = new System.Drawing.Point(306, 142);
+            this.txtEVs.MaximumValue = 511;
+            this.txtEVs.MinimumValue = 0;
+            this.txtEVs.Name = "txtEVs";
+            this.txtEVs.Size = new System.Drawing.Size(48, 20);
+            this.txtEVs.TabIndex = 23;
+            this.txtEVs.Text = "0";
+            this.txtEVs.Value = 0;
+            this.txtEVs.TextChanged += new System.EventHandler(this.txtEVs_TextChanged);
+            // 
+            // txtLevel
+            // 
+            this.txtLevel.Location = new System.Drawing.Point(252, 142);
+            this.txtLevel.MaximumValue = 255;
+            this.txtLevel.MinimumValue = 0;
+            this.txtLevel.Name = "txtLevel";
+            this.txtLevel.Size = new System.Drawing.Size(48, 20);
+            this.txtLevel.TabIndex = 22;
+            this.txtLevel.Text = "0";
+            this.txtLevel.Value = 0;
+            this.txtLevel.TextChanged += new System.EventHandler(this.txtLevel_TextChanged);
             // 
             // p6
             // 
@@ -778,6 +848,27 @@
             this.grpClass.TabStop = false;
             this.grpClass.Text = "Class";
             // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(6, 19);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(17, 20);
+            this.textBox3.TabIndex = 28;
+            this.textBox3.Text = "0x";
+            // 
+            // txtClassID
+            // 
+            this.txtClassID.Location = new System.Drawing.Point(22, 19);
+            this.txtClassID.MaximumValue = 2147483646;
+            this.txtClassID.MinimumValue = 0;
+            this.txtClassID.Name = "txtClassID";
+            this.txtClassID.Size = new System.Drawing.Size(32, 20);
+            this.txtClassID.TabIndex = 25;
+            this.txtClassID.Text = "0";
+            this.txtClassID.Value = 0;
+            this.txtClassID.TextChanged += new System.EventHandler(this.txtClassID_TextChanged);
+            // 
             // txtClass
             // 
             this.txtClass.Location = new System.Drawing.Point(60, 46);
@@ -798,34 +889,16 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 389);
+            this.textBox1.Location = new System.Drawing.Point(12, 442);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(17, 20);
             this.textBox1.TabIndex = 8;
             this.textBox1.Text = "0x";
             // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(252, 102);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(17, 20);
-            this.textBox2.TabIndex = 27;
-            this.textBox2.Text = "0x";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(6, 19);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(17, 20);
-            this.textBox3.TabIndex = 28;
-            this.textBox3.Text = "0x";
-            // 
             // txtSearchName
             // 
-            this.txtSearchName.Location = new System.Drawing.Point(66, 389);
+            this.txtSearchName.Location = new System.Drawing.Point(66, 442);
             this.txtSearchName.Name = "txtSearchName";
             this.txtSearchName.Size = new System.Drawing.Size(87, 20);
             this.txtSearchName.TabIndex = 9;
@@ -845,7 +918,7 @@
             // 
             this.txtSearchId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearchId.Location = new System.Drawing.Point(28, 389);
+            this.txtSearchId.Location = new System.Drawing.Point(28, 442);
             this.txtSearchId.MaximumValue = 33554431;
             this.txtSearchId.MinimumValue = 0;
             this.txtSearchId.Name = "txtSearchId";
@@ -854,78 +927,6 @@
             this.txtSearchId.Text = "0";
             this.txtSearchId.Value = 0;
             this.txtSearchId.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearchId_KeyUp);
-            // 
-            // txtAI
-            // 
-            this.txtAI.Location = new System.Drawing.Point(6, 71);
-            this.txtAI.MaximumValue = 511;
-            this.txtAI.MinimumValue = 0;
-            this.txtAI.Name = "txtAI";
-            this.txtAI.Size = new System.Drawing.Size(48, 20);
-            this.txtAI.TabIndex = 23;
-            this.txtAI.Text = "0";
-            this.txtAI.Value = 0;
-            this.txtAI.TextChanged += new System.EventHandler(this.txtAI_TextChanged);
-            // 
-            // txtMusic
-            // 
-            this.txtMusic.Location = new System.Drawing.Point(6, 32);
-            this.txtMusic.MaximumValue = 127;
-            this.txtMusic.MinimumValue = 0;
-            this.txtMusic.Name = "txtMusic";
-            this.txtMusic.Size = new System.Drawing.Size(48, 20);
-            this.txtMusic.TabIndex = 23;
-            this.txtMusic.Text = "0";
-            this.txtMusic.Value = 0;
-            this.txtMusic.TextChanged += new System.EventHandler(this.txtMusic_TextChanged);
-            // 
-            // txtSpecies
-            // 
-            this.txtSpecies.Location = new System.Drawing.Point(268, 102);
-            this.txtSpecies.MaximumValue = 2147483646;
-            this.txtSpecies.MinimumValue = 0;
-            this.txtSpecies.Name = "txtSpecies";
-            this.txtSpecies.Size = new System.Drawing.Size(32, 20);
-            this.txtSpecies.TabIndex = 24;
-            this.txtSpecies.Text = "0";
-            this.txtSpecies.Value = 0;
-            this.txtSpecies.TextChanged += new System.EventHandler(this.txtSpecies_TextChanged);
-            // 
-            // txtEVs
-            // 
-            this.txtEVs.Location = new System.Drawing.Point(306, 142);
-            this.txtEVs.MaximumValue = 511;
-            this.txtEVs.MinimumValue = 0;
-            this.txtEVs.Name = "txtEVs";
-            this.txtEVs.Size = new System.Drawing.Size(48, 20);
-            this.txtEVs.TabIndex = 23;
-            this.txtEVs.Text = "0";
-            this.txtEVs.Value = 0;
-            this.txtEVs.TextChanged += new System.EventHandler(this.txtEVs_TextChanged);
-            // 
-            // txtLevel
-            // 
-            this.txtLevel.Location = new System.Drawing.Point(252, 142);
-            this.txtLevel.MaximumValue = 255;
-            this.txtLevel.MinimumValue = 0;
-            this.txtLevel.Name = "txtLevel";
-            this.txtLevel.Size = new System.Drawing.Size(48, 20);
-            this.txtLevel.TabIndex = 22;
-            this.txtLevel.Text = "0";
-            this.txtLevel.Value = 0;
-            this.txtLevel.TextChanged += new System.EventHandler(this.txtLevel_TextChanged);
-            // 
-            // txtClassID
-            // 
-            this.txtClassID.Location = new System.Drawing.Point(22, 19);
-            this.txtClassID.MaximumValue = 2147483646;
-            this.txtClassID.MinimumValue = 0;
-            this.txtClassID.Name = "txtClassID";
-            this.txtClassID.Size = new System.Drawing.Size(32, 20);
-            this.txtClassID.TabIndex = 25;
-            this.txtClassID.Text = "0";
-            this.txtClassID.Value = 0;
-            this.txtClassID.TextChanged += new System.EventHandler(this.txtClassID_TextChanged);
             // 
             // MainForm
             // 
@@ -940,6 +941,7 @@
             this.Controls.Add(this.listTrainers);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainForm";

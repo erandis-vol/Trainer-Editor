@@ -1,12 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Lost
@@ -41,6 +38,12 @@ namespace Lost
 
             repointAutomaticallyToolStripMenuItem.Checked = settings.GetBoolean("Settings", "RepointAutomatically");
             cleanRepointedTrainersToolStripMenuItem.Checked = settings.GetBoolean("Settings", "CleanRepointed");
+
+            grpTrainer.Enabled = false;
+            bRandomize.Enabled = false;
+            saveToolStripMenuItem.Enabled = false;
+            importToolStripMenuItem.Enabled = false;
+            exportToolStripMenuItem.Enabled = false;
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -72,6 +75,12 @@ namespace Lost
                 listTrainers.Items.Add(item);
             }
             txtSearchId.MaximumValue = trainerCount - 1;
+
+            grpTrainer.Enabled = true;
+            bRandomize.Enabled = true;
+            saveToolStripMenuItem.Enabled = true;
+            importToolStripMenuItem.Enabled = true;
+            exportToolStripMenuItem.Enabled = true;
 
             cClass.Items.Clear();
             cClass.Items.AddRange(classes);
@@ -255,7 +264,7 @@ namespace Lost
                     romInfo = Settings.FromFile($@"ROMs\{temp.Code}.ini", "ini");
 
                     // copy and save to custom settings
-                    romInfo.Save(custom, "ini");
+                    //romInfo.Save(custom, "ini");
                 }
             }
             catch (Exception ex)
