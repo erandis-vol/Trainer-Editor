@@ -18,7 +18,7 @@ namespace Lost
             var nameTable = romInfo.GetInt32("pokemon", "Names", 16);
 
             rom.Seek(nameTable);
-            pokemon = rom.ReadTextTable(11, pokemonCount, CharacterEncoding.English);
+            pokemon = rom.ReadTextTable(11, pokemonCount, TextTable.Encoding.English);
         }
 
         void LoadAttacks()
@@ -26,7 +26,7 @@ namespace Lost
             var table = romInfo.GetInt32("attacks", "Names", 16);
 
             rom.Seek(table);
-            attacks = rom.ReadTextTable(13, attackCount, CharacterEncoding.English);
+            attacks = rom.ReadTextTable(13, attackCount, TextTable.Encoding.English);
         }
 
         void LoadItems()
@@ -37,7 +37,7 @@ namespace Lost
             for (int i = 0; i < itemCount; i++)
             {
                 rom.Seek(firstItem + i * 44);
-                items[i] = rom.ReadText(14, CharacterEncoding.English);
+                items[i] = rom.ReadText(14, TextTable.Encoding.English);
             }
         }
 
@@ -51,7 +51,7 @@ namespace Lost
                 var spriteOffset = rom.ReadPointer();
 
                 rom.Seek(spriteOffset);
-                var sprite = rom.ReadCompressedBytes();
+                var sprite = rom.ReadLZ77CompressedBytes();
 
                 // ------------------------------
                 // read compressed palette
@@ -59,7 +59,7 @@ namespace Lost
                 var paletteOffset = rom.ReadPointer();
 
                 rom.Seek(paletteOffset);
-                var palette = rom.ReadCompressedPalette();
+                var palette = rom.ReadLZ77CompressedPalette();
 
                 // ------------------------------
                 return Sprites.Draw16(sprite, 8, 8, palette);

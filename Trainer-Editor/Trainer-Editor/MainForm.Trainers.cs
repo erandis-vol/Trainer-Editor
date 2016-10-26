@@ -31,7 +31,7 @@ namespace Lost
                 trainer.Gender = (byte)((genderMusic & 128) >> 7);
                 trainer.Music = (byte)(genderMusic & 127);
             trainer.Sprite = rom.ReadByte();
-            trainer.Name = rom.ReadText(12, CharacterEncoding.English);
+            trainer.Name = rom.ReadText(12, TextTable.Encoding.English);
             for (int i = 0; i < 4; i++)
                 trainer.Items[i] = rom.ReadUInt16();
             trainer.DoubleBattle = rom.ReadByte() == 1;
@@ -121,7 +121,7 @@ namespace Lost
             rom.WriteByte(trainer.Class);
             rom.WriteByte((byte)((trainer.Gender << 7) + trainer.Music));
             rom.WriteByte(trainer.Sprite);
-            rom.WriteText(trainer.Name, 12, CharacterEncoding.English);
+            rom.WriteText(trainer.Name, 12, TextTable.Encoding.English);
             for (int i = 0; i < 4; i++)
                 rom.WriteUInt16(trainer.Items[i]);
             rom.WriteByte((byte)(trainer.DoubleBattle ? 1 : 0));
@@ -259,7 +259,7 @@ namespace Lost
             for (int i = 0; i < trainerCount; i++)
             {
                 rom.Seek(firstTrainer + i * 40 + 4);
-                names[i] = rom.ReadText(12, CharacterEncoding.English);
+                names[i] = rom.ReadText(12, TextTable.Encoding.English);
             }
         }
 
@@ -268,7 +268,7 @@ namespace Lost
             var table = romInfo.GetInt32("trainer_classes", "Names", 16);
 
             rom.Seek(table);
-            classes = rom.ReadTextTable(13, classCount, CharacterEncoding.English);
+            classes = rom.ReadTextTable(13, classCount, TextTable.Encoding.English);
         }
 
         void SaveClasses()
@@ -276,7 +276,7 @@ namespace Lost
             var table = romInfo.GetInt32("trainer_classes", "Names", 16);
 
             rom.Seek(table);
-            rom.WriteTextTable(classes, 13, CharacterEncoding.English);
+            rom.WriteTextTable(classes, 13, TextTable.Encoding.English);
         }
 
         Bitmap LoadTrainerSprite(int id)
@@ -289,7 +289,7 @@ namespace Lost
                 var spriteOffset = rom.ReadPointer();
 
                 rom.Seek(spriteOffset);
-                var sprite = rom.ReadCompressedBytes();
+                var sprite = rom.ReadLZ77CompressedBytes();
 
                 // ------------------------------
                 // read compressed palette
@@ -297,13 +297,14 @@ namespace Lost
                 var paletteOffset = rom.ReadPointer();
 
                 rom.Seek(paletteOffset);
-                var palette = rom.ReadCompressedPalette();
+                var palette = rom.ReadLZ77CompressedPalette();
 
                 // ------------------------------
                 return Sprites.Draw16(sprite, 8, 8, palette);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + "\n" + ex.StackTrace);
                 return invisible;
             }
         }

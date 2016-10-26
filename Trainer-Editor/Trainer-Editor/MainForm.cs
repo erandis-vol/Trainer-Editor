@@ -121,8 +121,6 @@ namespace Lost
             SaveTrainer();
             SaveClasses();
 
-            rom.Save();
-
             grpParty.Text = $"Party (0x{trainer.PartyOffset:X7})";
 
             listTrainers.Items[trainer.Index].SubItems[1].Text = trainer.Name;
@@ -673,7 +671,6 @@ namespace Lost
 
             // (simple) randomize all trainers
             RandomizeTrainers();
-            rom.Save();
 
             // reload current trainer
             if (trainer != null)

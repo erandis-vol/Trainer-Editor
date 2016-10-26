@@ -4,15 +4,19 @@ using System.Text;
 
 namespace Lost
 {
-    public enum CharacterEncoding
-    {
-        English,
-        Japanese
-    }
-
+    /// <summary>
+    /// Represents the English and Japanese GBA Pokémon character encodings.
+    /// </summary>
     public static class TextTable
     {
-        // http://bulbapedia.bulbagarden.net/wiki/Character_encoding_in_Generation_III
+        // see: http://bulbapedia.bulbagarden.net/wiki/Character_encoding_in_Generation_III
+
+        // Japanese and non-Japanese games have different encodings
+        public enum Encoding
+        {
+            English,
+            Japanese
+        }
 
         public static readonly string[] EnglishTable = {
             " ", "À", "Á", "Â", "Ç", "È", "É", "Ê", "Ë", "Ì", "こ", "Î", "Ï", "Ò", "Ó", "Ô",
@@ -52,7 +56,7 @@ namespace Lost
             ":", "Ä", "Ö", "Ü", "ä", "ö", "ü", "[^]", "[v]", "[<]", "\\l", "\\p", "\\c", "\\v", "\\n", "\\x",
         };
 
-        public static string GetString(byte[] bytes, CharacterEncoding encoding = CharacterEncoding.English)
+        public static string GetString(byte[] bytes, Encoding encoding)
         {
             var sb = new StringBuilder();
             for (int i = 0; i < bytes.Length; i++)
@@ -202,12 +206,10 @@ namespace Lost
                 }
                 else if (b == 0xFF)
                 {
-                    // terminate string
                     break;
                 }
                 else
                 {
-                    // add character from japanese or english table
                     //sb.Append(encoding == CharacterEncoding.Japanese ? JapaneseTable[b] : EnglishTable[b]);
                     sb.Append(GetCharacter(b, encoding));
                 }
@@ -216,18 +218,31 @@ namespace Lost
             return sb.ToString();
         }
 
-        public static string GetCharacter(byte b, CharacterEncoding encoding = CharacterEncoding.English)
+        public static string GetCharacter(byte b, Encoding encoding)
         {
-            return encoding == CharacterEncoding.Japanese ? JapaneseTable[b] : EnglishTable[b];
+            return encoding == Encoding.Japanese ? JapaneseTable[b] : EnglishTable[b];
         }
 
-        public static byte[] GetBytes(string str, CharacterEncoding encoding = CharacterEncoding.English)
+        public static bool TryGetBytes(string str, Encoding encoding, out byte[] bytes)
         {
-            // ignore an empty string
-            if (str.Length == 0)
+            try
+            {
+                bytes = GetBytes(str, encoding);
+                return true;
+            }
+            catch
+            {
+                bytes = null;
+                return false;
+            }
+        }
+
+        public static byte[] GetBytes(string str, Encoding encoding)
+        {
+            if (string.IsNullOrEmpty(str))
                 return new byte[0];
 
-            // split the string into "characters"
+            // split the string ("characters")
             var chars = new List<string>();
             for (int i = 0; i < str.Length; i++)
             {
@@ -278,7 +293,7 @@ namespace Lost
             var buffer = new List<byte>();
             foreach (var ch in chars)
             {
-                if (ch[0] == '[')
+                if (ch.StartsWith("[") && ch.EndsWith("]"))
                 {
                     // [] stuff
                     switch (ch.Substring(1, ch.Length - 2))
@@ -338,7 +353,7 @@ namespace Lost
                             break;
                     }
                 }
-                else if (ch == "\\h")
+                else if (ch.StartsWith(@"\h"))
                 {
                     // hex value
                     // TODO: safe checking
@@ -357,20 +372,44 @@ namespace Lost
             return buffer.ToArray();
         }
 
-        public static byte GetByte(string c, CharacterEncoding encoding = CharacterEncoding.English)
+        public static bool TryGetByte(char c, Encoding encoding, out byte value)
         {
-            for (int i = 0; i <= 255; i++)
+            return TryGetByte(c.ToString(), encoding, out value);
+        }
+
+        public static bool TryGetByte(string c, Encoding encoding, out byte value)
+        {
+            string[] table = (encoding == Encoding.English ? EnglishTable : JapaneseTable);
+            value = 0;
+
+            for (int i = 0; i <= 0xFF; i++)
             {
-                if (encoding == CharacterEncoding.English && EnglishTable[i] == c)
+                if (table[i] == c)
                 {
-                    return (byte)i;
-                }
-                else if (JapaneseTable[i] == c)
-                {
-                    return (byte)i;
+                    value = (byte)i;
+                    return true;
                 }
             }
-            return 0;
+
+            return false;
+        }
+
+        public static byte GetByte(char c, Encoding encoding)
+        {
+            return GetByte(c.ToString(), encoding);
+        }
+
+        public static byte GetByte(string c, Encoding encoding)
+        {
+            byte value;
+            if (TryGetByte(c, encoding, out value))
+            {
+                return value;
+            }
+            else
+            {
+                throw new Exception($"{c} could not be found in the table!");
+            }
         }
     }
 }
