@@ -18,23 +18,25 @@ namespace Hopeless
 
         void LoadPokemonNames()
         {
-            var nameTable = romInfo.GetInt32("pokemon", "Names", 16);
-
-            rom.Seek(nameTable);
+            var nameTablePtr = romInfo.GetInt32("pokemon", "Names", 16);
+            rom.Seek(nameTablePtr);
+            rom.ReadPointerAndSeek();
             pokemon = rom.ReadTextTable(11, pokemonCount, Table.Encoding.English);
         }
 
         void LoadAttacks()
         {
-            var table = romInfo.GetInt32("attacks", "Names", 16);
-
-            rom.Seek(table);
+            var tablePtr = romInfo.GetInt32("attacks", "Names", 16);
+            rom.Seek(tablePtr);
+            rom.ReadPointerAndSeek();
             attacks = rom.ReadTextTable(13, attackCount, Table.Encoding.English);
         }
 
         void LoadItems()
         {
-            var firstItem = romInfo.GetInt32("items", "Data", 16);
+            var firstItemPtr = romInfo.GetInt32("items", "Data", 16);
+            rom.Seek(firstItemPtr);
+            var firstItem = rom.ReadPointer();
 
             items = new string[itemCount];
             for (int i = 0; i < itemCount; i++)
@@ -46,32 +48,38 @@ namespace Hopeless
 
         Image LoadFrontSprite(int id)
         {
+            Sprite sprite;
+            Palette palette;
+
             try
             {
                 // ------------------------------
                 // read compressed sprite
-                rom.Seek(romInfo.GetInt32("pokemon_sprites", "FrontData", 16) + id * 8);
-                var spriteOffset = rom.ReadPointer();
-
-                rom.Seek(spriteOffset);
-                var sprite = rom.ReadCompressedSprite(BitDepth.Four);
+                rom.Seek(romInfo.GetInt32("pokemon_sprites", "FrontData", 16));
+                rom.ReadPointerAndSeek();
+                rom.Skip(id * 8);
+                rom.ReadPointerAndSeek();
+                sprite = rom.ReadCompressedSprite4();
 
                 // ------------------------------
                 // read compressed palette
-                rom.Seek(romInfo.GetInt32("pokemon_sprites", "RegularPalettes", 16) + id * 8);
-                var paletteOffset = rom.ReadPointer();
-
-                rom.Seek(paletteOffset);
-                var palette = rom.ReadCompressedPalette();
+                rom.Seek(romInfo.GetInt32("pokemon_sprites", "RegularPalettes", 16));
+                rom.ReadPointerAndSeek();
+                rom.Skip(id * 8);
+                rom.ReadPointerAndSeek();
+                if (rom.PeekCompressed())
+                    palette = rom.ReadCompressedPalette();
+                else
+                    palette = rom.ReadPalette(16);
 
                 // ------------------------------
-                //return Sprites.Draw16(sprite, 8, 8, palette);
                 return sprite.ToImage(8, 8, palette, false);
             }
             catch (Exception ex)
             {
+#if DEBUG
                 Console.WriteLine(ex.Message + "\n" + ex.StackTrace);
-
+#endif
                 return invisible;
             }
         }

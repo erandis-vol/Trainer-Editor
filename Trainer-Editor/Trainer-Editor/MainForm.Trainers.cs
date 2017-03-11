@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using GBAHL.Drawing;
 using GBAHL.Text;
 
 namespace Hopeless
@@ -21,7 +22,10 @@ namespace Hopeless
         void LoadTrainer(int index)
         {
             trainer = new Trainer(index);
-            rom.Seek(romInfo.GetInt32("trainers", "Data", 16) + index * 40);
+            //rom.Seek(romInfo.GetInt32("trainers", "Data", 16) + index * 40);
+            rom.Seek(romInfo.GetInt32("trainers", "Data", 16));
+            rom.ReadPointerAndSeek();
+            rom.Skip(index * 40);
 
             // read trainer data
             var flags = rom.ReadByte();
@@ -116,7 +120,10 @@ namespace Hopeless
                 trainer.PartyOffset = newOffset;
             }
 
-            rom.Seek(romInfo.GetInt32("trainers", "Data", 16) + trainer.Index * 40);
+            //rom.Seek(romInfo.GetInt32("trainers", "Data", 16) + trainer.Index * 40);
+            rom.Seek(romInfo.GetInt32("trainers", "Data", 16));
+            rom.ReadPointerAndSeek();
+            rom.Skip(trainer.Index * 40);
 
             // write trainer data
             rom.WriteByte((byte)((trainer.HasCustomAttacks ? 1 : 0) + (trainer.HasHeldItems ? 2 : 0)));
@@ -138,7 +145,6 @@ namespace Hopeless
 
             // write party
             rom.Seek(trainer.PartyOffset);
-
             foreach (var p in trainer.Party)
             {
                 rom.WriteUInt16(p.EVs);
@@ -256,8 +262,12 @@ namespace Hopeless
 
         void LoadNames()
         {
-            var firstTrainer = romInfo.GetInt32("trainers", "Data", 16);
+            // Read offset of names
+            var firstTrainerPtr = romInfo.GetInt32("trainers", "Data", 16);
+            rom.Seek(firstTrainerPtr);
+            var firstTrainer = rom.ReadPointer();
 
+            // Read names
             names = new string[trainerCount];
             for (int i = 0; i < trainerCount; i++)
             {
@@ -268,47 +278,57 @@ namespace Hopeless
 
         void LoadClasses()
         {
-            var table = romInfo.GetInt32("trainer_classes", "Names", 16);
+            var tablePtr = romInfo.GetInt32("trainer_classes", "Names", 16);
+            rom.Seek(tablePtr);
 
-            rom.Seek(table);
+            rom.ReadPointerAndSeek();
             classes = rom.ReadTextTable(13, classCount, Table.Encoding.English);
         }
 
         void SaveClasses()
         {
-            var table = romInfo.GetInt32("trainer_classes", "Names", 16);
+            var tablePtr = romInfo.GetInt32("trainer_classes", "Names", 16);
+            rom.Seek(tablePtr);
 
-            rom.Seek(table);
+            rom.ReadPointerAndSeek();
             rom.WriteTextTable(classes, 13, Table.Encoding.English);
         }
 
         Image LoadTrainerSprite(int id)
         {
+            Sprite sprite;
+            Palette palette;
+
             try
             {
                 // ------------------------------
                 // read compressed sprite
-                rom.Seek(romInfo.GetInt32("trainer_sprites", "Data", 16) + id * 8);
-                var spriteOffset = rom.ReadPointer();
-
-                rom.Seek(spriteOffset);
-                var sprite = rom.ReadCompressedSprite4();
+                rom.Seek(romInfo.GetInt32("trainer_sprites", "Data", 16));
+                rom.ReadPointerAndSeek();
+                rom.Skip(id * 8);
+                rom.ReadPointerAndSeek();
+                sprite = rom.ReadCompressedSprite4();
 
                 // ------------------------------
                 // read compressed palette
-                rom.Seek(romInfo.GetInt32("trainer_sprites", "Palettes", 16) + id * 8);
-                var paletteOffset = rom.ReadPointer();
+                rom.Seek(romInfo.GetInt32("trainer_sprites", "Palettes", 16));
+                rom.ReadPointerAndSeek();
+                rom.Skip(id * 8);
+                rom.ReadPointerAndSeek();
 
-                rom.Seek(paletteOffset);
-                var palette = rom.ReadCompressedPalette();
+                if (rom.PeekCompressed())
+                    palette = rom.ReadCompressedPalette();
+                else
+                    palette = rom.ReadPalette(16);
 
                 // ------------------------------
-                //return Sprites.Draw16(sprite, 8, 8, palette);
                 return sprite.ToImage(8, 8, palette, false);
             }
             catch (Exception ex)
             {
+#if DEBUG
                 Console.WriteLine(ex.Message + "\n" + ex.StackTrace);
+#endif
                 return invisible;
             }
         }

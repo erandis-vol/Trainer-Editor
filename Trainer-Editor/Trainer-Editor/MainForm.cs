@@ -239,53 +239,43 @@ namespace Hopeless
 
         bool OpenROM(string filename)
         {
-            bool success = true;
             ROM temp = null;
 
-            var custom = Path.ChangeExtension(filename, ".hte");
-
+            //var custom = Path.ChangeExtension(filename, ".hte");
             try
             {
-                // create a new ROM
+                // open ROM file
                 temp = new ROM(filename);
 
-                // first check for custom settings
-                if (File.Exists(custom))
-                {
-                    romInfo = Settings.FromFile(custom, Settings.Format.INI);
+                // check for settings file
+                if (!File.Exists($@"ROMs\{temp.Code}.ini")) {
+                    MessageBox.Show("ROM code {temp.Code} is not supported!",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    temp?.Dispose();
+                    return false;
                 }
-                else
-                {
-                    // check that it is valid
-                    if (!File.Exists($@"ROMs\{temp.Code}.ini"))
-                        throw new Exception($"ROM type {temp.Code} is not supported!");
 
-                    // load default settings
-                    romInfo = Settings.FromFile($@"ROMs\{temp.Code}.ini", Settings.Format.INI);
-
-                    // copy and save to custom settings
-                    romInfo.Save(custom, Settings.Format.INI);
-                }
+                // open settings file
+                romInfo = Settings.FromFile($@"ROMs\{temp.Code}.ini", Settings.Format.INI);
             }
             catch (Exception ex)
             {
+#if DEBUG
                 MessageBox.Show($"{ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#else
+                MessageBox.Show($"There was an error opening the ROM.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#endif
 
-                success = false;
-            }
-
-            // finish
-            if (success)
-            {
-                rom?.Dispose();
-                rom = temp;
-            }
-            else
-            {
                 temp?.Dispose();
+                return false;
             }
-            return success;
+
+            // set new open ROM and report success
+            rom?.Dispose();
+            rom = temp;
+            return true;
         }
 
         void LoadAll()
@@ -304,11 +294,11 @@ namespace Hopeless
             // load all data needed
             LoadNames();
             LoadClasses();
-
             LoadPokemonNames();
             LoadAttacks();
             LoadItems();
 
+            // settings for editor
             txtSpecies.MaximumValue = pokemonCount - 1;
             txtClassID.MaximumValue = classCount - 1;
             nSprite.Maximum = trainerSpriteCount - 1;
