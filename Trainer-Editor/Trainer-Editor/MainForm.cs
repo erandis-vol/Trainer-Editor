@@ -44,6 +44,7 @@ namespace Hopeless
             saveToolStripMenuItem.Enabled = false;
             importToolStripMenuItem.Enabled = false;
             exportToolStripMenuItem.Enabled = false;
+            changePartyOffsetToolStripMenuItem.Enabled = false;
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -82,6 +83,7 @@ namespace Hopeless
             saveToolStripMenuItem.Enabled = true;
             importToolStripMenuItem.Enabled = true;
             exportToolStripMenuItem.Enabled = true;
+            changePartyOffsetToolStripMenuItem.Enabled = true;
 
             cClass.Items.Clear();
             cClass.Items.AddRange(classes);
@@ -270,6 +272,9 @@ namespace Hopeless
                 temp?.Dispose();
                 return false;
             }
+
+            // update title
+            Text = $"Hopeless Trainer Editor v1.0 - [{Path.GetFileName(openFileDialog1.FileName)}]";
 
             // set new open ROM and report success
             rom?.Dispose();

@@ -3,6 +3,8 @@ Copyright 2015-2017 lost (heart)
 
 A trainer editor for the non-Japanese 3rd generation Pokémon games.
 
+![Hopeless Trainer Editor](/example.png?raw=true "Peeking at the popular hack 'Touhou Puppet Play Enhanced'.")
+
 ## Features
 * Basic trainer editing
 * Pointer-based loading of data
