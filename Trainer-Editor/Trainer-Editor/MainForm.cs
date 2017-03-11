@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using GBAHL;
+using GBAHL.IO;
 
 namespace Lost
 {
@@ -34,7 +36,7 @@ namespace Lost
             if (!File.Exists("Settings.ini"))
                 return;
 
-            settings = Settings.FromFile("Settings.ini", "ini");
+            settings = Settings.FromFile("Settings.ini", Settings.Format.INI);
 
             repointAutomaticallyToolStripMenuItem.Checked = settings.GetBoolean("Settings", "RepointAutomatically");
             cleanRepointedTrainersToolStripMenuItem.Checked = settings.GetBoolean("Settings", "CleanRepointed");
@@ -240,7 +242,7 @@ namespace Lost
             bool success = true;
             ROM temp = null;
 
-            var custom = Path.ChangeExtension(filename, ".h");
+            var custom = Path.ChangeExtension(filename, ".hte");
 
             try
             {
@@ -262,7 +264,7 @@ namespace Lost
                     romInfo = Settings.FromFile($@"ROMs\{temp.Code}.ini", "ini");
 
                     // copy and save to custom settings
-                    //romInfo.Save(custom, "ini");
+                    romInfo.Save(custom, "ini");
                 }
             }
             catch (Exception ex)
