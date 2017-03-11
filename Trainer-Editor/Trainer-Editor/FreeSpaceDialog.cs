@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using GBAHL.IO;
 
 namespace Lost
 {
@@ -43,7 +44,7 @@ namespace Lost
             // search for up to 8 offsets
             for (int i = 0; i < 8; i++)
             {
-                var result = rom.FindFreeSpace(txtNeeded.Value, 0xFF, start, 4);
+                var result = rom.Find(0xFF, txtNeeded.Value, start);
                 if (result == -1)
                     break;
                 else

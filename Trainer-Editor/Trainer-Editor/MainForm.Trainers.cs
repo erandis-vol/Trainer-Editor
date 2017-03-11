@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using GBAHL.Text;
 
 namespace Lost
 {
@@ -31,7 +32,7 @@ namespace Lost
                 trainer.Gender = (byte)((genderMusic & 128) >> 7);
                 trainer.Music = (byte)(genderMusic & 127);
             trainer.Sprite = rom.ReadByte();
-            trainer.Name = rom.ReadText(12, TextTable.Encoding.English);
+            trainer.Name = rom.ReadText(12, Table.Encoding.English);
             for (int i = 0; i < 4; i++)
                 trainer.Items[i] = rom.ReadUInt16();
             trainer.DoubleBattle = rom.ReadByte() == 1;
@@ -81,7 +82,8 @@ namespace Lost
                 // find freespace
                 if (repointAutomaticallyToolStripMenuItem.Checked)
                 {
-                    newOffset = rom.FindFreeSpace(trainer.PartySize, 0xFF, 0x720000, 4);
+                    //newOffset = rom.FindFreeSpace(trainer.PartySize, 0xFF, 0x720000, 4);
+                    newOffset = rom.Find(0xFF, trainer.PartySize, 0x720000);
                 }
                 else
                 {
@@ -121,7 +123,7 @@ namespace Lost
             rom.WriteByte(trainer.Class);
             rom.WriteByte((byte)((trainer.Gender << 7) + trainer.Music));
             rom.WriteByte(trainer.Sprite);
-            rom.WriteText(trainer.Name, 12, TextTable.Encoding.English);
+            rom.WriteText(trainer.Name, 12, Table.Encoding.English);
             for (int i = 0; i < 4; i++)
                 rom.WriteUInt16(trainer.Items[i]);
             rom.WriteByte((byte)(trainer.DoubleBattle ? 1 : 0));
@@ -186,7 +188,8 @@ namespace Lost
             {
                 if (repointAutomaticallyToolStripMenuItem.Checked)
                 {
-                    newOffset = rom.FindFreeSpace(newSize, 0xFF, 0x720000, 4);
+                    //newOffset = rom.FindFreeSpace(newSize, 0xFF, 0x720000, 4);
+                    newOffset = rom.Find(0xFF, newSize, 0x720000);
                 }
                 else
                 {
@@ -259,7 +262,7 @@ namespace Lost
             for (int i = 0; i < trainerCount; i++)
             {
                 rom.Seek(firstTrainer + i * 40 + 4);
-                names[i] = rom.ReadText(12, TextTable.Encoding.English);
+                names[i] = rom.ReadText(12, Table.Encoding.English);
             }
         }
 
@@ -268,7 +271,7 @@ namespace Lost
             var table = romInfo.GetInt32("trainer_classes", "Names", 16);
 
             rom.Seek(table);
-            classes = rom.ReadTextTable(13, classCount, TextTable.Encoding.English);
+            classes = rom.ReadTextTable(13, classCount, Table.Encoding.English);
         }
 
         void SaveClasses()
@@ -276,10 +279,10 @@ namespace Lost
             var table = romInfo.GetInt32("trainer_classes", "Names", 16);
 
             rom.Seek(table);
-            rom.WriteTextTable(classes, 13, TextTable.Encoding.English);
+            rom.WriteTextTable(classes, 13, Table.Encoding.English);
         }
 
-        Bitmap LoadTrainerSprite(int id)
+        Image LoadTrainerSprite(int id)
         {
             try
             {
@@ -289,7 +292,7 @@ namespace Lost
                 var spriteOffset = rom.ReadPointer();
 
                 rom.Seek(spriteOffset);
-                var sprite = rom.ReadLZ77CompressedBytes();
+                var sprite = rom.ReadCompressedSprite4();
 
                 // ------------------------------
                 // read compressed palette
@@ -297,10 +300,11 @@ namespace Lost
                 var paletteOffset = rom.ReadPointer();
 
                 rom.Seek(paletteOffset);
-                var palette = rom.ReadLZ77CompressedPalette();
+                var palette = rom.ReadCompressedPalette();
 
                 // ------------------------------
-                return Sprites.Draw16(sprite, 8, 8, palette);
+                //return Sprites.Draw16(sprite, 8, 8, palette);
+                return sprite.ToImage(8, 8, palette, false);
             }
             catch (Exception ex)
             {

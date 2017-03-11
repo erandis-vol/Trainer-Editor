@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using GBAHL.Drawing;
+using GBAHL.IO;
+using GBAHL.Text;
 
 namespace Lost
 {
@@ -18,7 +21,7 @@ namespace Lost
             var nameTable = romInfo.GetInt32("pokemon", "Names", 16);
 
             rom.Seek(nameTable);
-            pokemon = rom.ReadTextTable(11, pokemonCount, TextTable.Encoding.English);
+            pokemon = rom.ReadTextTable(11, pokemonCount, Table.Encoding.English);
         }
 
         void LoadAttacks()
@@ -26,7 +29,7 @@ namespace Lost
             var table = romInfo.GetInt32("attacks", "Names", 16);
 
             rom.Seek(table);
-            attacks = rom.ReadTextTable(13, attackCount, TextTable.Encoding.English);
+            attacks = rom.ReadTextTable(13, attackCount, Table.Encoding.English);
         }
 
         void LoadItems()
@@ -37,11 +40,11 @@ namespace Lost
             for (int i = 0; i < itemCount; i++)
             {
                 rom.Seek(firstItem + i * 44);
-                items[i] = rom.ReadText(14, TextTable.Encoding.English);
+                items[i] = rom.ReadText(14, Table.Encoding.English);
             }
         }
 
-        Bitmap LoadFrontSprite(int id)
+        Image LoadFrontSprite(int id)
         {
             try
             {
@@ -51,7 +54,7 @@ namespace Lost
                 var spriteOffset = rom.ReadPointer();
 
                 rom.Seek(spriteOffset);
-                var sprite = rom.ReadLZ77CompressedBytes();
+                var sprite = rom.ReadCompressedSprite(BitDepth.Four);
 
                 // ------------------------------
                 // read compressed palette
@@ -59,10 +62,11 @@ namespace Lost
                 var paletteOffset = rom.ReadPointer();
 
                 rom.Seek(paletteOffset);
-                var palette = rom.ReadLZ77CompressedPalette();
+                var palette = rom.ReadCompressedPalette();
 
                 // ------------------------------
-                return Sprites.Draw16(sprite, 8, 8, palette);
+                //return Sprites.Draw16(sprite, 8, 8, palette);
+                return sprite.ToImage(8, 8, palette, false);
             }
             catch (Exception ex)
             {

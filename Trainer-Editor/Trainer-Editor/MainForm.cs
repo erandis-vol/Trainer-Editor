@@ -152,7 +152,7 @@ namespace Lost
 
                 for (int i = 0; i < 6; i++)
                 {
-                    var sprite = invisible;
+                    Image sprite = invisible;
                     if (i < trainer.Party.Count)
                     {
                         sprite = LoadFrontSprite(trainer.Party[i].Species);
@@ -179,13 +179,13 @@ namespace Lost
         private void repointAutomaticallyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             settings.Set("Settings", "RepointAutomatically", repointAutomaticallyToolStripMenuItem.Checked);
-            settings.Save("Settings.ini", "ini");
+            settings.Save("Settings.ini", Settings.Format.INI);
         }
 
         private void cleanRepointedTrainersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             settings.Set("Settings", "CleanRepointed", cleanRepointedTrainersToolStripMenuItem.Checked);
-            settings.Save("Settings.ini", "ini");
+            settings.Save("Settings.ini", Settings.Format.INI);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -209,7 +209,7 @@ namespace Lost
 
             for (int i = 0; i < 6; i++)
             {
-                var sprite = invisible;
+                Image sprite = invisible;
                 if (i < trainer.Party.Count)
                 {
                     sprite = LoadFrontSprite(trainer.Party[i].Species);
@@ -252,7 +252,7 @@ namespace Lost
                 // first check for custom settings
                 if (File.Exists(custom))
                 {
-                    romInfo = Settings.FromFile(custom, "ini");
+                    romInfo = Settings.FromFile(custom, Settings.Format.INI);
                 }
                 else
                 {
@@ -261,10 +261,10 @@ namespace Lost
                         throw new Exception($"ROM type {temp.Code} is not supported!");
 
                     // load default settings
-                    romInfo = Settings.FromFile($@"ROMs\{temp.Code}.ini", "ini");
+                    romInfo = Settings.FromFile($@"ROMs\{temp.Code}.ini", Settings.Format.INI);
 
                     // copy and save to custom settings
-                    romInfo.Save(custom, "ini");
+                    romInfo.Save(custom, Settings.Format.INI);
                 }
             }
             catch (Exception ex)
@@ -595,7 +595,7 @@ namespace Lost
 
             for (int i = 0; i < 6; i++)
             {
-                var sprite = invisible;
+                Image sprite = invisible;
                 if (i < trainer.Party.Count)
                     sprite = LoadFrontSprite(trainer.Party[i].Species);
 
@@ -687,7 +687,7 @@ namespace Lost
 
                 for (int i = 0; i < 6; i++)
                 {
-                    var sprite = invisible;
+                    Image sprite = invisible;
                     if (i < trainer.Party.Count)
                     {
                         sprite = LoadFrontSprite(trainer.Party[i].Species);
