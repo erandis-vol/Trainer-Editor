@@ -1,0 +1,3 @@
+[submodule "GBA"]
+	path = GBA
+	url = https://github.com/doom-desire/GBA
