@@ -292,10 +292,15 @@ namespace Hopeless
             classCount = romInfo.GetInt32("trainer_classes", "Count");
 
             // load all data needed
+            Console.WriteLine("Loading names...");
             LoadNames();
+            Console.WriteLine("Loading classes...");
             LoadClasses();
+            Console.WriteLine("Loading Pokemon...");
             LoadPokemonNames();
+            Console.WriteLine("Loading attacks...");
             LoadAttacks();
+            Console.WriteLine("Loading items...");
             LoadItems();
 
             // settings for editor
