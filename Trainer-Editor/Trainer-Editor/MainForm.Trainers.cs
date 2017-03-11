@@ -22,7 +22,8 @@ namespace Hopeless
         void LoadTrainer(int index)
         {
             trainer = new Trainer(index);
-            //rom.Seek(romInfo.GetInt32("trainers", "Data", 16) + index * 40);
+
+            // seek trainer offset
             rom.Seek(romInfo.GetInt32("trainers", "Data", 16));
             rom.ReadPointerAndSeek();
             rom.Skip(index * 40);
@@ -44,17 +45,24 @@ namespace Hopeless
             trainer.AI = rom.ReadUInt32();
             var partyCount = rom.ReadByte();
             rom.Skip(3);
-            var partyStart = rom.ReadPointer();
+            trainer.PartyOffset = rom.ReadPointer();
             // todo: there's more padding ?
 
             // read party data
-            if (partyCount == 0) return;
+            LoadParty(partyCount);
+        }
 
-            trainer.PartyOffset = partyStart;
-            rom.Seek(partyStart);
+        void LoadParty(int partyCount)
+        {
+            if (partyCount <= 0 || trainer.PartyOffset <= 0)
+                return;
 
-            for (int i = 0; i < partyCount; i++)
-            {
+            // --
+            rom.Seek(trainer.PartyOffset);
+
+            // read pokemon data
+            trainer.Party.Clear();
+            for (int i = 0; i < partyCount; i++) {
                 var p = new Pokemon(i);
                 p.EVs = rom.ReadUInt16();
                 p.Level = rom.ReadUInt16();
@@ -73,7 +81,7 @@ namespace Hopeless
                 trainer.Party.Add(p);
             }
 
-            trainer.OriginalPartySize = rom.Position - partyStart;
+            trainer.OriginalPartySize = rom.Position - trainer.PartyOffset;
         }
 
         void SaveTrainer()

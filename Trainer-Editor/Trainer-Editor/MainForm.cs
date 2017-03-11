@@ -54,6 +54,7 @@ namespace Hopeless
             base.OnFormClosed(e);
 
             invisible.Dispose();
+            rom?.Dispose();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -685,6 +686,45 @@ namespace Hopeless
                     }
                     partyPictureBoxes[i].Image = sprite;
                 }
+            }
+        }
+
+        private void changePartyOffsetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var d = new OffsetDialog(trainer.PartyOffset, trainer.Party.Count))
+            {
+                if (d.ShowDialog() == DialogResult.OK)
+                {
+                    // --
+                    if (trainer.PartyOffset == d.Offset)
+                        return;
+
+                    // Load a fresh party
+                    trainer.PartyOffset = d.Offset;
+                    LoadParty(d.Count);
+
+                    // Adjust party
+                    member = null;
+
+                    for (int i = 0; i < 6; i++) {
+                        Image sprite = invisible;
+                        if (i < trainer.Party.Count) {
+                            sprite = LoadFrontSprite(trainer.Party[i].Species);
+                        }
+                        partyPictureBoxes[i].Image = sprite;
+                    }
+                    pSprite.Image = LoadTrainerSprite(trainer.Sprite);
+
+                    // ------------------------------
+                    DisplayTrainer();
+                    DisplayPartyMember();
+                }
+#if DEBUG
+                else
+                {
+                    Console.WriteLine("Change offset canceled.");
+                }
+#endif
             }
         }
     }
