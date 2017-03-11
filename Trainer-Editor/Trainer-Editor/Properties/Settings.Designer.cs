@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Lost.Properties {
+namespace Hopeless.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

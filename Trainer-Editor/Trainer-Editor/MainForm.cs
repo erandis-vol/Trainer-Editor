@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using GBAHL;
 using GBAHL.IO;
 
-namespace Lost
+namespace Hopeless
 {
     public partial class MainForm : Form
     {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Lost
+namespace Hopeless
 {
     public class DecimalBox : TextBox
     {

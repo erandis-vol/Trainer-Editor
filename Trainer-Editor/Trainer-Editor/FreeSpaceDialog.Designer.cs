@@ -1,4 +1,4 @@
-﻿namespace Lost
+﻿namespace Hopeless
 {
     partial class FreeSpaceDialog
     {
@@ -30,8 +30,8 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtNeeded = new Lost.DecimalBox();
-            this.txtSearchStart = new Lost.HexBox();
+            this.txtNeeded = new Hopeless.DecimalBox();
+            this.txtSearchStart = new Hopeless.HexBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.listResults = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();

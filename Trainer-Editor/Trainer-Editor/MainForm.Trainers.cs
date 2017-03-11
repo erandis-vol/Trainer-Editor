@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using GBAHL.Text;
 
-namespace Lost
+namespace Hopeless
 {
     public partial class MainForm
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using GBAHL.IO;
 
-namespace Lost
+namespace Hopeless
 {
     public partial class FreeSpaceDialog : Form
     {

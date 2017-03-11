@@ -4,7 +4,7 @@ using GBAHL.Drawing;
 using GBAHL.IO;
 using GBAHL.Text;
 
-namespace Lost
+namespace Hopeless
 {
     public partial class MainForm
     {

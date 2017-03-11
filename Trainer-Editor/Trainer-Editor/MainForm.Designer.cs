@@ -1,4 +1,4 @@
-﻿namespace Lost
+﻿namespace Hopeless
 {
     partial class MainForm
     {
@@ -53,16 +53,16 @@
             this.chkHeldItems = new System.Windows.Forms.CheckBox();
             this.chkDoubleBattle = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.txtAI = new Lost.DecimalBox();
-            this.txtMusic = new Lost.DecimalBox();
+            this.txtAI = new Hopeless.DecimalBox();
+            this.txtMusic = new Hopeless.DecimalBox();
             this.label9 = new System.Windows.Forms.Label();
             this.grpParty = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.bPartyRemove = new System.Windows.Forms.Button();
             this.bPartyAdd = new System.Windows.Forms.Button();
-            this.txtSpecies = new Lost.HexBox();
-            this.txtEVs = new Lost.DecimalBox();
-            this.txtLevel = new Lost.DecimalBox();
+            this.txtSpecies = new Hopeless.HexBox();
+            this.txtEVs = new Hopeless.DecimalBox();
+            this.txtLevel = new Hopeless.DecimalBox();
             this.p6 = new System.Windows.Forms.PictureBox();
             this.p5 = new System.Windows.Forms.PictureBox();
             this.p4 = new System.Windows.Forms.PictureBox();
@@ -99,14 +99,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.grpClass = new System.Windows.Forms.GroupBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.txtClassID = new Lost.HexBox();
+            this.txtClassID = new Hopeless.HexBox();
             this.txtClass = new System.Windows.Forms.TextBox();
             this.cClass = new System.Windows.Forms.ComboBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.txtSearchName = new System.Windows.Forms.TextBox();
             this.bRandomize = new System.Windows.Forms.Button();
-            this.txtSearchId = new Lost.HexBox();
+            this.txtSearchId = new Hopeless.HexBox();
             this.menuStrip1.SuspendLayout();
             this.grpTrainer.SuspendLayout();
             this.grpOptions.SuspendLayout();
@@ -150,7 +150,7 @@
             // 
             // openToolStripMenuItem
             // 
-            this.openToolStripMenuItem.Image = global::Lost.Properties.Resources.OpenFolder_16x;
+            this.openToolStripMenuItem.Image = global::Hopeless.Properties.Resources.OpenFolder_16x;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
@@ -159,7 +159,7 @@
             // 
             // saveToolStripMenuItem
             // 
-            this.saveToolStripMenuItem.Image = global::Lost.Properties.Resources.Save_16x;
+            this.saveToolStripMenuItem.Image = global::Hopeless.Properties.Resources.Save_16x;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
@@ -173,7 +173,7 @@
             // 
             // exitToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Image = global::Lost.Properties.Resources.Close_16x;
+            this.exitToolStripMenuItem.Image = global::Hopeless.Properties.Resources.Close_16x;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
@@ -191,7 +191,7 @@
             // 
             // importToolStripMenuItem
             // 
-            this.importToolStripMenuItem.Image = global::Lost.Properties.Resources.Import_16x;
+            this.importToolStripMenuItem.Image = global::Hopeless.Properties.Resources.Import_16x;
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
             this.importToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
             this.importToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
@@ -200,7 +200,7 @@
             // 
             // exportToolStripMenuItem
             // 
-            this.exportToolStripMenuItem.Image = global::Lost.Properties.Resources.Export_16x;
+            this.exportToolStripMenuItem.Image = global::Hopeless.Properties.Resources.Export_16x;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             this.exportToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
             this.exportToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
@@ -246,7 +246,7 @@
             // 
             // aboutToolStripMenuItem
             // 
-            this.aboutToolStripMenuItem.Image = global::Lost.Properties.Resources.InformationSymbol_16x;
+            this.aboutToolStripMenuItem.Image = global::Hopeless.Properties.Resources.InformationSymbol_16x;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.A)));
@@ -440,7 +440,7 @@
             // 
             // bPartyRemove
             // 
-            this.bPartyRemove.Image = global::Lost.Properties.Resources.Remove_16x;
+            this.bPartyRemove.Image = global::Hopeless.Properties.Resources.Remove_16x;
             this.bPartyRemove.Location = new System.Drawing.Point(171, 275);
             this.bPartyRemove.Name = "bPartyRemove";
             this.bPartyRemove.Size = new System.Drawing.Size(75, 23);
@@ -452,7 +452,7 @@
             // 
             // bPartyAdd
             // 
-            this.bPartyAdd.Image = global::Lost.Properties.Resources.Add_16x;
+            this.bPartyAdd.Image = global::Hopeless.Properties.Resources.Add_16x;
             this.bPartyAdd.Location = new System.Drawing.Point(90, 275);
             this.bPartyAdd.Name = "bPartyAdd";
             this.bPartyAdd.Size = new System.Drawing.Size(75, 23);

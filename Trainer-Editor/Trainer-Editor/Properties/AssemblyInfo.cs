@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Hopeless Trainer Editor")]
 [assembly: AssemblyDescription("Hopeless Trainer Editor")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("itari")]
+[assembly: AssemblyCompany("lost")]
 [assembly: AssemblyProduct("Hopeless Trainer Editor")]
-[assembly: AssemblyCopyright("Copyright © itari 2016")]
+[assembly: AssemblyCopyright("Copyright © lost 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

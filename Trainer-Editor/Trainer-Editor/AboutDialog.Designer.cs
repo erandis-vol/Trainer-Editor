@@ -1,4 +1,4 @@
-﻿namespace Lost
+﻿namespace Hopeless
 {
     partial class AboutDialog
     {
@@ -53,16 +53,16 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(142, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Copyright © itari 2015 - 2016";
+            this.label2.Text = "Copyright © lost 2015 - 2017";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(14, 34);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(127, 13);
+            this.label3.Size = new System.Drawing.Size(121, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Version 1.0 (11/13/2016)";
+            this.label3.Text = "Version 1.0 (3/11/2017)";
             // 
             // panel1
             // 

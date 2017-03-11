@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Lost
+namespace Hopeless
 {
     public class Trainer
     {

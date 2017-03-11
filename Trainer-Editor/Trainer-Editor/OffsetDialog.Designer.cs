@@ -1,4 +1,4 @@
-﻿namespace Lost
+﻿namespace Hopeless
 {
     partial class OffsetDialog
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.txtOffset = new Lost.HexBox();
+            this.txtOffset = new Hopeless.HexBox();
             this.lblDescription = new System.Windows.Forms.Label();
             this.bCancel = new System.Windows.Forms.Button();
             this.bOK = new System.Windows.Forms.Button();
