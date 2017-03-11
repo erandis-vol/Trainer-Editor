@@ -92,7 +92,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(313, 23);
             this.button1.TabIndex = 5;
-            this.button1.Text = "OK";
+            this.button1.Text = "Alright!";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // AboutDialog
