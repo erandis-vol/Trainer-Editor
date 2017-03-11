@@ -18,69 +18,35 @@ namespace Hopeless
 
             txtNeeded.Value = neededBytes;
             txtSearchStart.Value = searchStart;
-
             txtNeeded.ReadOnly = true;
+
+            Search();
         }
 
-        private void txtSearchStart_TextChanged(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
             Search();
         }
 
-        private void listResults_SelectedIndexChanged(object sender, EventArgs e)
+        private void txtRepointTo_TextChanged(object sender, EventArgs e)
         {
-            if (results != null && results.Length > 0)
-            {
-                selection = listResults.SelectedIndex;
-                button1.Enabled = true;
-            }
+            button1.Enabled = txtRepointTo.Value > 0;
         }
 
-        void Search()
+        private void Search()
         {
-            var start = txtSearchStart.Value;
-            var search = new List<int>();
-
-            // search for up to 8 offsets
-            for (int i = 0; i < 8; i++)
-            {
-                var result = rom.Find(0xFF, txtNeeded.Value, start);
-                if (result == -1)
-                    break;
-                else
-                    search.Add(result);
-
-                start = result + txtNeeded.Value;
-            }
-
-            listResults.Items.Clear();
-            if (search.Count > 0)
-            {
-                // add results to listbox
-                foreach (var r in search)
-                    listResults.Items.Add($"{r:X7}");
-
-                // ---
-                results = search.ToArray();
-
-                // select first option
-                listResults.SelectedIndex = 0;
-                selection = 0;
-            }
-            else
-            {
-                selection = -1;
-            }
-
-            button1.Enabled = search.Count > 0;
+            txtRepointTo.Value = rom.Find(0xFF, txtNeeded.Value, txtSearchStart.Value);
+            button1.Enabled = txtRepointTo.Value > 0;
         }
 
         public int Offset
         {
-            get
-            {
-                return selection == -1 ? -1 : results[selection];
-            }
+            get { return txtRepointTo.Value; }
+        }
+
+        public int SearchStart
+        {
+            get { return txtSearchStart.Value; }
         }
     }
 }

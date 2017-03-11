@@ -86,17 +86,19 @@ namespace Hopeless
                 // find freespace
                 if (repointAutomaticallyToolStripMenuItem.Checked)
                 {
-                    //newOffset = rom.FindFreeSpace(trainer.PartySize, 0xFF, 0x720000, 4);
                     newOffset = rom.Find(0xFF, trainer.PartySize, 0x720000);
                 }
                 else
                 {
-                    using (var fs = new FreeSpaceDialog(rom, trainer.PartySize, 0x720000))
+                    using (var fs = new FreeSpaceDialog(rom, trainer.PartySize, lastSearch))
                     {
                         fs.Text = "Repoint Party";
 
                         if (fs.ShowDialog() == DialogResult.OK)
+                        {
                             newOffset = fs.Offset;
+                            lastSearch = fs.SearchStart;
+                        }
                     }
                 }
 
@@ -194,17 +196,18 @@ namespace Hopeless
             {
                 if (repointAutomaticallyToolStripMenuItem.Checked)
                 {
-                    //newOffset = rom.FindFreeSpace(newSize, 0xFF, 0x720000, 4);
                     newOffset = rom.Find(0xFF, newSize, 0x720000);
                 }
                 else
                 {
-                    using (var fs = new FreeSpaceDialog(rom, newSize, 0x720000))
+                    using (var fs = new FreeSpaceDialog(rom, newSize, lastSearch))
                     {
                         fs.Text = "Repoint Trainer Table";
 
-                        if (fs.ShowDialog() == DialogResult.OK)
+                        if (fs.ShowDialog() == DialogResult.OK) {
                             newOffset = fs.Offset;
+                            lastSearch = fs.SearchStart;
+                        }
                     }
                 }
             }
