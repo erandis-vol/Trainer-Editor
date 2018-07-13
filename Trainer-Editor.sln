@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainer-Editor", "Trainer-Editor\Trainer-Editor.csproj", "{D511F97B-8CC5-4608-AD34-461E3D3B6E38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainer-Editor", "src\Trainer-Editor\Trainer-Editor.csproj", "{D511F97B-8CC5-4608-AD34-461E3D3B6E38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
