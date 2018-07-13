@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Hopeless
+namespace Hopeless.Forms
 {
     public partial class AboutDialog : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace Hopeless
+﻿namespace Hopeless.Forms
 {
     partial class OffsetDialog
     {
