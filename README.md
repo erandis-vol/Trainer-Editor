@@ -1,5 +1,4 @@
-# Hopeless Trainer Editor
-Copyright 2015-2017 lost (heart)
+# Hopeless Trainer Editor (v2)
 
 A trainer editor for the non-Japanese 3rd generation Pokémon games.
 
