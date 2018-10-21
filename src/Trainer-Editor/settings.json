@@ -1,7 +1,0 @@
-{
-  // Determines whether a party should be repointed automatically.
-  "RepointAutomatically": true,
-
-  // Determines whether a repointed party should be overwritten with freespace.
-  "CleanRepointed": false
-}
