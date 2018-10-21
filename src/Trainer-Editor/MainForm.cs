@@ -1,25 +1,27 @@
-﻿using System;
+﻿using GBAHL;
+using GBAHL.IO;
+using GBAHL.Configuration;
+using Hopeless.Forms;
+using System;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
-using GBAHL;
-using GBAHL.IO;
-using Hopeless.Forms;
 
 namespace Hopeless
 {
     public partial class MainForm : Form
     {
-        Settings settings;
+        private Settings settings;
+        private Game game;
 
-        ROM rom;
-        Settings romInfo;
-        int lastSearch = 0x720000;
+        //ROM rom;
+        //Settings romInfo;
+        private int lastSearch = 0x720000;
 
-        Bitmap invisible = new Bitmap(64, 64);
-        PictureBox[] partyPictureBoxes;
+        private Bitmap invisible = new Bitmap(64, 64);
+        private PictureBox[] partyPictureBoxes;
 
-        bool ignore = false;
+        private bool ignore = false;
 
         public MainForm()
         {
@@ -30,30 +32,52 @@ namespace Hopeless
 
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
+            // ----------------------------------------------------------------
+            try
+            {
+                using (var fs = File.OpenRead("settings.json"))
+                {
+                    settings = JsonConfiguration.Default.Load<Settings>(fs);
+                }
+            }
+            catch
+            {
+                settings = new Settings { RepointAutomatically = false, CleanRepointed = true };
+            }
 
-            if (!File.Exists("Settings.ini"))
-                return;
+            repointAutomaticallyToolStripMenuItem.Checked = settings.RepointAutomatically;
+            cleanRepointedTrainersToolStripMenuItem.Checked = settings.CleanRepointed;
 
-            settings = Settings.FromFile("Settings.ini", Settings.Format.INI);
-
-            repointAutomaticallyToolStripMenuItem.Checked = settings.GetBoolean("Settings", "RepointAutomatically");
-            cleanRepointedTrainersToolStripMenuItem.Checked = settings.GetBoolean("Settings", "CleanRepointed");
-
+            // ----------------------------------------------------------------
             grpTrainer.Enabled = false;
             bRandomize.Enabled = false;
             saveToolStripMenuItem.Enabled = false;
             importToolStripMenuItem.Enabled = false;
             exportToolStripMenuItem.Enabled = false;
             changePartyOffsetToolStripMenuItem.Enabled = false;
+
+            base.OnLoad(e);
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            base.OnFormClosed(e);
+            try
+            {
+                using (var fs = File.Create("settings.json"))
+                {
+                    JsonConfiguration.Default.Save(fs, settings);
+                }
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                Console.WriteLine(ex);
+#endif
+            }
 
             invisible.Dispose();
-            rom?.Dispose();
+
+            base.OnFormClosed(e);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -180,14 +204,12 @@ namespace Hopeless
 
         private void repointAutomaticallyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            settings.Set("Settings", "RepointAutomatically", repointAutomaticallyToolStripMenuItem.Checked);
-            settings.Save("Settings.ini", Settings.Format.INI);
+            settings.RepointAutomatically = repointAutomaticallyToolStripMenuItem.Checked;
         }
 
         private void cleanRepointedTrainersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            settings.Set("Settings", "CleanRepointed", cleanRepointedTrainersToolStripMenuItem.Checked);
-            settings.Save("Settings.ini", Settings.Format.INI);
+            settings.CleanRepointed = cleanRepointedTrainersToolStripMenuItem.Checked;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -241,52 +263,75 @@ namespace Hopeless
 
         bool OpenROM(string filename)
         {
-            ROM temp = null;
-
-            //var custom = Path.ChangeExtension(filename, ".hte");
             try
             {
-                // open ROM file
-                temp = new ROM(filename);
+                string gameCode;
 
-                // check for settings file
-                if (!File.Exists($@"ROMs\{temp.Code}.ini")) {
-                    MessageBox.Show("ROM code {temp.Code} is not supported!",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    temp?.Dispose();
-                    return false;
+                using (var fs = File.Open(filename, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+                using (var gb = new GbaBinaryStream(fs))
+                {
+                    gameCode = gb.Code;
                 }
 
-                // open settings file
-                romInfo = Settings.FromFile($@"ROMs\{temp.Code}.ini", Settings.Format.INI);
+                using (var fs = File.OpenRead($@"ROMs\{gameCode}.json"))
+                {
+                    game = JsonConfiguration.Default.Load<Game>(fs);
+                }
             }
             catch (Exception ex)
             {
-#if DEBUG
-                MessageBox.Show($"{ex.Message}",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-#else
-                MessageBox.Show($"There was an error opening the ROM.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-#endif
-
-                temp?.Dispose();
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
-            // update title
-            Text = $"Hopeless Trainer Editor v1.0 - [{Path.GetFileName(openFileDialog1.FileName)}]";
 
-            // set new open ROM and report success
-            rom?.Dispose();
-            rom = temp;
-            return true;
+
+            //            ROM temp = null;
+
+            //            //var custom = Path.ChangeExtension(filename, ".hte");
+            //            try
+            //            {
+            //                // open ROM file
+            //                temp = new ROM(filename);
+
+            //                // check for settings file
+            //                if (!File.Exists($@"ROMs\{temp.Code}.ini")) {
+            //                    MessageBox.Show("ROM code {temp.Code} is not supported!",
+            //                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //                    temp?.Dispose();
+            //                    return false;
+            //                }
+
+            //                // open settings file
+            //                romInfo = Settings.FromFile($@"ROMs\{temp.Code}.ini", Settings.Format.INI);
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //#if DEBUG
+            //                MessageBox.Show($"{ex.Message}",
+            //                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //#else
+            //                MessageBox.Show($"There was an error opening the ROM.",
+            //                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //#endif
+
+            //                temp?.Dispose();
+            //                return false;
+            //            }
+
+            //            // update title
+            //            Text = $"Hopeless Trainer Editor v1.0 - [{Path.GetFileName(openFileDialog1.FileName)}]";
+
+            //            // set new open ROM and report success
+            //            rom?.Dispose();
+            //            rom = temp;
+            //            return true;
+
+            return false;
         }
 
         void LoadAll()
         {
-            if (rom == null) return;
-
             // get limits from .ini
             pokemonCount = romInfo.GetInt32("pokemon", "Count");
             itemCount = romInfo.GetInt32("items", "Count");

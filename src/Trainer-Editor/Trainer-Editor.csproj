@@ -37,6 +37,16 @@
     <ApplicationIcon>hte.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GBAHL">
+      <HintPath>..\..\lib\GBAHL.dll</HintPath>
+    </Reference>
+    <Reference Include="GBAHL.Drawing.GDI">
+      <HintPath>..\..\lib\GBAHL.Drawing.GDI.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -62,6 +72,7 @@
     <Compile Include="Forms\FreeSpaceDialog.Designer.cs">
       <DependentUpon>FreeSpaceDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Game.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +98,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Trainer.cs" />
     <EmbeddedResource Include="Forms\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
@@ -131,6 +143,9 @@
     <None Include="ROMs\BPEE.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="ROMs\BPRE.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="ROMs\epsi.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -140,7 +155,7 @@
     <None Include="ROMs\BPRE.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Settings.ini">
+    <None Include="settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
