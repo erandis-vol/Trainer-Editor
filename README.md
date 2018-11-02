@@ -1,5 +1,5 @@
 # Hopeless Trainer Editor
-Copyright 2015-2017 lost (heart)
+Copyright 2015-2017 erandis-vol
 
 A trainer editor for the non-Japanese 3rd generation Pokémon games.
 
